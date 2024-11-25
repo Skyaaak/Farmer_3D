@@ -14,6 +14,11 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     public GameObject inventoryPanel;
 
+    public ItemData toolEquipped;
+
+    [SerializeField]
+    private ToolSlot toolSlot;
+
     [SerializeField]
     private Transform inventorySlotsParent;
 
@@ -30,20 +35,27 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemData item)
     {
-        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
-
-        if (itemInInventory != null && item.stackable)
+        if(item.type == ItemType.Ressource)
         {
-            itemInInventory.count++;
-            actualWeight += item.weight;
+            ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+            if (itemInInventory != null && item.stackable)
+            {
+                itemInInventory.count++;
+                actualWeight += item.weight;
+            }
+            else
+            {
+                content.Add(new ItemInInventory { itemData = item, count = 1 });
+                actualWeight += item.weight;
+            }
+            Debug.Log("actualWeight= " + actualWeight);
         }
         else
         {
-            content.Add(new ItemInInventory { itemData = item, count = 1 });
-            actualWeight += item.weight;
+            toolEquipped = item;
         }
-        Debug.Log("actualWeight= " + actualWeight);
-
+        
         RefreshContent();
         
     }
@@ -103,21 +115,41 @@ public class Inventory : MonoBehaviour
             }
             //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
         }
+
+        if (toolEquipped)
+        {
+            toolSlot.item = toolEquipped;
+            toolSlot.itemVisual.sprite = toolEquipped.visuel;
+        }
     }
 
     public bool HaveSpace(ItemData item)
     {
-        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
-
-        if (itemInInventory != null && item.stackable)
+        if(item.type == ItemType.Ressource)
         {
-            if (actualWeight + item.weight <= maxWeight)
+            ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+            if (itemInInventory != null && item.stackable)
             {
-                return true;
+                if (actualWeight + item.weight <= maxWeight)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false;
+                if (actualWeight + item.weight <= maxWeight)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
         else
@@ -131,6 +163,7 @@ public class Inventory : MonoBehaviour
                 return false;
             }
         }
+        
     }
 }
 
