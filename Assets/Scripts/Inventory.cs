@@ -17,6 +17,8 @@ public class Inventory : MonoBehaviour
     private Transform inventorySlotsParent;
 
     const int maxSize = 3;
+    const int maxWeight = 1000;
+    public int actualWeight = 0;
 
     public Sprite emptySlotVisual;
 
@@ -32,11 +34,14 @@ public class Inventory : MonoBehaviour
         if (itemInInventory != null && item.stackable)
         {
             itemInInventory.count++;
+            actualWeight += item.weight;
         }
         else
         {
             content.Add(new ItemInInventory{itemData = item,count = 1});
+            actualWeight += item.weight;
         }
+        Debug.Log("actualWeight= " + actualWeight);
 
         RefreshContent();
     }
