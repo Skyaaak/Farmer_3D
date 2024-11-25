@@ -32,11 +32,13 @@ public class InteractWithItem : MonoBehaviour
 
             if (hit.transform.CompareTag("Item"))
             {
-                text.text = inventory.HaveSpace() ? "Appuyez sur E pour ramasser" : "Inventaire plein";
+                ItemData itemSee = hit.transform.gameObject.GetComponent<Item>().item;
+
+                text.text = inventory.HaveSpace(itemSee) ? "Appuyez sur E pour ramasser" : "Inventaire plein";
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if (inventory.HaveSpace())
+                    if (inventory.HaveSpace(itemSee))
                     {
                         inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
                         Destroy(hit.transform.gameObject);

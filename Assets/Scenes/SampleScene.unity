@@ -1321,7 +1321,7 @@ MonoBehaviour:
   inventory: {fileID: 1613769355}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   text: {fileID: 243954956}
 --- !u!1001 &1034034674
 PrefabInstance:
@@ -1439,7 +1439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9218926353566358502, guid: 98541326b56e6e14eb84d42aa2461bac, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9218926353566358502, guid: 98541326b56e6e14eb84d42aa2461bac, type: 3}
       propertyPath: m_TagString

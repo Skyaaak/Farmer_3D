@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private Transform inventorySlotsParent;
 
-    const int maxSize = 3;
-    const int maxWeight = 1000;
+    const int maxSize = 5;
+    const int maxWeight = 10000;
     public int actualWeight = 0;
 
     public Sprite emptySlotVisual;
@@ -38,12 +39,13 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            content.Add(new ItemInInventory{itemData = item,count = 1});
+            content.Add(new ItemInInventory { itemData = item, count = 1 });
             actualWeight += item.weight;
         }
         Debug.Log("actualWeight= " + actualWeight);
 
         RefreshContent();
+        
     }
 
     public void RemoveItem(ItemData item)
@@ -103,9 +105,32 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool HaveSpace()
+    public bool HaveSpace(ItemData item)
     {
-        return maxSize != content.Count;
+        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+        if (itemInInventory != null && item.stackable)
+        {
+            if (actualWeight + item.weight <= maxWeight)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (actualWeight + item.weight <= maxWeight)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
 
