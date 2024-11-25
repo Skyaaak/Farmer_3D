@@ -1321,7 +1321,7 @@ MonoBehaviour:
   inventory: {fileID: 1613769355}
   layerMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 0
   text: {fileID: 243954956}
 --- !u!1001 &1034034674
 PrefabInstance:
@@ -2317,6 +2317,7 @@ MonoBehaviour:
   content: []
   inventoryPanel: {fileID: 1089906996}
   inventorySlotsParent: {fileID: 1834696102}
+  actualWeight: 0
   emptySlotVisual: {fileID: 0}
 --- !u!4 &1613769356
 Transform:
