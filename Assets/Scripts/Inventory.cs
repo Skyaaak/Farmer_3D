@@ -4,38 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using DefaultNamespace;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField]
-    public List<ItemInInventory> content = new List<ItemInInventory>();
-
-    [SerializeField]
-    public GameObject inventoryPanel;
-
-    [SerializeField]
-    private Transform inventorySlotsParent;
+    [SerializeField] private List<ItemInInventory> content = new List<ItemInInventory>();
+    [SerializeField] private GameObject inventoryPanel;
+    [SerializeField] private Transform inventorySlotsParent;
 
     const int maxSize = 3;
-
-    public Sprite emptySlotVisual;
+    [SerializeField]  private Sprite emptySlotVisual;
 
     public void Start()
     {
         RefreshContent();
     }
 
-    public void AddItem(ItemData item)
+    public void AddItem(Item item)
     {
-        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+        ItemInInventory itemInInventory = content.Where(element => element.getItemData() == item).FirstOrDefault();
 
-        if (itemInInventory != null && item.stackable)
+        if (itemInInventory != null && item.GetItemData().stackable)
         {
-            itemInInventory.count++;
+            itemInInventory.addItem();
         }
         else
         {
-            content.Add(new ItemInInventory{itemData = item,count = 1});
+            content.Add(new ItemInInventory(item.GetItemData(), 1));
         }
 
         RefreshContent();
@@ -43,11 +38,11 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(ItemData item)
     {
-        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+        ItemInInventory itemInInventory = content.Where(element => element.getItemData() == item).FirstOrDefault();
 
-        if (itemInInventory.count > 1)
+        if (itemInInventory.getCount() > 1)
         {
-            itemInInventory.count--;
+            itemInInventory.removeItem();
         }
         else
         {
@@ -86,13 +81,13 @@ public class Inventory : MonoBehaviour
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
 
-            currentSlot.item = content[i].itemData;
-            currentSlot.itemVisual.sprite = content[i].itemData.visuel;
+            currentSlot.item = content[i].getItemData();
+            currentSlot.itemVisual.sprite = content[i].getItemData().visuel;
 
             if (currentSlot.item.stackable)
             {
                 currentSlot.countText.enabled = true;
-                currentSlot.countText.text = content[i].count.ToString();
+                currentSlot.countText.text = content[i].getCount().ToString();
             }
             //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
         }
@@ -102,11 +97,4 @@ public class Inventory : MonoBehaviour
     {
         return maxSize != content.Count;
     }
-}
-
-[System.Serializable]
-public class ItemInInventory
-{
-    public ItemData itemData;
-    public int count;
 }

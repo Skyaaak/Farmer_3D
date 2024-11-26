@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
-public class Harvestable : MonoBehaviour
+public abstract class Harvestable
 {
-    [SerializeField]
-    public Ressource[] harvestableItems;
-}
+    protected Resource[] harvestableItems;
+    protected Vector3 harvestablePosition;
+    public abstract Resource[] harvest();
 
-[System.Serializable]
-public class Ressource
-{
-    public ItemData itemData;
-    public int minRessource;
-    public int maxRessource;
-
+    public Vector3 getHarvestablePosition()
+    {
+        return harvestablePosition;
+    }
 }

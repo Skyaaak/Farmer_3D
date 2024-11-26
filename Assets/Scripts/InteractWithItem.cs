@@ -1,22 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DefaultNamespace;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InteractWithItem : MonoBehaviour
 {
-    [SerializeField]
-    private float range = 1.5f;
-
-    public Inventory inventory;
-
-    [SerializeField]
-    private LayerMask layerMask;
-
-    [SerializeField]
-    private Text text;
+    [SerializeField] private float range = 1.5f;
+    [SerializeField] private Inventory inventory;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private Text text;
 
     private Harvestable harvestable;
 
@@ -38,7 +33,7 @@ public class InteractWithItem : MonoBehaviour
                 {
                     if (inventory.HaveSpace())
                     {
-                        inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
+                        inventory.AddItem(hit.transform.gameObject.GetComponent<Item>());
                         Destroy(hit.transform.gameObject);
                     }
                     else
@@ -48,26 +43,26 @@ public class InteractWithItem : MonoBehaviour
 
                 }
             }
+            
             if (hit.transform.CompareTag("Harvestable"))
             {
-
-                if (inventory.content.Exists(item => Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(item.itemData) )== "Hoe"))
+                if (inventory.GetContent().Exists(item => Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(item.getItemData()) )== "Hoe"))
                 {
-                    text.text = "Appuyer sur E pour récolter";
+                    text.text = "Appuyer sur E pour rï¿½colter";
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        Debug.Log("Object récolter");
+                        Debug.Log("Object rï¿½colter");
 
                         harvestable = hit.transform.gameObject.GetComponent<Harvestable>();
 
-                        for (int i = 0; i < harvestable.harvestableItems.Length; i++)
+                        for (int i = 0; i < harvestable.harvest().Length; i++)
                         {
-                            Ressource ressource = harvestable.harvestableItems[i];
+                            Resource ressource = harvestable.harvest()[i];
 
-                            for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
+                            for (int j = 0; j < Random.Range(ressource.GetMinResource(), ressource.GetMaxResource()); j++)
                             {
-                                GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
-                                instantiatedRessource.transform.position = harvestable.transform.position;
+                                GameObject instantiatedRessource = GameObject.Instantiate(ressource.GetItemData().prefab);
+                                instantiatedRessource.transform.position = harvestable.getHarvestablePosition();
                             }
                         }
 
@@ -77,7 +72,7 @@ public class InteractWithItem : MonoBehaviour
                 }
                 else
                 {
-                    text.text = "Il vous faut une Houe pour récolter";
+                    text.text = "Il vous faut une Houe pour rï¿½colter";
                 }
             }
         }

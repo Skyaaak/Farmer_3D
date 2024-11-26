@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public ItemData item;
+    [SerializeField] ItemData item;
+
+    public ItemData GetItemData()
+    {
+        return item;
+    }
 }
