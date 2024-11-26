@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -13,10 +14,17 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     public GameObject inventoryPanel;
 
+    public ItemData toolEquipped;
+
+    [SerializeField]
+    private ToolSlot toolSlot;
+
     [SerializeField]
     private Transform inventorySlotsParent;
 
-    const int maxSize = 3;
+    const int maxSize = 5;
+    const int maxWeight = 10000;
+    public int actualWeight = 0;
 
     public Sprite emptySlotVisual;
 
@@ -27,18 +35,29 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemData item)
     {
-        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
-
-        if (itemInInventory != null && item.stackable)
+        if(item.type == ItemType.Ressource)
         {
-            itemInInventory.count++;
+            ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+            if (itemInInventory != null && item.stackable)
+            {
+                itemInInventory.count++;
+                actualWeight += item.weight;
+            }
+            else
+            {
+                content.Add(new ItemInInventory { itemData = item, count = 1 });
+                actualWeight += item.weight;
+            }
+            Debug.Log("actualWeight= " + actualWeight);
         }
         else
         {
-            content.Add(new ItemInInventory{itemData = item,count = 1});
+            toolEquipped = item;
         }
-
+        
         RefreshContent();
+        
     }
 
     public void RemoveItem(ItemData item)
@@ -96,11 +115,55 @@ public class Inventory : MonoBehaviour
             }
             //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
         }
+
+        if (toolEquipped)
+        {
+            toolSlot.item = toolEquipped;
+            toolSlot.itemVisual.sprite = toolEquipped.visuel;
+        }
     }
 
-    public bool HaveSpace()
+    public bool HaveSpace(ItemData item)
     {
-        return maxSize != content.Count;
+        if(item.type == ItemType.Ressource)
+        {
+            ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+            if (itemInInventory != null && item.stackable)
+            {
+                if (actualWeight + item.weight <= maxWeight)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (actualWeight + item.weight <= maxWeight)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            if (actualWeight + item.weight <= maxWeight)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
     }
 }
 
