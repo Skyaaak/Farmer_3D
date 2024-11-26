@@ -16,8 +16,7 @@ public class Inventory : MonoBehaviour
 
     public ItemData toolEquipped;
 
-    [SerializeField]
-    private ToolSlot toolSlot;
+    [SerializeField] private ToolSlot toolSlot;
 
     [SerializeField]
     private Transform inventorySlotsParent;

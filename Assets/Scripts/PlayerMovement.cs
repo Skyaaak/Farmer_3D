@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Vector3 velocity;
+    
     [SerializeField] private float speed = 12f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 2f;
@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isGrounded;
     
     private CharacterController controller;
+    private Vector3 velocity;
     void Start()
     {
         this.controller = GetComponent<CharacterController>();
@@ -28,16 +29,16 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        UpdateMovement();
+        UpdateRotation();
+    }
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+    private void UpdateMovement()
+    {
+        CheckGroundInteraction();
         
         Vector2 inputDir = this.gameInput.GetMoveVectorNormalized();
-        Vector3 move = transform.right * inputDir.x + transform.forward * inputDir.y;
-
-        controller.Move(move * speed * Time.deltaTime);
+        Vector3 move = (transform.right * inputDir.x + transform.forward * inputDir.y) * this.speed;
 
         if(this.gameInput.GetJumpingInput() && isGrounded)
         {
@@ -46,7 +47,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        move.y = velocity.y;
+        
+        controller.Move(move * Time.deltaTime);
+    }
+
+    private void UpdateRotation()
+    {
+        Vector2 rotationInput = this.gameInput.GetLookVectorNormalized();
+        rotationInput *= Time.deltaTime;
+        transform.Rotate(0, rotationInput.x, 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,6 +66,14 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = true;
         }
 
+    }
+
+    private void CheckGroundInteraction()
+    {
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
     }
 
 }

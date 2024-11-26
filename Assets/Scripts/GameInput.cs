@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameInput : MonoBehaviour
 {
+    [SerializeField] private float mouseSpeed = 100f;
     private PlayerControl playerInputAction;
 
     private void Awake()
@@ -24,7 +25,7 @@ public class GameInput : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public Vector2 GetMoveVector()
+    private Vector2 GetMoveVector()
     {
         Vector2 inputVector = playerInputAction.Player.Move.ReadValue<Vector2>();
         return inputVector;
@@ -36,14 +37,18 @@ public class GameInput : MonoBehaviour
         return moveDir;
     }
 
-    public Vector2 GetLookVector()
+    private Vector2 GetLookVector()
     {
         return playerInputAction.Player.Look.ReadValue<Vector2>();
     }
 
     public Vector2 GetLookVectorNormalized() 
     {
-        return GetLookVector().normalized;
+        Vector2 lookDir = GetLookVector().normalized;
+        Debug.Log(lookDir);
+        lookDir *= this.mouseSpeed;
+        Debug.Log(lookDir);
+        return lookDir;
     }
 
     public bool GetSprintingInput()
