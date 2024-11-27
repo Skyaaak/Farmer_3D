@@ -27,6 +27,7 @@ public class GameInput : MonoBehaviour
 
     private Vector2 GetMoveVector()
     {
+        CheckPlayerInputEnabled();
         Vector2 inputVector = playerInputAction.Player.Move.ReadValue<Vector2>();
         return inputVector;
     }
@@ -39,29 +40,45 @@ public class GameInput : MonoBehaviour
 
     private Vector2 GetLookVector()
     {
+        CheckPlayerInputEnabled();
         return playerInputAction.Player.Look.ReadValue<Vector2>();
     }
 
     public Vector2 GetLookVectorNormalized() 
     {
         Vector2 lookDir = GetLookVector().normalized;
-        Debug.Log(lookDir);
         lookDir *= this.mouseSpeed;
-        Debug.Log(lookDir);
         return lookDir;
     }
 
     public bool GetSprintingInput()
     {
+        CheckPlayerInputEnabled();
         return playerInputAction.Player.Sprint.IsPressed();
     }
 
     public bool GetJumpingInput() {
+        CheckPlayerInputEnabled();
         return playerInputAction.Player.Jump.triggered;
     }
 
     public bool GetInteractingInput()
     {
+        CheckPlayerInputEnabled();
         return playerInputAction.Player.Interact.triggered;
+    }
+
+    public bool GetInventoryInput()
+    {
+        CheckPlayerInputEnabled();
+        return playerInputAction.Player.Inventory.triggered;
+    }
+
+    private void CheckPlayerInputEnabled()
+    {
+        if (playerInputAction.Player.enabled == false)
+        {
+            throw new Exception("PlayerControl not enabled");
+        }
     }
 }
