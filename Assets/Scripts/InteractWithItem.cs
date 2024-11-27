@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InteractWithItem : MonoBehaviour
 {
-    [SerializeField]
+    /*[SerializeField]
     private float range = 1.5f;
 
     public Inventory inventory;
@@ -32,7 +32,7 @@ public class InteractWithItem : MonoBehaviour
 
             if (hit.transform.CompareTag("Item"))
             {
-                ItemData itemSee = hit.transform.gameObject.GetComponent<Item>().item;
+                ItemData itemSee = hit.transform.gameObject.GetComponent<ItemData>().item;
 
                 text.text = inventory.HaveSpace(itemSee) ? "Appuyez sur E pour ramasser" : "Inventaire plein";
 
@@ -40,7 +40,7 @@ public class InteractWithItem : MonoBehaviour
                 {
                     if (inventory.HaveSpace(itemSee))
                     {
-                        inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
+                        inventory.AddItem(hit.transform.gameObject.GetComponent<ItemData>().item);
                         Destroy(hit.transform.gameObject);
                     }
                     else
@@ -55,10 +55,10 @@ public class InteractWithItem : MonoBehaviour
 
                 if ( Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped) )== "Hoe")
                 {
-                    text.text = "Appuyer sur E pour récolter";
+                    text.text = "Appuyer sur E pour rï¿½colter";
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        Debug.Log("Object récolter");
+                        Debug.Log("Object rï¿½colter");
 
                         harvestable = hit.transform.gameObject.GetComponent<Harvestable>();
 
@@ -79,7 +79,7 @@ public class InteractWithItem : MonoBehaviour
                 }
                 else
                 {
-                    text.text = "Il vous faut une Houe pour récolter";
+                    text.text = "Il vous faut une Houe pour rï¿½colter";
                 }
             }
         }
@@ -87,5 +87,5 @@ public class InteractWithItem : MonoBehaviour
         {
             //text.SetActive(false);
         }
-    }
+    }*/
 }

@@ -14,5 +14,4 @@ public class Ressource
     public ItemData itemData;
     public int minRessource;
     public int maxRessource;
-
 }
