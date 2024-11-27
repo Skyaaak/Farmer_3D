@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     
     private PlayerMovement playerMovement;
     private PlayerGenetic playerGenetic;
-    private Inventory playerInventory;
+    [SerializeField] private Inventory playerInventory;
     private CharacterController controller;
 
     void Start()

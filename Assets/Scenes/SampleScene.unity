@@ -1106,7 +1106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6314872c5a82f14a65547801dbe9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSpeed: 100
+  mouseSpeed: 180
 --- !u!4 &778667246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6072337444827864894, guid: 6c4007604bc022f448fc1c1580e16882, type: 3}
@@ -1431,12 +1431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d566e446a710047991e745f845cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 2
-  inventory: {fileID: 1613769355}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  text: {fileID: 243954956}
 --- !u!1001 &1034034674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1845,7 +1839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 281700445225418413, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3762071116466580673, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       propertyPath: m_Enabled
@@ -1919,9 +1913,6 @@ PrefabInstance:
       addedObject: {fileID: 1680452282}
     - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1680452281}
-    - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1680452280}
     - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       insertIndex: -1
@@ -1929,6 +1920,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1680452285}
+    - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1680452287}
   m_SourcePrefab: {fileID: 100100000, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
 --- !u!1 &1282257600
 GameObject:
@@ -2540,56 +2534,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2363876856940968498, guid: 08318bfa45faef449b1da46359ab91e9, type: 3}
   m_PrefabInstance: {fileID: 1969379088}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1613769354
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1613769356}
-  - component: {fileID: 1613769355}
-  m_Layer: 0
-  m_Name: Inventory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1613769355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613769354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bdb527c111f0974b9e129370f462f9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: []
-  inventoryPanel: {fileID: 1089906996}
-  toolEquipped: {fileID: 0}
-  inventorySlotsParent: {fileID: 323728503}
-  actualWeight: 0
-  emptySlotVisual: {fileID: 0}
---- !u!4 &1613769356
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613769354}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1617365512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2816,29 +2760,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1680452281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680452278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55c3e9fecde1431408122f0a057d54ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 12
-  gravity: -19
-  jumpHeight: 2
-  groundCheck: {fileID: 1535247149}
-  gameInput: {fileID: 743524030}
-  groundDistance: 1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
-  isJumping: 0
-  isGrounded: 0
 --- !u!143 &1680452282
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2891,6 +2812,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1680452287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680452278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995e954f05664a528f4a79ba2729ec73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameInput: {fileID: 743524030}
 --- !u!224 &1703799428 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2363876856940968498, guid: 08318bfa45faef449b1da46359ab91e9, type: 3}
@@ -4183,7 +4117,6 @@ SceneRoots:
   - {fileID: 1248184795}
   - {fileID: 4360460050988117980}
   - {fileID: 1784876544}
-  - {fileID: 1613769356}
   - {fileID: 23573239}
   - {fileID: 1038893470}
   - {fileID: 1757750700}
