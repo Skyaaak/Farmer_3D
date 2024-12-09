@@ -46,7 +46,7 @@ public class GameInput : MonoBehaviour
 
     public Vector2 GetLookVectorNormalized() 
     {
-        Vector2 lookDir = GetLookVector().normalized;
+        Vector2 lookDir = GetLookVector();
         lookDir *= this.mouseSpeed;
         return lookDir;
     }

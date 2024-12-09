@@ -1,24 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using InventoryManager;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InteractWithItem : MonoBehaviour
 {
-    /*[SerializeField]
-    private float range = 1.5f;
+    [SerializeField] private float range = 1.5f;
 
-    public Inventory inventory;
+    [SerializeField] private Inventory inventory;
 
-    [SerializeField]
-    private LayerMask layerMask;
+    [SerializeField] private LayerMask layerMask;
 
-    [SerializeField]
-    private Text text;
+    [SerializeField] private Text text;
 
-    private Harvestable harvestable;
+    private Item harvestable;
 
     // Update is called once per frame
     void Update()
@@ -26,66 +24,88 @@ public class InteractWithItem : MonoBehaviour
         RaycastHit hit;
         text.text = "";
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask))
+        hit = launchRayCast();
+
+        CheckOnRaycastHit(hit);
+    }
+
+    private RaycastHit launchRayCast()
+    {
+        RaycastHit raycastHit;
+        Physics.Raycast(transform.position, transform.forward, out raycastHit, range, layerMask);
+        Debug.Log(raycastHit);
+
+        return raycastHit;
+    }
+
+    private void CheckOnRaycastHit(RaycastHit raycastHit)
+    {
+        if (raycastHit.collider == null)
         {
-            //text.SetActive(true);
+            return;
+        }
+        
+        RaycastHitItem(raycastHit);
+        RaycastHitHarvestable(raycastHit);
+    }
 
-            if (hit.transform.CompareTag("Item"))
+    private void RaycastHitItem(RaycastHit raycastHit)
+    {
+        if (raycastHit.transform.CompareTag("Item"))
+        {
+            Item itemSee = raycastHit.transform.gameObject.GetComponent<Item>();
+
+            text.text = inventory.HasSpace(itemSee) ? "Appuyez sur E pour ramasser" : "Inventaire plein";
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                ItemData itemSee = hit.transform.gameObject.GetComponent<ItemData>().item;
-
-                text.text = inventory.HaveSpace(itemSee) ? "Appuyez sur E pour ramasser" : "Inventaire plein";
-
-                if (Input.GetKeyDown(KeyCode.E))
+                if (inventory.HasSpace(itemSee))
                 {
-                    if (inventory.HaveSpace(itemSee))
-                    {
-                        inventory.AddItem(hit.transform.gameObject.GetComponent<ItemData>().item);
-                        Destroy(hit.transform.gameObject);
-                    }
-                    else
-                    {
-                        Debug.Log("Inventaire plein");
-                    }
-
-                }
-            }
-            if (hit.transform.CompareTag("Harvestable"))
-            {
-
-                if ( Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped) )== "Hoe")
-                {
-                    text.text = "Appuyer sur E pour r�colter";
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        Debug.Log("Object r�colter");
-
-                        harvestable = hit.transform.gameObject.GetComponent<Harvestable>();
-
-                        for (int i = 0; i < harvestable.harvestableItems.Length; i++)
-                        {
-                            Ressource ressource = harvestable.harvestableItems[i];
-
-                            for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
-                            {
-                                GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
-                                instantiatedRessource.transform.position = harvestable.transform.position;
-                            }
-                        }
-
-                        Destroy(hit.transform.gameObject);
-
-                    }
+                    inventory.AddItem(raycastHit.transform.gameObject.GetComponent<Item>(), 1);
+                    Destroy(raycastHit.transform.gameObject);
                 }
                 else
                 {
-                    text.text = "Il vous faut une Houe pour r�colter";
+                    Debug.Log("Inventaire plein");
                 }
+
             }
         }
-        else
+    }
+
+    private void RaycastHitHarvestable(RaycastHit raycastHit)
+    {
+        /*if (raycastHit.transform.CompareTag("Harvestable"))
         {
-            //text.SetActive(false);
-        }
-    }*/
+
+            if (Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped)) == "Hoe")
+            {
+                text.text = "Appuyer sur E pour r�colter";
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Debug.Log("Object r�colter");
+
+                    harvestable = hit.transform.gameObject.GetComponent<Harvestable>();
+
+                    for (int i = 0; i < harvestable.harvestableItems.Length; i++)
+                    {
+                        Ressource ressource = harvestable.harvestableItems[i];
+
+                        for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
+                        {
+                            GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
+                            instantiatedRessource.transform.position = harvestable.transform.position;
+                        }
+                    }
+
+                    Destroy(raycastHit.transform.gameObject);
+
+                }
+            }
+            else
+            {
+                text.text = "Il vous faut une Houe pour récolter";
+            }
+        }*/
+    }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class PlayerMovement
+public class PlayerMovement: MonoBehaviour
 {
     [SerializeField] private float speed = 12f;
     [SerializeField] private float gravity = -9.81f;
@@ -17,15 +17,15 @@ public class PlayerMovement
     [SerializeField] private bool isJumping = false;
     [SerializeField] private bool isGrounded;
     private Vector3 velocity;
-    private Transform playerTransform;
-    private CharacterController playerController;
-    private GameInput playerGameInput;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private CharacterController playerController;
+    [SerializeField] private GameInput playerGameInput;
 
     public PlayerMovement(Transform playerTransform, CharacterController playerController, GameInput playerGameInput)
     {
-        this.playerTransform = playerTransform;
+        /*this.playerTransform = playerTransform;
         this.playerController = playerController;
-        this.playerGameInput = playerGameInput;
+        this.playerGameInput = playerGameInput;*/
     }
 
     public void Update()

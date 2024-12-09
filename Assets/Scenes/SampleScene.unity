@@ -436,10 +436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad03df5f39a404488fb6050da775049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  harvestableItems:
-  - itemData: {fileID: 11400000, guid: 19d9001a6268ade44b6892098b3fd939, type: 2}
-    minRessource: 1
-    maxRessource: 6
 --- !u!54 &289200447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1106,7 +1102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6314872c5a82f14a65547801dbe9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSpeed: 180
+  mouseSpeed: 5
 --- !u!4 &778667246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6072337444827864894, guid: 6c4007604bc022f448fc1c1580e16882, type: 3}
@@ -1431,6 +1427,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d566e446a710047991e745f845cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 1.5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  text: {fileID: 243954956}
 --- !u!1001 &1034034674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1759,10 +1760,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8218537401047620137, guid: 387244667f3e96e4dbed87522ac27e49, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3333028828918135912, guid: 387244667f3e96e4dbed87522ac27e49, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2147220040}
   m_SourcePrefab: {fileID: 100100000, guid: 387244667f3e96e4dbed87522ac27e49, type: 3}
 --- !u!1001 &1219851919
 PrefabInstance:
@@ -1923,6 +1928,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1680452287}
+    - targetCorrespondingSourceObject: {fileID: 6792327054025522797, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1680452289}
   m_SourcePrefab: {fileID: 100100000, guid: 64db8d48fab1ceb43a8ee5d52643029a, type: 3}
 --- !u!1 &1282257600
 GameObject:
@@ -2825,6 +2833,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInput: {fileID: 743524030}
+--- !u!114 &1680452289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680452278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c3e9fecde1431408122f0a057d54ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  gravity: -10
+  jumpHeight: 5
+  groundCheck: {fileID: 1535247149}
+  groundDistance: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1
+  isJumping: 0
+  isGrounded: 0
+  playerTransform: {fileID: 1680452284}
+  playerController: {fileID: 1680452282}
+  playerGameInput: {fileID: 743524030}
 --- !u!224 &1703799428 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2363876856940968498, guid: 08318bfa45faef449b1da46359ab91e9, type: 3}
@@ -3853,6 +3886,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7372471363592420540, guid: a61f779380e8e2e4e92e5234e172e61c, type: 3}
   m_PrefabInstance: {fileID: 2115842220}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2147220033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3333028828918135912, guid: 387244667f3e96e4dbed87522ac27e49, type: 3}
+  m_PrefabInstance: {fileID: 1215318957}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2147220040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147220033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b5809740094afba5b08621b53ecd7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Tomato
+  itemDescription: It is a tomato
+  weight: 5
+  prefab: {fileID: 2147220033}
 --- !u!1001 &3237877054896251083
 PrefabInstance:
   m_ObjectHideFlags: 0

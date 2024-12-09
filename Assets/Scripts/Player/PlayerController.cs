@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        this.playerMovement.Update();
         this.playerGenetic.Update();
         this.playerInventory.Update(playerGenetic.Strengh);
     }

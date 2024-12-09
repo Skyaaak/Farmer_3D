@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace InventoryManager
 {
-    public abstract class Item
+    public abstract class Item: MonoBehaviour
     {
         [SerializeField] private string itemName;
         [SerializeField] private string itemDescription;
@@ -35,5 +36,10 @@ namespace InventoryManager
         }
         
         public abstract void UseObject(PlayerController playerController);
+
+        public void Update()
+        {
+            
+        }
     }
 }

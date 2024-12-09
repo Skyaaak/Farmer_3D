@@ -68,5 +68,15 @@ namespace InventoryManager
             slotContainingItem.DecreaseAmount(amount);
             this.totalWeight -= item.Weight * amount;
         }
+
+        public bool HasSpace(Item item)
+        {
+            if (item.Weight + totalWeight > maxWeight)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
