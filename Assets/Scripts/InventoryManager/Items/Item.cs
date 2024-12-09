@@ -3,13 +3,14 @@ using UnityEngine;
 
 namespace InventoryManager
 {
-    public abstract class Item: MonoBehaviour
+    public class Item: MonoBehaviour
     {
         [SerializeField] private string itemName;
         [SerializeField] private string itemDescription;
         [SerializeField] private ItemType itemType;
         [SerializeField] private float weight;
         [SerializeField] private GameObject prefab;
+        [SerializeField] private PlayerController playerController;
 
         public Item(string itemName, string itemDescription, ItemType itemType, float weight, GameObject prefab)
         {
@@ -33,13 +34,6 @@ namespace InventoryManager
         public void Destroy()
         {
             this.prefab.SetActive(false);
-        }
-        
-        public abstract void UseObject(PlayerController playerController);
-
-        public void Update()
-        {
-            
         }
     }
 }

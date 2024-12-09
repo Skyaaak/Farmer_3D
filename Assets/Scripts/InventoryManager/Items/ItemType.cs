@@ -3,9 +3,11 @@ using UnityEngine;
 
 namespace InventoryManager
 {
-    public class ItemType
+    public class ItemType: MonoBehaviour
     {
         [SerializeField] protected ItemTypeData itemData;
+        [SerializeField] protected UseItem useItem;
+        [SerializeField] protected PlayerController playerController;
 
         public String GetItemType()
         {
@@ -20,6 +22,11 @@ namespace InventoryManager
         public Sprite GetItemIcon()
         {
             return itemData.Visuel;
+        }
+
+        public void UseItem(PlayerController playerController)
+        {
+            this.useItem.Use(playerController);
         }
     }
 }
