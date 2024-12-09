@@ -23,67 +23,93 @@ public class InteractWithItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
         text.text = "";
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, layerMask))
         {
-            //text.SetActive(true);
+            
+            //Debug.Log("You hit " + hit.transform.gameObject.name + " in front of you");
 
             if (hit.transform.CompareTag("Item"))
             {
-                text.text = inventory.HaveSpace() ? "Appuyez sur E pour ramasser" : "Inventaire plein";
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    if (inventory.HaveSpace())
-                    {
-                        inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
-                        Destroy(hit.transform.gameObject);
-                    }
-                    else
-                    {
-                        Debug.Log("Inventaire plein");
-                    }
-
-                }
+                grab(hit);
             }
+
+
             if (hit.transform.CompareTag("Harvestable"))
             {
+                harvest(hit);
+            }
+        }
+    }
 
-                if (inventory.content.Exists(item => Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(item.itemData) )== "Hoe"))
-                {
-                    text.text = "Appuyer sur E pour récolter";
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        Debug.Log("Object récolter");
+    void grab(RaycastHit hit)
+    {
+        GameObject obj = hit.transform.gameObject;
+        // sauvegarde du nom pour le DEBUG
+        string name = new string(obj.name);
 
-                        harvestable = hit.transform.gameObject.GetComponent<Harvestable>();
+        if (inventory.HaveSpace())
+        {
+            text.text = "Appuyez sur E pour ramasser";
 
-                        for (int i = 0; i < harvestable.harvestableItems.Length; i++)
-                        {
-                            Ressource ressource = harvestable.harvestableItems[i];
+            if (Input.GetKeyDown(KeyCode.E))
+            {
 
-                            for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
-                            {
-                                GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
-                                instantiatedRessource.transform.position = harvestable.transform.position;
-                            }
-                        }
+                inventory.AddItem(obj.GetComponent<Item>().item);
+                Destroy(obj);
 
-                        Destroy(hit.transform.gameObject);
-
-                    }
-                }
-                else
-                {
-                    text.text = "Il vous faut une Houe pour récolter";
-                }
+                Debug.Log("Player tried to grab an item('" + name + "') and it succeded");
             }
         }
         else
         {
-            //text.SetActive(false);
+            text.text = "Inventaire plein";
+            Debug.Log("Player tried to pick an item('" + name + "') but it fails because his inventory is full");
         }
     }
+
+
+
+    void harvest(RaycastHit hit)
+    {
+        GameObject crop = hit.transform.gameObject;
+
+        // sauvegarde du nom pour le DEBUG
+        string name = new string(crop.name);
+
+        // récupération du tableau de 'harvestable' pour la collecte des objets
+        harvestable = crop.GetComponent<Harvestable>();
+
+        if (inventory.content.Exists(item => Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(item.itemData)) == "Hoe"))
+        {
+            text.text = "Appuyer sur E pour récolter";
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                // transformation du plant ('crop') en GameObjects ressource à ramasser
+                for (int i = 0; i < harvestable.harvestableItems.Length; i++)
+                {
+                    Ressource ressource = harvestable.harvestableItems[i];
+
+                    for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
+                    {
+                        GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
+                        instantiatedRessource.transform.position = harvestable.transform.position;
+                    }
+                }
+
+                Destroy(crop);
+
+                Debug.Log("Player tried to harvest a crop('" + name + "') and it succeded");
+
+            }
+        }
+        else
+        {
+            text.text = "Il vous faut une Houe pour récolter";
+            Debug.Log("Player watch over an harvestable but he can't havest it because the specific tool is not in his inventory");
+        }
+    }
+
 }
