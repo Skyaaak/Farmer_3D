@@ -7,7 +7,7 @@ namespace DefaultNamespace
         public List<T> GetAll();
         public void Add(T t);
         public void Remove(T t);
-        public T Get(int index);
-        
+        public T GetIndex(int index);
+        public T GetId(int id);
     }
 }
