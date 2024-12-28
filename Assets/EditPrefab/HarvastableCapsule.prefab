@@ -86,9 +86,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statesOfGroth: []
   type: 
+  dayBeforeGrowth: 0
   state: 0
   dayTracker: 0
   actualPrefab: {fileID: 0}
+  isPlanted: 0
+  isHarvestable: 0
 --- !u!1001 &2531962360036533151
 PrefabInstance:
   m_ObjectHideFlags: 0
