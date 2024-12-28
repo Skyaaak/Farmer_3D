@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Dirt : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    public GameObject dirtObject;
+    [SerializeField]
+    public GameObject dirtPlowedObject;
+
+    public bool plowed = false;
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void isGettingPlowed()
     {
-        
+        plowed = true;
+        dirtPlowedObject.SetActive(true);
+        dirtObject.SetActive(false);
     }
 }

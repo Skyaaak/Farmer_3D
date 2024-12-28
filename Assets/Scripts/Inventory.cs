@@ -154,7 +154,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            if (actualWeight + item.weight <= maxWeight)
+            if (!toolEquipped && actualWeight + item.weight <= maxWeight)
             {
                 return true;
             }

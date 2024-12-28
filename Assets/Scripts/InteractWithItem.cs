@@ -18,7 +18,10 @@ public class InteractWithItem : MonoBehaviour
     [SerializeField]
     private Text text;
 
-    private Harvestable harvestable;
+    private FullGrownItem harvestable;
+
+    [SerializeField]
+    public SeedData tomatoSeed;
 
     // Update is called once per frame
     void Update()
@@ -28,17 +31,18 @@ public class InteractWithItem : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask))
         {
-            //text.SetActive(true);
 
             if (hit.transform.CompareTag("Item"))
             {
                 ItemData itemSee = hit.transform.gameObject.GetComponent<Item>().item;
 
-                text.text = inventory.HaveSpace(itemSee) ? "Appuyez sur E pour ramasser" : "Inventaire plein";
+                bool haveSpace = inventory.HaveSpace(itemSee);
+
+                text.text = haveSpace ? "Appuyez sur E pour ramasser" : "Inventaire plein";
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if (inventory.HaveSpace(itemSee))
+                    if (haveSpace)
                     {
                         inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
                         Destroy(hit.transform.gameObject);
@@ -47,20 +51,19 @@ public class InteractWithItem : MonoBehaviour
                     {
                         Debug.Log("Inventaire plein");
                     }
-
                 }
             }
             if (hit.transform.CompareTag("Harvestable"))
             {
 
-                if ( Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped) )== "Hoe")
+                if (Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped)) == "Hoe")
                 {
                     text.text = "Appuyer sur E pour récolter";
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         Debug.Log("Object récolter");
 
-                        harvestable = hit.transform.gameObject.GetComponent<Harvestable>();
+                        harvestable = hit.transform.gameObject.GetComponent<FullGrownItem>();
 
                         for (int i = 0; i < harvestable.harvestableItems.Length; i++)
                         {
@@ -80,6 +83,52 @@ public class InteractWithItem : MonoBehaviour
                 else
                 {
                     text.text = "Il vous faut une Houe pour récolter";
+                }
+            }
+            if (hit.transform.CompareTag("CapsuleDirt"))
+            {
+                Dirt dirtSee = hit.transform.gameObject.GetComponent<Dirt>();
+                if (!dirtSee.plowed)
+                {
+                    if (Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped)) == "Hoe")
+                    {
+                        text.text = "Appuyez sur E pour labourré";
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            dirtSee.isGettingPlowed();
+                        }
+                    }
+                    else
+                    {
+                        text.text = "Prenez la houe pour labourrer";
+                    }
+                }
+                else
+                {
+                    HarvestableInstance harvestableSee = hit.transform.gameObject.GetComponent<HarvestableInstance>();
+
+                    if (!harvestableSee.isPlanted)
+                    {
+                        text.text = "Appuyez sur E pour planter les graines";
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+
+                            harvestableSee.isSeedeed(tomatoSeed);
+                        }
+                    }
+                    else
+                    {
+                        if (!harvestableSee.isHarvestable)
+                        {
+                            text.text = harvestableSee.type + " planté depuis " + harvestableSee.dayTracker + (harvestableSee.dayTracker == 0 ? "aujourd'hui" : harvestableSee.dayTracker > 1 ? " jours" : " jour");
+                        }
+                        else
+                        {
+                            text.text = harvestableSee.type + " ramassable";
+                        }
+                        
+                    }
+                   
                 }
             }
         }

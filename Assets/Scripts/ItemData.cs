@@ -12,11 +12,13 @@ public class ItemData : ScriptableObject
     public GameObject prefab;
     public bool stackable;
     public int weight;
+    public SeedData seed;
 }
 
 
 public enum ItemType
 {
     Tool,
-    Ressource
+    Ressource,
+    Seed
 }
