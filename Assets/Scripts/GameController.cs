@@ -10,19 +10,19 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            NewDay();
-        }
     }
 
+    //Fonction pour le changement de jour
     public void NewDay()
     {
         days++;
-        GameObject[] listeOfHarvetable = GameObject.FindGameObjectsWithTag("CapsuleDirt");
-        foreach(GameObject t in listeOfHarvetable)
+        //On liste tout les terrains cultivables de la scéne
+        GameObject[] listeOfCultivable = GameObject.FindGameObjectsWithTag("CapsuleDirt");
+        foreach(GameObject cultivable in listeOfCultivable)
         {
-            HarvestableInstance script = t.GetComponent<HarvestableInstance>();
+            //On récupère le script du plant
+            HarvestableInstance script = cultivable.GetComponent<HarvestableInstance>();
+            //Si on as quelque chose de planté, on ajoute un jour à la culture.
             if (script != null)
             {
                 script.AddDay();

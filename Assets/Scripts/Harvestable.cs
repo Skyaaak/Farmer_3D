@@ -12,6 +12,9 @@ public class Harvestable : MonoBehaviour
     public GameObject actualPrefab;
     public bool isPlanted = false;
     public bool isHarvestable = false;
+    public PlantType plantType;
+    [SerializeField]
+    private Dirt dirt;
 
     // Update is called once per frame
     void Update()
@@ -32,9 +35,9 @@ public class Harvestable : MonoBehaviour
 
                 if (state == 0)
                 {
-                    state++;
                     //On initialise le modèle correspondant à l'étape actuelle
-                    actualPrefab = Instantiate(statesOfGroth[0], gameObject.transform);
+                    actualPrefab = Instantiate(statesOfGroth[state], gameObject.transform);
+                    state++;
                 }
                 else
                 {
@@ -63,5 +66,33 @@ public class Harvestable : MonoBehaviour
         type = seedData.typeOfSeed;
         dayBeforeGrowth = seedData.dayBeforeGrowth;
         isPlanted = true;
+        plantType = seedData.plantType;
+    }
+
+    public void isPickedUp()
+    {
+        isHarvestable = false;
+        if (plantType == PlantType.Plant)
+        {
+            Debug.Log("C'est un plant");
+            state--;
+            Destroy(actualPrefab);
+            actualPrefab = Instantiate(statesOfGroth[state-1], gameObject.transform);
+        }
+        else
+        {
+            Debug.Log("C'est autre chose");
+            Destroy(actualPrefab);
+            Reinitialised();
+        }
+    }
+
+    public void Reinitialised()
+    {
+        statesOfGroth = null;
+        type = null;
+        dayBeforeGrowth = 0;
+        isPlanted = false;
+        dirt.Reinisialized();
     }
 }

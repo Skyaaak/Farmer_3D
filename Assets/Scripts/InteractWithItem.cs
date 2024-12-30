@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,10 +21,20 @@ public class InteractWithItem : MonoBehaviour
     [SerializeField]
     private Text text;
 
-    private FullGrownItem harvestable;
-
     [SerializeField]
     public SeedData tomatoSeed;
+
+    [SerializeField]
+    public GameController gameController;
+
+    [SerializeField]
+    public GameObject menuDeNuit;
+
+    [SerializeField]
+    private TextMeshProUGUI textNumeroJour;
+
+    [SerializeField]
+    public GameObject inventaire;
 
     // Update is called once per frame
     void Update()
@@ -68,24 +80,38 @@ public class InteractWithItem : MonoBehaviour
                     {
                         Debug.Log("Object récolter");
 
-                        harvestable = hit.transform.gameObject.GetComponent<FullGrownItem>();
+                        FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
+                        Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
 
                         //On boucle sur chaque objet différent que peut dropper le plant
-                        for (int i = 0; i < harvestable.harvestableItems.Length; i++)
+                        for (int i = 0; i < fullGrownItem.harvestableItems.Length; i++)
                         {
-                            Ressource ressource = harvestable.harvestableItems[i];
+                            Ressource ressource = fullGrownItem.harvestableItems[i];
 
                             //Pour chaque ressource, on génère un nombre aléatoire entre le minimum et le maximum de ressources possible
                             for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
                             {
+                                //On instancie un objet
                                 GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
-                                instantiatedRessource.transform.position = harvestable.transform.position;
+
+                                if(harvestable.plantType == PlantType.Plant)
+                                {
+                                    //On modifie légérement sa position pour qu'il soit ramassable
+                                    Vector3 newPos = fullGrownItem.transform.position;
+                                    newPos.x += 0.5f;
+                                    instantiatedRessource.transform.position = newPos;
+                                }
+                                else
+                                {
+                                    Vector3 newPos = fullGrownItem.transform.position;
+                                    newPos.y += 0.2f;
+                                    instantiatedRessource.transform.position = newPos;
+                                }
+                                
                             }
                         }
 
-                        //On finit par détruire l'objet
-                        Destroy(hit.transform.gameObject);
-
+                        harvestable.isPickedUp();
                     }
                 }
                 //Si on as pas de Houe on affiche le text nécessaire
@@ -153,6 +179,24 @@ public class InteractWithItem : MonoBehaviour
                         
                     }
                    
+                }
+            }
+            if (hit.transform.CompareTag("Door"))
+            {
+                text.text = "Appuyez sur E pour terminer la journé";
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    //On désactive l'affichage de l'inventaire et on active l'affichage du menu de nuit
+                    inventaire.SetActive(false);
+                    menuDeNuit.SetActive(true);
+                    //On désactive le mouvement de la caméra et on réactive la souris
+                    Time.timeScale = 0;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    //On change le text pour afficher le jour et on lance le nouveau jour
+                    textNumeroJour.text = "Fin du jour " + gameController.days;
+                    gameController.NewDay();
                 }
             }
         }

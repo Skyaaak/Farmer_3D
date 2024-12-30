@@ -11,5 +11,13 @@ public class SeedData : ScriptableObject
     public string typeOfSeed;
     [SerializeField]
     public int dayBeforeGrowth;
+    [SerializeField]
+    public PlantType plantType;
 
+}
+
+public enum PlantType
+{
+    Plant,
+    Tearable
 }
