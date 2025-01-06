@@ -1,37 +1,36 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.EconomicSystem.MarketSystem;
-using Assets.Scripts.seedInstances;
+using Assets.Scripts;
 using UnityEngine;
 
-public class Item : MonoBehaviour, MarketableItem
+public class Item : MonoBehaviour
 {
     public ItemData item;
     [SerializeField] private bool marketable = false;
-    [SerializeField] private MarketSystem market;
 
-
-    private void Start()
+    public bool IsMarketable()
     {
-        if (marketable)
-        {
-            if (market == null)
-            {
-                throw new Exception("marketable market is null");
-            }
-            
-            market.SubscribeItem(this);
-        } 
+        return marketable;
     }
     
     public float GetPrice()
     {
-        return this.market.AskPrice(this);
+        if (!marketable)
+        {
+            return 0;
+        }
+
+        return this.item.price;
     }
 
-    public void SetPrice(float price)
+    public void AddPrice(float price)
     {
-        throw new Exception("Price not updatable");
+        if (price + item.price < 0)
+        {
+            throw new ArgumentException("Price cannot be negative");
+        }
+        
+        item.price += price;
     }
 }

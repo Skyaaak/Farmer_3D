@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,36 +23,36 @@ public class Harvestable : MonoBehaviour
         
     }
 
-    //Fonction pour ajouter un jour à la plantation
+    //Fonction pour ajouter un jour ï¿½ la plantation
     public void AddDay()
     {
-        //On regarde si quelque chose est planté
+        //On regarde si quelque chose est plantï¿½
         if (isPlanted)
         {
             dayTracker++;
-            //On regarrde si le nombre de jour modulo le temps entre deux étape de pousse est égale à 0 pour chager le modèle
+            //On regarde si le nombre de jour modulo le temps entre deux ï¿½tape de pousse est ï¿½gale ï¿½ 0 pour chager le modï¿½le
             if (dayTracker % dayBeforeGrowth == 0)
             {
 
                 if (state == 0)
                 {
-                    //On initialise le modèle correspondant à l'étape actuelle
+                    //On initialise le modï¿½le correspondant ï¿½ l'ï¿½tape actuelle
                     actualPrefab = Instantiate(statesOfGroth[state], gameObject.transform);
                     state++;
                 }
                 else
                 {
-                    //Si la plantation n'est pas arrivé à terme on la fait avancée
+                    //Si la plantation n'est pas arrivï¿½ ï¿½ terme on la fait avancï¿½e
                     if (state < statesOfGroth.Length)
                     {
-                        //Si on augmente la culture on détruit le model actuel avant de mettre le nouveau
+                        //Si on augmente la culture on dï¿½truit le model actuel avant de mettre le nouveau
                         Destroy(actualPrefab);
                         actualPrefab = Instantiate(statesOfGroth[state], gameObject.transform);
                         state++;
                     }
                     if(state == statesOfGroth.Length)
                     {
-                        //Si on arrive à la dernière étape on dit que la culture est récoltable
+                        //Si on arrive ï¿½ la derniï¿½re ï¿½tape on dit que la culture est rï¿½coltable
                         isHarvestable = true;
                     }
                 }
@@ -59,7 +60,7 @@ public class Harvestable : MonoBehaviour
         }
     }
 
-    //Fonction pour la plantation de graines -> On renseigne tout les champ nécessaire
+    //Fonction pour la plantation de graines -> On renseigne tout les champ nï¿½cessaire
     public void isSeedeed(SeedData seedData)
     {
         statesOfGroth = seedData.statesOfGroth;

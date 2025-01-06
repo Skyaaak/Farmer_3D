@@ -1,4 +1,4 @@
-namespace Assets.Scripts.seedInstances
+namespace Assets.Scripts
 {
     public interface MarketableItem
     {

@@ -140,3 +140,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3cf3e31873b6fe042b076bd871c96b1f, type: 2}
+  marketable: 0

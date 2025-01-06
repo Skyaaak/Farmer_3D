@@ -13,6 +13,7 @@ public class ItemData : ScriptableObject
     public bool stackable;
     public int weight;
     public SeedData seed;
+    public float price;
 }
 
 
