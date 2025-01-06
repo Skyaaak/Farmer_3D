@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using static UnityEditor.Progress;
 
-//Inventaire du joueur sï¿½parï¿½ en deux partis:
+//Inventaire du joueur séparé en deux partis:
 //La partie inventaire unique pour un outil ou un sac de graines
-//La partie inventaire classique pour les rï¿½coltes
+//La partie inventaire classique pour les récoltes
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
@@ -16,10 +17,17 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     public GameObject inventoryPanel;
 
+    public ItemData toolEquipped;
+
+    [SerializeField]
+    private ToolSlot toolSlot;
+
     [SerializeField]
     private Transform inventorySlotsParent;
 
-    const int maxSize = 3;
+    const int maxSize = 5;
+    const int maxWeight = 10000;
+    public int actualWeight = 0;
 
     public Sprite emptySlotVisual;
 
@@ -28,16 +36,16 @@ public class Inventory : MonoBehaviour
         RefreshContent();
     }
 
-    //Fonction pour l'ajout d'un objet ï¿½ l'inventaire tel qu'il soit
+    //Fonction pour l'ajout d'un objet à l'inventaire tel qu'il soit
     public void AddItem(ItemData item)
     {
-        //Si l'objet est une ressource on l'ajoute ï¿½ l'inventaire normal
+        //Si l'objet est une ressource on l'ajoute à l'inventaire normal
         if(item.type == ItemType.Ressource)
         {
-            //On cherche si cet objet est dï¿½jï¿½ prï¿½sent dans l'inventaire
+            //On cherche si cet objet est déjà présent dans l'inventaire
             ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
 
-            //Si l'objet est prï¿½sent et qu'il est stackable on incrï¿½mente le nombre d'objet et on met ï¿½ jour le poids
+            //Si l'objet est présent et qu'il est stackable on incrémente le nombre d'objet et on met à jour le poids
             if (itemInInventory != null && item.stackable)
             {
                 itemInInventory.count++;
@@ -54,14 +62,15 @@ public class Inventory : MonoBehaviour
         //SInon on ajoute l'objet dans l'inventaire de l'outil
         else
         {
-            content.Add(new ItemInInventory{itemData = item,count = 1});
+            toolEquipped = item;
         }
         
-        //On rafraichï¿½t le visuel de l'inventaire.
+        //On rafraichît le visuel de l'inventaire.
         RefreshContent();
+        
     }
 
-    //Fonction pour la suppression d'un objet ï¿½ l'inventaire
+    //Fonction pour la suppression d'un objet à l'inventaire
     public void RemoveItem(ItemData item)
     {
         if (item.type == ItemType.Ressource)
@@ -82,17 +91,17 @@ public class Inventory : MonoBehaviour
             toolEquipped = null;
         }
 
-        //On rafraichï¿½t le visuel de l'inventaire.
+        //On rafraichît le visuel de l'inventaire.
         RefreshContent();
     }
 
-    //Fonction permettant de rï¿½cupï¿½rer le contenu de l'inventaire
+    //Fonction permettant de récupérer le contenu de l'inventaire
     public List<ItemInInventory> GetContent()
     {
         return content;
     }
 
-    //Fonction permettant la mise ï¿½ jour ï¿½ chaque Frame
+    //Fonction permettant la mise à jour à chaque Frame
     public void Update()
     {
         //Si on appuie sur la touche I on affiche ou cache la barre d'inventaire
@@ -102,10 +111,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    //Fonction permettant de mettre ï¿½ jour le visuel de l'inventaire
+    //Fonction permettant de mettre à jour le visuel de l'inventaire
     private void RefreshContent()
     {
-        //On boucle sur chaque slot de l'inventaire et on remet l'affichage par dï¿½faut
+        //On boucle sur chaque slot de l'inventaire et on remet l'affichage par défaut
         for (int i = 0; i < inventorySlotsParent.childCount; i++)
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
@@ -114,7 +123,7 @@ public class Inventory : MonoBehaviour
             currentSlot.itemVisual.sprite = emptySlotVisual;
             currentSlot.countText.enabled = false;
         }
-        //On met l'affichage par dï¿½faut sur l'inventaire d'outil 
+        //On met l'affichage par défaut sur l'inventaire d'outil 
         toolSlot.item = null;
         toolSlot.itemVisual.sprite = emptySlotVisual;
 
@@ -123,11 +132,11 @@ public class Inventory : MonoBehaviour
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
 
-            //On ajoute les donnï¿½es nï¿½cessaire ï¿½ l'affichage
+            //On ajoute les données nécessaire à l'affichage
             currentSlot.item = content[i].itemData;
             currentSlot.itemVisual.sprite = content[i].itemData.visuel;
 
-            //Si l'objet est stackable on affiche ï¿½galement le compteur
+            //Si l'objet est stackable on affiche également le compteur
             if (currentSlot.item.stackable)
             {
                 currentSlot.countText.enabled = true;
@@ -136,7 +145,7 @@ public class Inventory : MonoBehaviour
             //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
         }
 
-        //Si on as un outil ï¿½quipï¿½, on change l'affichage
+        //Si on as un outil équipé, on change l'affichage
         if (toolEquipped)
         {
             toolSlot.item = toolEquipped;
@@ -144,7 +153,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    //Fonction permettant de vï¿½rifier si on as de la place dans l'inventaire
+    //Fonction permettant de vérifier si on as de la place dans l'inventaire
     public bool HaveSpace(ItemData item)
     {
         //Si c'est une ressource, on regarde dans l'inventaire normal
@@ -152,10 +161,10 @@ public class Inventory : MonoBehaviour
         {
             ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
 
-            //Si l'objet est prï¿½snet et qu'il est stackable
+            //Si l'objet est présnet et qu'il est stackable
             if (itemInInventory != null && item.stackable)
             {
-                //On regarde si le futur poids n'est pas au dessus de la capacitï¿½ du joueur
+                //On regarde si le futur poids n'est pas au dessus de la capacité du joueur
                 if (actualWeight + item.weight <= maxWeight)
                 {
                     return true;
@@ -165,7 +174,7 @@ public class Inventory : MonoBehaviour
                     return false;
                 }
             }
-            //S'il n'est pas prï¿½sent on regarde s'il ï¿½ assez de poids disponible et assez de slots disponible
+            //S'il n'est pas présent on regarde s'il à assez de poids disponible et assez de slots disponible
             else
             {
                 if (actualWeight + item.weight <= maxWeight && content.Count+1 < maxSize)
@@ -178,10 +187,10 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        //Sinon on regarde l'inventaire d'ï¿½quippement
+        //Sinon on regarde l'inventaire d'équippement
         else
         {
-            //Si on as pas dï¿½jï¿½ d'outil et que le joueur peut le porter on retourne true
+            //Si on as pas déjà d'outil et que le joueur peut le porter on retourne true
             if (!toolEquipped && actualWeight + item.weight <= maxWeight)
             {
                 return true;
@@ -195,7 +204,7 @@ public class Inventory : MonoBehaviour
     }
 }
 
-//Objet contenant l'item et le nombre d'item stockï¿½
+//Objet contenant l'item et le nombre d'item stocké
 [System.Serializable]
 public class ItemInInventory
 {
