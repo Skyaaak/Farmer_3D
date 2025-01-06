@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using System.Linq;
 using System;
 
+//Inventaire du joueur s�par� en deux partis:
+//La partie inventaire unique pour un outil ou un sac de graines
+//La partie inventaire classique pour les r�coltes
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
@@ -25,54 +28,84 @@ public class Inventory : MonoBehaviour
         RefreshContent();
     }
 
+    //Fonction pour l'ajout d'un objet � l'inventaire tel qu'il soit
     public void AddItem(ItemData item)
     {
-        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
-
-        if (itemInInventory != null && item.stackable)
+        //Si l'objet est une ressource on l'ajoute � l'inventaire normal
+        if(item.type == ItemType.Ressource)
         {
-            itemInInventory.count++;
+            //On cherche si cet objet est d�j� pr�sent dans l'inventaire
+            ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+            //Si l'objet est pr�sent et qu'il est stackable on incr�mente le nombre d'objet et on met � jour le poids
+            if (itemInInventory != null && item.stackable)
+            {
+                itemInInventory.count++;
+                actualWeight += item.weight;
+            }
+            //Sinon, on l'ajoute dans un nouvel espace
+            else
+            {
+                content.Add(new ItemInInventory { itemData = item, count = 1 });
+                actualWeight += item.weight;
+            }
+            Debug.Log("actualWeight= " + actualWeight);
         }
+        //SInon on ajoute l'objet dans l'inventaire de l'outil
         else
         {
             content.Add(new ItemInInventory{itemData = item,count = 1});
         }
-
+        
+        //On rafraich�t le visuel de l'inventaire.
         RefreshContent();
     }
 
+    //Fonction pour la suppression d'un objet � l'inventaire
     public void RemoveItem(ItemData item)
     {
-        ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
-
-        if (itemInInventory.count > 1)
+        if (item.type == ItemType.Ressource)
         {
-            itemInInventory.count--;
+            ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+            if (itemInInventory.count > 1)
+            {
+                itemInInventory.count--;
+            }
+            else
+            {
+                content.Remove(itemInInventory);
+            }
         }
         else
         {
-            content.Remove(itemInInventory);
+            toolEquipped = null;
         }
 
+        //On rafraich�t le visuel de l'inventaire.
         RefreshContent();
     }
 
+    //Fonction permettant de r�cup�rer le contenu de l'inventaire
     public List<ItemInInventory> GetContent()
     {
         return content;
     }
 
+    //Fonction permettant la mise � jour � chaque Frame
     public void Update()
     {
+        //Si on appuie sur la touche I on affiche ou cache la barre d'inventaire
         if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryPanel.SetActive(!inventoryPanel.activeSelf);
         }
     }
 
+    //Fonction permettant de mettre � jour le visuel de l'inventaire
     private void RefreshContent()
     {
-
+        //On boucle sur chaque slot de l'inventaire et on remet l'affichage par d�faut
         for (int i = 0; i < inventorySlotsParent.childCount; i++)
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
@@ -81,14 +114,20 @@ public class Inventory : MonoBehaviour
             currentSlot.itemVisual.sprite = emptySlotVisual;
             currentSlot.countText.enabled = false;
         }
+        //On met l'affichage par d�faut sur l'inventaire d'outil 
+        toolSlot.item = null;
+        toolSlot.itemVisual.sprite = emptySlotVisual;
 
+        //On boucle sur le contenu de l'inventaire
         for (int i = 0; i < content.Count; i++)
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
 
+            //On ajoute les donn�es n�cessaire � l'affichage
             currentSlot.item = content[i].itemData;
             currentSlot.itemVisual.sprite = content[i].itemData.visuel;
 
+            //Si l'objet est stackable on affiche �galement le compteur
             if (currentSlot.item.stackable)
             {
                 currentSlot.countText.enabled = true;
@@ -96,14 +135,67 @@ public class Inventory : MonoBehaviour
             }
             //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
         }
+
+        //Si on as un outil �quip�, on change l'affichage
+        if (toolEquipped)
+        {
+            toolSlot.item = toolEquipped;
+            toolSlot.itemVisual.sprite = toolEquipped.visuel;
+        }
     }
 
-    public bool HaveSpace()
+    //Fonction permettant de v�rifier si on as de la place dans l'inventaire
+    public bool HaveSpace(ItemData item)
     {
-        return maxSize != content.Count;
+        //Si c'est une ressource, on regarde dans l'inventaire normal
+        if(item.type == ItemType.Ressource)
+        {
+            ItemInInventory itemInInventory = content.Where(element => element.itemData == item).FirstOrDefault();
+
+            //Si l'objet est pr�snet et qu'il est stackable
+            if (itemInInventory != null && item.stackable)
+            {
+                //On regarde si le futur poids n'est pas au dessus de la capacit� du joueur
+                if (actualWeight + item.weight <= maxWeight)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            //S'il n'est pas pr�sent on regarde s'il � assez de poids disponible et assez de slots disponible
+            else
+            {
+                if (actualWeight + item.weight <= maxWeight && content.Count+1 < maxSize)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        //Sinon on regarde l'inventaire d'�quippement
+        else
+        {
+            //Si on as pas d�j� d'outil et que le joueur peut le porter on retourne true
+            if (!toolEquipped && actualWeight + item.weight <= maxWeight)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
     }
 }
 
+//Objet contenant l'item et le nombre d'item stock�
 [System.Serializable]
 public class ItemInInventory
 {
