@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Fonction permettant l'interaction avec les objets
 public class InteractWithItem : MonoBehaviour
 {
     [SerializeField]
@@ -18,54 +21,189 @@ public class InteractWithItem : MonoBehaviour
     [SerializeField]
     private Text text;
 
-    private Harvestable harvestable;
+    [SerializeField]
+    public SeedData tomatoSeed;
+
+    [SerializeField]
+    public GameController gameController;
+
+    [SerializeField]
+    public GameObject menuDeNuit;
+
+    [SerializeField]
+    private TextMeshProUGUI textNumeroJour;
+
+    [SerializeField]
+    public GameObject inventaire;
 
     // Update is called once per frame
     void Update()
     {
         text.text = "";
 
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, layerMask))
+        //On utilse un rayon vers l'avant pour savoir si on regarde un objet avec lequel on peut intï¿½ragir
+        if (Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask))
         {
-            
-            //Debug.Log("You hit " + hit.transform.gameObject.name + " in front of you");
-
+            //On regarde le tag de l'objet pour agir en fonction
             if (hit.transform.CompareTag("Item"))
             {
-                grab(hit);
+                //Si c'est un item et qu'on ï¿½ de la place, on donne la possibilitï¿½ de le ramasser avec E
+                ItemData itemSee = hit.transform.gameObject.GetComponent<Item>().item;
+
+                bool haveSpace = inventory.HaveSpace(itemSee);
+
+                text.text = haveSpace ? "Appuyez sur E pour ramasser" : "Inventaire plein";
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if (haveSpace)
+                    {
+                        inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
+                        Destroy(hit.transform.gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log("Inventaire plein");
+                    }
+                }
             }
 
 
             if (hit.transform.CompareTag("Harvestable"))
             {
-                harvest(hit);
+                //Si c'est un harvestable, on regarde si l'objet ï¿½quipï¿½ a pour nom "Hoe"
+                //On regarde si c'est un objet de type Hoe : if (Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped)) == "Hoe")
+                if(inventory.toolEquipped?.nameItem == "Hoe")
+                {
+                    //Si on as la Houe on donne la possibilitï¿½ de rï¿½colter
+                    text.text = "Appuyer sur E pour rï¿½colter";
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        Debug.Log("Object rï¿½colter");
+
+                        FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
+                        Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
+
+                        //On boucle sur chaque objet diffï¿½rent que peut dropper le plant
+                        for (int i = 0; i < fullGrownItem.harvestableItems.Length; i++)
+                        {
+                            Ressource ressource = fullGrownItem.harvestableItems[i];
+
+                            //Pour chaque ressource, on gï¿½nï¿½re un nombre alï¿½atoire entre le minimum et le maximum de ressources possible
+                            for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
+                            {
+                                //On instancie un objet
+                                GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
+
+                                if(harvestable.plantType == PlantType.Plant)
+                                {
+                                    //On modifie lï¿½gï¿½rement sa position pour qu'il soit ramassable
+                                    Vector3 newPos = fullGrownItem.transform.position;
+                                    newPos.x += 0.5f;
+                                    instantiatedRessource.transform.position = newPos;
+                                }
+                                else
+                                {
+                                    Vector3 newPos = fullGrownItem.transform.position;
+                                    newPos.y += 0.2f;
+                                    instantiatedRessource.transform.position = newPos;
+                                }
+                                
+                            }
+                        }
+
+                        harvestable.isPickedUp();
+                    }
+                }
+                //Si on as pas de Houe on affiche le text nï¿½cessaire
+                else
+                {
+                    text.text = "Il vous faut une Houe pour rï¿½colter";
+                }
             }
-        }
-    }
-
-    void grab(RaycastHit hit)
-    {
-        GameObject obj = hit.transform.gameObject;
-        // sauvegarde du nom pour le DEBUG
-        string name = new string(obj.name);
-
-        if (inventory.HaveSpace())
-        {
-            text.text = "Appuyez sur E pour ramasser";
-
-            if (Input.GetKeyDown(KeyCode.E))
+            if (hit.transform.CompareTag("CapsuleDirt"))
             {
+                //Si c'est une parcelle de terre on regarde si elle est labourï¿½e
+                Dirt dirtSee = hit.transform.gameObject.GetComponent<Dirt>();
+                
+                if (!dirtSee.plowed)
+                {
+                    //Si elle n'est pas labourï¿½ on regarde si on as la houe pour donner la possibilitï¿½ de labourer
+                    if (inventory.toolEquipped?.nameItem == "Hoe")
+                    {
+                        text.text = "Appuyez sur E pour labourrï¿½";
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            dirtSee.isGettingPlowed();
+                        }
+                    }
+                    else
+                    {
+                        text.text = "Prenez la houe pour labourrer";
+                    }
+                }
+                else
+                {
+                    HarvestableInstance harvestableSee = hit.transform.gameObject.GetComponent<HarvestableInstance>();
 
-                inventory.AddItem(obj.GetComponent<Item>().item);
-                Destroy(obj);
+                    //Si la terre ï¿½ ï¿½tï¿½ labourrï¿½ on regarde si des graines ont ï¿½tï¿½ plantï¿½es
+                    if (!harvestableSee.isPlanted)
+                    {
+                        //Si on as pas dï¿½jï¿½ de graine plantï¿½es on en plante si on as des graines dans l'inventaire
 
-                Debug.Log("Player tried to grab an item('" + name + "') and it succeded");
+                        if (inventory.toolEquipped?.type == ItemType.Seed)
+                        {
+                            text.text = "Appuyez sur E pour planter les graines";
+                            if (Input.GetKeyDown(KeyCode.E))
+                            {
+
+                                harvestableSee.isSeedeed(tomatoSeed);
+                            }
+                        }
+                        else
+                        {
+                            text.text = "Prenez des graines pour les planter";
+                        }
+                        
+                    }
+                    else
+                    {
+                        //Si on a dï¿½jï¿½ plantï¿½ quelque chose on regarde si on peut ramasser
+                        if (!harvestableSee.isHarvestable)
+                        {
+                            text.text = harvestableSee.type + " plantï¿½ depuis " + (harvestableSee.dayTracker == 0 ? "aujourd'hui" : harvestableSee.dayTracker + (harvestableSee.dayTracker > 1 ? " jours" : " jour"));
+                        }
+                        else
+                        {
+                            text.text = harvestableSee.type + " ramassable";
+                        }
+                        
+                    }
+                   
+                }
+            }
+            if (hit.transform.CompareTag("Door"))
+            {
+                text.text = "Appuyez sur E pour terminer la journï¿½";
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    //On dï¿½sactive l'affichage de l'inventaire et on active l'affichage du menu de nuit
+                    inventaire.SetActive(false);
+                    menuDeNuit.SetActive(true);
+                    //On dï¿½sactive le mouvement de la camï¿½ra et on rï¿½active la souris
+                    Time.timeScale = 0;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    //On change le text pour afficher le jour et on lance le nouveau jour
+                    textNumeroJour.text = "Fin du jour " + gameController.days;
+                    gameController.NewDay();
+                }
             }
         }
         else
         {
-            text.text = "Inventaire plein";
-            Debug.Log("Player tried to pick an item('" + name + "') but it fails because his inventory is full");
+            //On ne regarde pas d'objet
         }
     }
 
@@ -78,16 +216,16 @@ public class InteractWithItem : MonoBehaviour
         // sauvegarde du nom pour le DEBUG
         string name = new string(crop.name);
 
-        // récupération du tableau de 'harvestable' pour la collecte des objets
+        // rï¿½cupï¿½ration du tableau de 'harvestable' pour la collecte des objets
         harvestable = crop.GetComponent<Harvestable>();
 
         if (inventory.content.Exists(item => Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(item.itemData)) == "Hoe"))
         {
-            text.text = "Appuyer sur E pour récolter";
+            text.text = "Appuyer sur E pour rï¿½colter";
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                // transformation du plant ('crop') en GameObjects ressource à ramasser
+                // transformation du plant ('crop') en GameObjects ressource ï¿½ ramasser
                 for (int i = 0; i < harvestable.harvestableItems.Length; i++)
                 {
                     Ressource ressource = harvestable.harvestableItems[i];
@@ -107,7 +245,7 @@ public class InteractWithItem : MonoBehaviour
         }
         else
         {
-            text.text = "Il vous faut une Houe pour récolter";
+            text.text = "Il vous faut une Houe pour rï¿½colter";
             Debug.Log("Player watch over an harvestable but he can't havest it because the specific tool is not in his inventory");
         }
     }
