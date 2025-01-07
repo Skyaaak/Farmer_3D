@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Harvestable : MonoBehaviour
 {
-    public GameObject[] statesOfGroth;
+    public GameObject[] statesOfGrowth;
     public string type;
     public int dayBeforeGrowth;
     public int state;
@@ -36,20 +36,20 @@ public class Harvestable : MonoBehaviour
                 if (state == 0)
                 {
                     //On initialise le modèle correspondant à l'étape actuelle
-                    actualPrefab = Instantiate(statesOfGroth[state], gameObject.transform);
+                    actualPrefab = Instantiate(statesOfGrowth[state], gameObject.transform);
                     state++;
                 }
                 else
                 {
                     //Si la plantation n'est pas arrivé à terme on la fait avancée
-                    if (state < statesOfGroth.Length)
+                    if (state < statesOfGrowth.Length)
                     {
                         //Si on augmente la culture on détruit le model actuel avant de mettre le nouveau
                         Destroy(actualPrefab);
-                        actualPrefab = Instantiate(statesOfGroth[state], gameObject.transform);
+                        actualPrefab = Instantiate(statesOfGrowth[state], gameObject.transform);
                         state++;
                     }
-                    if(state == statesOfGroth.Length)
+                    if(state == statesOfGrowth.Length)
                     {
                         //Si on arrive à la dernière étape on dit que la culture est récoltable
                         isHarvestable = true;
@@ -62,13 +62,14 @@ public class Harvestable : MonoBehaviour
     //Fonction pour la plantation de graines -> On renseigne tout les champ nécessaire
     public void isSeedeed(SeedData seedData)
     {
-        statesOfGroth = seedData.statesOfGroth;
+        statesOfGrowth = seedData.statesOfGroth;
         type = seedData.typeOfSeed;
         dayBeforeGrowth = seedData.dayBeforeGrowth;
         isPlanted = true;
         plantType = seedData.plantType;
     }
 
+    //Fonction pour le ramassage de la culture
     public void isPickedUp()
     {
         isHarvestable = false;
@@ -77,7 +78,7 @@ public class Harvestable : MonoBehaviour
             Debug.Log("C'est un plant");
             state--;
             Destroy(actualPrefab);
-            actualPrefab = Instantiate(statesOfGroth[state-1], gameObject.transform);
+            actualPrefab = Instantiate(statesOfGrowth[state-1], gameObject.transform);
         }
         else
         {
@@ -87,12 +88,13 @@ public class Harvestable : MonoBehaviour
         }
     }
 
+    //Fonction pour enlever la culture et réinitialiser la terre
     public void Reinitialised()
     {
-        statesOfGroth = null;
+        statesOfGrowth = null;
         type = null;
         dayBeforeGrowth = 0;
         isPlanted = false;
-        dirt.Reinisialized();
+        dirt.Reinisialised();
     }
 }

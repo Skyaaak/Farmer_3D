@@ -5,9 +5,11 @@ using UnityEngine;
 public class ButtonController : MonoBehaviour
 {
     [SerializeField]
-    public GameObject menuDeNuit;
+    private GameObject menuDeNuit;
     [SerializeField]
-    public GameObject inventaire;
+    private GameObject inventaire;
+    [SerializeField]
+    private Transform playerBody;
 
     //Fonction pour le click du bouton quitter
     public void CloseButtonClick()
@@ -19,5 +21,7 @@ public class ButtonController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
+
+        playerBody.rotation = Quaternion.Euler(new Vector3(0f, -120f, 0f)); ;
     }
 }

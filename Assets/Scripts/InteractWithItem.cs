@@ -13,7 +13,8 @@ public class InteractWithItem : MonoBehaviour
     [SerializeField]
     private float range = 1.5f;
 
-    public Inventory inventory;
+    [SerializeField]
+    private Inventory inventory;
 
     [SerializeField]
     private LayerMask layerMask;
@@ -22,19 +23,22 @@ public class InteractWithItem : MonoBehaviour
     private Text text;
 
     [SerializeField]
-    public SeedData tomatoSeed;
+    private SeedData tomatoSeed;
 
     [SerializeField]
-    public GameController gameController;
+    private GameController gameController;
 
     [SerializeField]
-    public GameObject menuDeNuit;
+    private GameObject menuDeNuit;
 
     [SerializeField]
     private TextMeshProUGUI textNumeroJour;
 
     [SerializeField]
-    public GameObject inventaire;
+    private TextMeshProUGUI textMoneyJour;
+
+    [SerializeField]
+    private GameObject inventaire;
 
     // Update is called once per frame
     void Update()
@@ -196,8 +200,21 @@ public class InteractWithItem : MonoBehaviour
                     Cursor.lockState = CursorLockMode.None;
                     //On change le text pour afficher le jour et on lance le nouveau jour
                     textNumeroJour.text = "Fin du jour " + gameController.days;
+                    textMoneyJour.text = "Argent gagné pendant la journée: " + gameController.moneyWin;
                     gameController.NewDay();
                 }
+            }
+            if (hit.transform.CompareTag("Pickable"))
+            {
+                text.text = "Arbre avec fruit";
+            }
+            if (hit.transform.CompareTag("TreeLand"))
+            {
+                text.text = "Zone pour plantage d'arbre";
+            }
+            if (hit.transform.CompareTag("TreeSappling"))
+            {
+                text.text = "Prendre la pousse d'arbre";
             }
         }
         else

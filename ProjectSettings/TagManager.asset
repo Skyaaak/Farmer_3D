@@ -11,6 +11,9 @@ TagManager:
   - CapsuleDirt
   - Seed
   - Door
+  - Pickable
+  - TreeLand
+  - TreeSappling
   layers:
   - Default
   - TransparentFX
