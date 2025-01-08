@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5774d819f65697647a7d771ac551045e, type: 3}
-  m_Name: Hoe
+  m_Name: Sickle
   m_EditorClassIdentifier: 
-  nameItem: Houe
+  nameItem: Faucille
   description: 
   type: 0
-  visuel: {fileID: 21300000, guid: 4632e854ef0ee934885e0953c49553e6, type: 3}
-  prefab: {fileID: 1670586203085811935, guid: ae78e34dbecdca847a938199eb2badb3, type: 3}
+  visuel: {fileID: 0}
+  prefab: {fileID: 968380127040638194, guid: fbe23bf23c51e9b44a5c22b7090c32e6, type: 3}
   stackable: 0
   weight: 1000
   seed: {fileID: 0}

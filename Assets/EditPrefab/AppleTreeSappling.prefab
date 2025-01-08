@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2777334189906155995}
   - component: {fileID: 3249440978950483116}
   - component: {fileID: 6489735731245780827}
-  - component: {fileID: 2075516103311469663}
   - component: {fileID: 6408548594778431426}
+  - component: {fileID: 7390572859055531244}
   m_Layer: 6
   m_Name: AppleTreeSappling
   m_TagString: Item
@@ -88,8 +88,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2075516103311469663
-MeshCollider:
+--- !u!114 &6408548594778431426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6394231527723076888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a33b3e4b52aa44581f8d1c90c0a854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 72ee73e6e88cb944599d1e78ff681003, type: 2}
+--- !u!65 &7390572859055531244
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -106,23 +119,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: dfcc6c8e2bf125b4cb12b30b6fcf7aeb, type: 3}
---- !u!114 &6408548594778431426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394231527723076888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2a33b3e4b52aa44581f8d1c90c0a854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 72ee73e6e88cb944599d1e78ff681003, type: 2}
+  serializedVersion: 3
+  m_Size: {x: 2.095111, y: 6, z: 2.2029305}
+  m_Center: {x: 0, y: 1.0724354, z: 0.0000038146973}
 --- !u!1001 &1362577483268647354
 PrefabInstance:
   m_ObjectHideFlags: 0
