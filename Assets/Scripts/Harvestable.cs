@@ -94,6 +94,7 @@ public class Harvestable : MonoBehaviour
         statesOfGrowth = null;
         type = null;
         dayBeforeGrowth = 0;
+        dayTracker = 0;
         isPlanted = false;
         dirt.Reinisialised();
     }

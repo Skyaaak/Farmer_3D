@@ -6,9 +6,16 @@ using UnityEngine;
 public class SapplingData : ScriptableObject
 {
     [SerializeField]
-    public GameObject[] statesOfGroth;
+    public GameObject[] statesOfGrowth;
     [SerializeField]
-    public string typeOfSappling;
+    private string typeOfSappling;
     [SerializeField]
     private int dayBeforeGrowth;
+
+    public int getDayBeforeGrowth()
+    {
+        return dayBeforeGrowth;
+    }
+
+    public string getTypeOfSappling() { return typeOfSappling; }
 }

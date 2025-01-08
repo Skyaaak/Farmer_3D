@@ -23,9 +23,6 @@ public class InteractWithItem : MonoBehaviour
     private Text text;
 
     [SerializeField]
-    private SeedData tomatoSeed;
-
-    [SerializeField]
     private GameController gameController;
 
     [SerializeField]
@@ -82,8 +79,6 @@ public class InteractWithItem : MonoBehaviour
                     text.text = "Appuyer sur E pour récolter";
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        Debug.Log("Object récolter");
-
                         FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
                         Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
 
@@ -159,8 +154,8 @@ public class InteractWithItem : MonoBehaviour
                             text.text = "Appuyez sur E pour planter les graines";
                             if (Input.GetKeyDown(KeyCode.E))
                             {
-
-                                harvestableSee.isSeedeed(tomatoSeed);
+                                SeedData seed = inventory.toolEquipped.seed;
+                                harvestableSee.isSeedeed(seed);
                             }
                         }
                         else
@@ -206,15 +201,68 @@ public class InteractWithItem : MonoBehaviour
             }
             if (hit.transform.CompareTag("Pickable"))
             {
-                text.text = "Arbre avec fruit";
+                //Si on as la Houe on donne la possibilité de récolter
+                text.text = "Appuyer sur E pour ceuillir les fruits";
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
+                    TreeLand treeLand = hit.transform.GetComponentInParent<TreeLand>();
+
+                    //On boucle sur chaque objet différent que peut dropper l'arbre
+                    for (int i = 0; i < fullGrownItem.harvestableItems.Length; i++)
+                    {
+                        Ressource ressource = fullGrownItem.harvestableItems[i];
+
+                        //Pour chaque ressource, on génère un nombre aléatoire entre le minimum et le maximum de ressources possible
+                        for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
+                        {
+                            //On instancie un objet
+                            GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
+                            float xRand = (float) Random.Range(4, 8)/10;
+                            float zRand = (float) Random.Range(4, 8)/10;
+                            print("xRand: " + xRand + " zRand: " + zRand);
+                            Vector3 newPos = fullGrownItem.transform.position;
+                            print("Vector3: "+newPos);
+                            newPos.x += xRand;
+                            newPos.z += zRand;
+                            print("Vector3New: " + newPos);
+                            instantiatedRessource.transform.position = newPos;
+                        }
+                    }
+
+                    treeLand.PickUp();
+                }
             }
             if (hit.transform.CompareTag("TreeLand"))
             {
-                text.text = "Zone pour plantage d'arbre";
-            }
-            if (hit.transform.CompareTag("TreeSappling"))
-            {
-                text.text = "Prendre la pousse d'arbre";
+                TreeLand treeLand = hit.transform.gameObject.GetComponent<TreeLand>();
+                if (treeLand.isPlanted())
+                {
+                    if (!treeLand.isPickable())
+                    {
+                        text.text = treeLand.getTreeName() + " planté depuis " + (treeLand.daySincePlantation() == 0 ? "aujourd'hui" : treeLand.daySincePlantation() + (treeLand.daySincePlantation() > 1 ? " jours" : " jour"));
+                    }
+                    else
+                    {
+                        text.text = treeLand.getTreeName() + " ramassable";
+                    }
+                }
+                else
+                {
+                    if (inventory.toolEquipped?.type == ItemType.Sappling)
+                    {
+                        text.text = "Appuyez sur E pour planter l'arbre";
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            SapplingData sappling = inventory.toolEquipped.sappling;
+                            treeLand.Plant(sappling);
+                        }
+                    }
+                    else
+                    {
+                        text.text = "Equipez une pousse d'arbre pour planter";
+                    }
+                }
             }
         }
         else

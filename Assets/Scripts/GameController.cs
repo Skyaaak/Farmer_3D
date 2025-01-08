@@ -30,5 +30,18 @@ public class GameController : MonoBehaviour
                 script.AddDay();
             }
         }
+
+        //On récupère la liste des arbres fruitier
+        GameObject[] listeOfFruitedTree = GameObject.FindGameObjectsWithTag("TreeLand");
+        foreach (GameObject fruitedTree in listeOfFruitedTree)
+        {
+            //On récupère le script du plant
+            TreeLand script = fruitedTree.GetComponent<TreeLand>();
+            //Si on as quelque chose de planté, on ajoute un jour à l'arbre'.
+            if (script != null)
+            {
+                script.AddDay();
+            }
+        }
     }
 }
