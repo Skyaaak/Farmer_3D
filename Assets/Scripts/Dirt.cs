@@ -25,7 +25,7 @@ public class Dirt : MonoBehaviour
         dirtObject.SetActive(false);
     }
 
-    public void Reinisialized()
+    public void Reinisialised()
     {
         plowed = false;
         dirtPlowedObject.SetActive(false);
