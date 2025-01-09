@@ -231,13 +231,27 @@ public class InteractWithItem : MonoBehaviour
                             //On instancie un objet
                             GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
                             float xRand = (float) Random.Range(4, 8)/10;
+                            int xSigne = Random.Range(0, 2);
                             float zRand = (float) Random.Range(4, 8)/10;
-                            print("xRand: " + xRand + " zRand: " + zRand);
+                            int zSigne = Random.Range(0, 2);
                             Vector3 newPos = fullGrownItem.transform.position;
-                            print("Vector3: "+newPos);
-                            newPos.x += xRand;
-                            newPos.z += zRand;
-                            print("Vector3New: " + newPos);
+                            if(xSigne == 0)
+                            {
+                                newPos.x += xRand;
+                            }
+                            else
+                            {
+                                newPos.x -= xRand;
+                            }
+
+                            if (zSigne == 0)
+                            {
+                                newPos.z += zRand;
+                            }
+                            else
+                            {
+                                newPos.z -= zRand;
+                            }
                             instantiatedRessource.transform.position = newPos;
                         }
                     }
