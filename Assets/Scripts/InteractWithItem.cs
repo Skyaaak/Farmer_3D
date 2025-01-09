@@ -106,12 +106,8 @@ public class InteractWithItem : MonoBehaviour
                                     //On modifie légérement sa position pour qu'il soit ramassable
                                     Vector3 newPos = harvestable.transform.position;
                                     print("avant changement: " + newPos);
-                                    if (ressource.itemData.nameItem == "Aubergine")
-                                    {
-                                        print("C'est une aubergine");
-                                        newPos.z -= 0.2f;
-                                        newPos.y += 0.1f;
-                                    }
+                                    newPos.z += ressource.itemData.prefab.transform.position.z;
+                                    newPos.y += ressource.itemData.prefab.transform.position.y;
                                     newPos.x += 0.5f;
                                     print("après changement: " + newPos);
                                     instantiatedRessource.transform.position = newPos;
