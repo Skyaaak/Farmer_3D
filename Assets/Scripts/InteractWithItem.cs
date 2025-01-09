@@ -52,22 +52,30 @@ public class InteractWithItem : MonoBehaviour
                 //Si c'est un item et qu'on à de la place, on donne la possibilité de le ramasser avec E
                 ItemData itemSee = hit.transform.gameObject.GetComponent<Item>().item;
 
-                bool haveSpace = inventory.HaveSpace(itemSee);
-
-                text.text = haveSpace ? "Appuyez sur E pour ramasser" : "Inventaire plein";
-
-                if (Input.GetKeyDown(KeyCode.E))
+                if (inventory.HaveSpace(itemSee))
                 {
-                    if (haveSpace)
+                    var endText = "";
+                    switch (itemSee.type)
+                    {
+                        case ItemType.Ressource: endText = "la " + itemSee.nameItem; break;
+                        case ItemType.Tool: endText = "la " + itemSee.nameItem; break;
+                        case ItemType.Seed: endText = "le sac de graines de " + itemSee.seed.typeOfSeed; break;
+                        case ItemType.Sappling: endText = "la pousse de " + itemSee.sappling.getTypeOfSappling(); break;
+                    }
+
+                    text.text = "Appuyez sur E pour ramasser " + endText;
+
+                    if (Input.GetKeyDown(KeyCode.E))
                     {
                         inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
                         Destroy(hit.transform.gameObject);
                     }
-                    else
-                    {
-                        Debug.Log("Inventaire plein");
-                    }
                 }
+                else
+                {
+                    text.text = "Inventaire plein";
+                }
+                
             }
             if (hit.transform.CompareTag("Harvestable"))
             {
