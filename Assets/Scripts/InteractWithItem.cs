@@ -71,15 +71,15 @@ public class InteractWithItem : MonoBehaviour
             }
             if (hit.transform.CompareTag("Harvestable"))
             {
-                //Si c'est un harvestable, on regarde si l'objet équipé a pour nom "Hoe"
-                //On regarde si c'est un objet de type Hoe : if (Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped)) == "Hoe")
-                if(inventory.toolEquipped?.nameItem == "Hoe")
+                FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
+
+                //Si c'est un harvestable, on regarde si il à besoin d'un objet pour être ramassé et si, le cas présent, l'objet nécessaire est l'objet équipé
+                if (fullGrownItem.GetToolRequired() == null || inventory.toolEquipped == fullGrownItem.GetToolRequired())
                 {
-                    //Si on as la Houe on donne la possibilité de récolter
+                    //Si on as la Faucille on donne la possibilité de récolter
                     text.text = "Appuyer sur E pour récolter";
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
                         Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
 
                         //On boucle sur chaque objet différent que peut dropper le plant
@@ -102,8 +102,10 @@ public class InteractWithItem : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Vector3 newPos = fullGrownItem.transform.position;
+                                    Vector3 newPos = harvestable.transform.position;
+                                    print("avant changement: "+newPos);
                                     newPos.y += 0.2f;
+                                    print("après changement: " + newPos);
                                     instantiatedRessource.transform.position = newPos;
                                 }
                                 
@@ -113,10 +115,10 @@ public class InteractWithItem : MonoBehaviour
                         harvestable.isPickedUp();
                     }
                 }
-                //Si on as pas de Houe on affiche le text nécessaire
+                //Si on as pas l'objet adéquat on affiche le text nécessaire
                 else
                 {
-                    text.text = "Il vous faut une Houe pour récolter";
+                    text.text = "Il vous faut l'outil "+ fullGrownItem.GetToolRequired().nameItem + " pour récolter";
                 }
             }
             if (hit.transform.CompareTag("CapsuleDirt"))
@@ -127,7 +129,7 @@ public class InteractWithItem : MonoBehaviour
                 if (!dirtSee.plowed)
                 {
                     //Si elle n'est pas labouré on regarde si on as la houe pour donner la possibilité de labourer
-                    if (inventory.toolEquipped?.nameItem == "Hoe")
+                    if (inventory.toolEquipped?.nameItem == "Houe")
                     {
                         text.text = "Appuyez sur E pour labourré";
                         if (Input.GetKeyDown(KeyCode.E))

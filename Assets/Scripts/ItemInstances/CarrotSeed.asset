@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5774d819f65697647a7d771ac551045e, type: 3}
-  m_Name: TomatoSeed
+  m_Name: CarrotSeed
   m_EditorClassIdentifier: 
-  nameItem: TomatoSeed
+  nameItem: CarrotSeed
   description: 
   type: 2
-  visuel: {fileID: 21300000, guid: 1042047a8c5f2994798fab366ddd8c07, type: 3}
-  prefab: {fileID: 2227913219161879071, guid: 52ed732a99fc3204da44cd7e6366059a, type: 3}
+  visuel: {fileID: 21300000, guid: 4515c61459c037f4fab4a23a8c8d15e0, type: 3}
+  prefab: {fileID: 7666391188389969913, guid: 262d1ce9c60540242bf28980dacffcd7, type: 3}
   stackable: 0
-  weight: 100
-  seed: {fileID: 11400000, guid: e806afffc619f1a4aa880302283a370b, type: 2}
+  weight: 0
+  seed: {fileID: 11400000, guid: 90a0730bfd31d92479c25854151a4049, type: 2}
   sappling: {fileID: 0}

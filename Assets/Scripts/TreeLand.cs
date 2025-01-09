@@ -50,6 +50,8 @@ public class TreeLand : MonoBehaviour
     public void Plant(SapplingData newSappling)
     {
         sappling = newSappling;
+        actualPrefab = Instantiate(sappling.statesOfGrowth[state], gameObject.transform);
+        state = 1;
         Planted = true;
     }
 
