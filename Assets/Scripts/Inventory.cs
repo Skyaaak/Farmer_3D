@@ -57,7 +57,6 @@ public class Inventory : MonoBehaviour
                 content.Add(new ItemInInventory { itemData = item, count = 1 });
                 actualWeight += item.weight;
             }
-            Debug.Log("actualWeight= " + actualWeight);
         }
         //SInon on ajoute l'objet dans l'inventaire de l'outil
         else

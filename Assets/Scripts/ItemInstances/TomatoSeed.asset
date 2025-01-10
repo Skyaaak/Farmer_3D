@@ -15,8 +15,9 @@ MonoBehaviour:
   nameItem: TomatoSeed
   description: 
   type: 2
-  visuel: {fileID: 21300000, guid: e5f26e398b9f16d4fa8ea93bcf16f66b, type: 3}
-  prefab: {fileID: 2630425031254273193, guid: ff4399c5c516b6145b031f40e03b2334, type: 3}
+  visuel: {fileID: 21300000, guid: 1042047a8c5f2994798fab366ddd8c07, type: 3}
+  prefab: {fileID: 2227913219161879071, guid: 52ed732a99fc3204da44cd7e6366059a, type: 3}
   stackable: 0
-  weight: 100
+  weight: 300
   seed: {fileID: 11400000, guid: e806afffc619f1a4aa880302283a370b, type: 2}
+  sappling: {fileID: 0}

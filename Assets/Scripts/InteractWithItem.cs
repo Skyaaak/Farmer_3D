@@ -52,34 +52,42 @@ public class InteractWithItem : MonoBehaviour
                 //Si c'est un item et qu'on à de la place, on donne la possibilité de le ramasser avec E
                 ItemData itemSee = hit.transform.gameObject.GetComponent<Item>().item;
 
-                bool haveSpace = inventory.HaveSpace(itemSee);
-
-                text.text = haveSpace ? "Appuyez sur E pour ramasser" : "Inventaire plein";
-
-                if (Input.GetKeyDown(KeyCode.E))
+                if (inventory.HaveSpace(itemSee))
                 {
-                    if (haveSpace)
+                    var endText = "";
+                    switch (itemSee.type)
+                    {
+                        case ItemType.Ressource: endText = "la " + itemSee.nameItem; break;
+                        case ItemType.Tool: endText = "la " + itemSee.nameItem; break;
+                        case ItemType.Seed: endText = "le sac de graines de " + itemSee.seed.typeOfSeed; break;
+                        case ItemType.Sappling: endText = "la pousse de " + itemSee.sappling.getTypeOfSappling(); break;
+                    }
+
+                    text.text = "Appuyez sur E pour ramasser " + endText;
+
+                    if (Input.GetKeyDown(KeyCode.E))
                     {
                         inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
                         Destroy(hit.transform.gameObject);
                     }
-                    else
-                    {
-                        Debug.Log("Inventaire plein");
-                    }
                 }
+                else
+                {
+                    text.text = "Inventaire plein";
+                }
+                
             }
             if (hit.transform.CompareTag("Harvestable"))
             {
-                //Si c'est un harvestable, on regarde si l'objet équipé a pour nom "Hoe"
-                //On regarde si c'est un objet de type Hoe : if (Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(inventory.toolEquipped)) == "Hoe")
-                if(inventory.toolEquipped?.nameItem == "Hoe")
+                FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
+
+                //Si c'est un harvestable, on regarde si il à besoin d'un objet pour être ramassé et si, le cas présent, l'objet nécessaire est l'objet équipé
+                if (fullGrownItem.GetToolRequired() == null || inventory.toolEquipped == fullGrownItem.GetToolRequired())
                 {
-                    //Si on as la Houe on donne la possibilité de récolter
+                    //Si on as la Faucille on donne la possibilité de récolter
                     text.text = "Appuyer sur E pour récolter";
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
                         Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
 
                         //On boucle sur chaque objet différent que peut dropper le plant
@@ -96,13 +104,17 @@ public class InteractWithItem : MonoBehaviour
                                 if(harvestable.plantType == PlantType.Plant)
                                 {
                                     //On modifie légérement sa position pour qu'il soit ramassable
-                                    Vector3 newPos = fullGrownItem.transform.position;
+                                    Vector3 newPos = harvestable.transform.position;
+                                    print("avant changement: " + newPos);
+                                    newPos.z += ressource.itemData.prefab.transform.position.z;
+                                    newPos.y += ressource.itemData.prefab.transform.position.y;
                                     newPos.x += 0.5f;
+                                    print("après changement: " + newPos);
                                     instantiatedRessource.transform.position = newPos;
                                 }
                                 else
                                 {
-                                    Vector3 newPos = fullGrownItem.transform.position;
+                                    Vector3 newPos = harvestable.transform.position;
                                     newPos.y += 0.2f;
                                     instantiatedRessource.transform.position = newPos;
                                 }
@@ -113,10 +125,10 @@ public class InteractWithItem : MonoBehaviour
                         harvestable.isPickedUp();
                     }
                 }
-                //Si on as pas de Houe on affiche le text nécessaire
+                //Si on as pas l'objet adéquat on affiche le text nécessaire
                 else
                 {
-                    text.text = "Il vous faut une Houe pour récolter";
+                    text.text = "Il vous faut l'outil "+ fullGrownItem.GetToolRequired().nameItem + " pour récolter";
                 }
             }
             if (hit.transform.CompareTag("CapsuleDirt"))
@@ -127,7 +139,7 @@ public class InteractWithItem : MonoBehaviour
                 if (!dirtSee.plowed)
                 {
                     //Si elle n'est pas labouré on regarde si on as la houe pour donner la possibilité de labourer
-                    if (inventory.toolEquipped?.nameItem == "Hoe")
+                    if (inventory.toolEquipped?.nameItem == "Houe")
                     {
                         text.text = "Appuyez sur E pour labourré";
                         if (Input.GetKeyDown(KeyCode.E))
@@ -219,13 +231,27 @@ public class InteractWithItem : MonoBehaviour
                             //On instancie un objet
                             GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
                             float xRand = (float) Random.Range(4, 8)/10;
+                            int xSigne = Random.Range(0, 2);
                             float zRand = (float) Random.Range(4, 8)/10;
-                            print("xRand: " + xRand + " zRand: " + zRand);
+                            int zSigne = Random.Range(0, 2);
                             Vector3 newPos = fullGrownItem.transform.position;
-                            print("Vector3: "+newPos);
-                            newPos.x += xRand;
-                            newPos.z += zRand;
-                            print("Vector3New: " + newPos);
+                            if(xSigne == 0)
+                            {
+                                newPos.x += xRand;
+                            }
+                            else
+                            {
+                                newPos.x -= xRand;
+                            }
+
+                            if (zSigne == 0)
+                            {
+                                newPos.z += zRand;
+                            }
+                            else
+                            {
+                                newPos.z -= zRand;
+                            }
                             instantiatedRessource.transform.position = newPos;
                         }
                     }

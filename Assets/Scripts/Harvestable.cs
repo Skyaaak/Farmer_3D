@@ -75,7 +75,7 @@ public class Harvestable : MonoBehaviour
         isHarvestable = false;
         if (plantType == PlantType.Plant)
         {
-            Debug.Log("C'est un plant");
+            Debug.Log("C'est un plant: "+state);
             state--;
             Destroy(actualPrefab);
             actualPrefab = Instantiate(statesOfGrowth[state-1], gameObject.transform);
