@@ -5,17 +5,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "item", menuName = "item/New item")]
 public class ItemData : ScriptableObject
 {
-    public string name;
+    public string nameItem;
     public string description;
     public ItemType type;
     public Sprite visuel;
     public GameObject prefab;
     public bool stackable;
+    public int weight;
+    public SeedData seed;
+    public SapplingData sappling;
 }
 
 
 public enum ItemType
 {
     Tool,
-    Ressource
+    Ressource,
+    Seed,
+    Sappling
 }

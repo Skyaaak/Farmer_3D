@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class Dirt : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    public GameObject dirtObject;
+    [SerializeField]
+    public GameObject dirtPlowedObject;
+
+    public bool plowed = false;
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    //Fonction pour labourré la terre
+    public void isGettingPlowed()
     {
-        
+        plowed = true;
+        //On cative le prefab de la terre labourré et on désactive le préfab de terre non labouré
+        dirtPlowedObject.SetActive(true);
+        dirtObject.SetActive(false);
+    }
+
+    public void Reinisialised()
+    {
+        plowed = false;
+        dirtPlowedObject.SetActive(false);
+        dirtObject.SetActive(true);
     }
 }

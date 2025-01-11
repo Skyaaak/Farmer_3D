@@ -4,10 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
   - Item
+  - Ground
   - Harvestable
-  - ObjMenu
+  - Dirt
+  - CapsuleDirt
+  - Seed
+  - Door
+  - Pickable
+  - TreeLand
+  - TreeSappling
   layers:
   - Default
   - TransparentFX
@@ -15,7 +21,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Item
   - 
   - 
   - 
