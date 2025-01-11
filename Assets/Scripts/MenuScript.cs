@@ -5,20 +5,38 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
-    void OnGUI()
-    {
-        const int buttonWidth = 200;
-        const int buttonHeight = 50;
-        
-        if (GUI.Button(new Rect(Screen.width / 2 - buttonWidth / 2, Screen.height / 2 - buttonHeight / 2, buttonWidth, buttonHeight), "Jouer"))
-        {
-            // Charger la scène du jeu lorsque le bouton est cliqué.
-            SceneManager.LoadScene("SampleScene");
-        }
+    // Références aux boutons
+    [SerializeField] 
+    public GameObject btnJouer;
 
-        // Créer 3 boutons : jouer, commandes, quitter
-        // Jouer lance la scène SampleScene (peut etre la renommer ?)
-        // Commande lance la scène CommandesScènes que j'implémenterai
-        // Quitter quitte le jeu
+    [SerializeField]
+    public GameObject btnCommandes;
+
+    [SerializeField]
+    public GameObject btnQuitter;
+
+    // Référence au Canvas des commandes
+    public GameObject memoCommandes;
+
+
+    public void jouer() {
+        // Charger la scène "SampleScene"
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void afficherMemoCommandes() {
+        // Afficher le Canvas des commandes
+        if (memoCommandes != null) {
+            memoCommandes.SetActive(true);
+        }
+    }
+
+    public void quitter() {
+        // Quitter le jeu
+        Application.Quit();
+
+        // Note : La fonction Application.Quit() ne fonctionne pas dans l'éditeur Unity.
+        // Pour tester dans l'éditeur, vous pouvez utiliser cette ligne :
+        Debug.Log("Quitter le jeu !");
     }
 }
