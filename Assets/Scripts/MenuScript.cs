@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
-    // Références aux boutons
     [SerializeField] 
     public GameObject btnJouer;
 
@@ -15,8 +14,14 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     public GameObject btnQuitter;
 
-    // Référence au Canvas des commandes
+    [SerializeField]
+    public GameObject btnRetourMenu;
+
+    [SerializeField]  
     public GameObject memoCommandes;
+
+    [SerializeField] 
+    public GameObject menuPrincipal;
 
 
     public void jouer() {
@@ -28,6 +33,21 @@ public class MenuScript : MonoBehaviour
         // Afficher le Canvas des commandes
         if (memoCommandes != null) {
             memoCommandes.SetActive(true);
+        }
+        //Cacher le menu
+        if (menuPrincipal != null) {
+            menuPrincipal.SetActive(false);
+        }
+    }
+
+    public void retourMenu() {
+        //Cacher les commandes
+        if (memoCommandes != null){
+            memoCommandes.SetActive(false);
+        }
+        //Afficher le menu
+        if (menuPrincipal != null){
+            menuPrincipal.SetActive(true);
         }
     }
 
