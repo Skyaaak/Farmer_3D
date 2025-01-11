@@ -23,6 +23,8 @@ public class MenuScript : MonoBehaviour
     [SerializeField] 
     public GameObject menuPrincipal;
 
+   
+
 
     public void jouer() {
         // Charger la scène "SampleScene"

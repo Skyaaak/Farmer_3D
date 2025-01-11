@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 9975403}
   m_Layer: 5
   m_Name: Text commandes
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 237355060}
   m_Layer: 5
   m_Name: btnJouer
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 325108890}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -629,7 +629,7 @@ GameObject:
   - component: {fileID: 480923083}
   m_Layer: 5
   m_Name: Text quitter
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 560290371}
   m_Layer: 5
   m_Name: Text jouer
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -900,11 +900,11 @@ GameObject:
   - component: {fileID: 634974543}
   m_Layer: 5
   m_Name: MenuPrincipal
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &634974543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,7 +1219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1298514402
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1318,7 +1318,7 @@ GameObject:
   - component: {fileID: 1735425133}
   m_Layer: 5
   m_Name: btnQuitter
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1451,7 +1451,7 @@ GameObject:
   - component: {fileID: 1821704765}
   m_Layer: 0
   m_Name: EventSystem
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1537,7 +1537,7 @@ GameObject:
   - component: {fileID: 1842587115}
   m_Layer: 5
   m_Name: Texte Bienvenue
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1672,7 +1672,7 @@ GameObject:
   - component: {fileID: 1880373120}
   m_Layer: 5
   m_Name: btnCommande
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1804,7 +1804,7 @@ GameObject:
   - component: {fileID: 2086945198}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: ObjMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
