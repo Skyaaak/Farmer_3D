@@ -29,6 +29,9 @@ public class MenuScript : MonoBehaviour
     public void jouer() {
         // Charger la scène "SampleScene"
         SceneManager.LoadScene("SampleScene");
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
     }
 
     public void afficherMemoCommandes() {
