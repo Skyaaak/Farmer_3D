@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
     [SerializeField] 
-    public GameObject btnJouer;
+    public Button btnJouer;
 
     [SerializeField]
     public GameObject btnCommandes;
@@ -23,8 +25,28 @@ public class MenuScript : MonoBehaviour
     [SerializeField] 
     public GameObject menuPrincipal;
 
-   
 
+    public void Start()
+    {
+        var textJouer = btnJouer.GetComponentInChildren<TextMeshProUGUI>();
+        if(LanguageManager.Instance != null)
+        {
+            if(textJouer != null)
+            {
+                textJouer.text = LanguageManager.Instance.GetTranslation("play");
+            }
+            else
+            {
+                print("textJoueur est null");
+            }
+            
+        }
+        else
+        {
+            print("Pas de LanguageManager");
+        }
+        
+    }
 
     public void jouer() {
         // Charger la scène "SampleScene"
