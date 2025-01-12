@@ -8,44 +8,64 @@ using UnityEngine.UI;
 public class MenuScript : MonoBehaviour
 {
     [SerializeField] 
-    public Button btnJouer;
+    private Button btnJouer;
 
     [SerializeField]
-    public GameObject btnCommandes;
+    private Button btnCommandes;
 
     [SerializeField]
-    public GameObject btnQuitter;
+    private Button btnQuitter;
 
     [SerializeField]
-    public GameObject btnRetourMenu;
+    private Button btnRetourMenu;
 
-    [SerializeField]  
-    public GameObject memoCommandes;
+    [SerializeField]
+    private Button btnRetourMenuLanguage;
 
-    [SerializeField] 
-    public GameObject menuPrincipal;
+    [SerializeField]
+    private Button btnLanguage;
+
+    [SerializeField]
+    private TextMeshProUGUI welcomeText;
+
+    [SerializeField]
+    private TextMeshProUGUI memoCommandesText;
+
+    [SerializeField]
+    private TextMeshProUGUI changeLanguage;
+
+    [SerializeField]
+    private TextMeshProUGUI forward;
+
+    [SerializeField]
+    private TextMeshProUGUI moveBack;
+
+    [SerializeField]
+    private TextMeshProUGUI left;
+
+    [SerializeField]
+    private TextMeshProUGUI right;
+
+    [SerializeField]
+    private TextMeshProUGUI showMenu;
+
+    [SerializeField]
+    private TextMeshProUGUI pickup;
+
+    [SerializeField]
+    private GameObject memoCommandes;
+
+    [SerializeField]
+    private GameObject menuPrincipal;
+
+    [SerializeField]
+    private GameObject menuLanguage;
+
 
 
     public void Start()
     {
-        var textJouer = btnJouer.GetComponentInChildren<TextMeshProUGUI>();
-        if(LanguageManager.Instance != null)
-        {
-            if(textJouer != null)
-            {
-                textJouer.text = LanguageManager.Instance.GetTranslation("play");
-            }
-            else
-            {
-                print("textJoueur est null");
-            }
-            
-        }
-        else
-        {
-            print("Pas de LanguageManager");
-        }
-        
+        changeAffichage();
     }
 
     public void jouer() {
@@ -72,10 +92,40 @@ public class MenuScript : MonoBehaviour
         if (memoCommandes != null){
             memoCommandes.SetActive(false);
         }
+        //Cacher les commandes
+        if (menuLanguage != null)
+        {
+            menuLanguage.SetActive(false);
+        }
         //Afficher le menu
         if (menuPrincipal != null){
             menuPrincipal.SetActive(true);
         }
+    }
+
+    public void selectLanguage()
+    {
+        if (memoCommandes != null)
+        {
+            memoCommandes.SetActive(false);
+        }
+        //Afficher le menu
+        if (menuLanguage != null)
+        {
+            menuLanguage.SetActive(true);
+        }
+    }
+
+    public void selectFr()
+    {
+        LanguageManager.Instance.SetLanguage("fr");
+        changeAffichage();
+    }
+
+    public void selectEn()
+    {
+        LanguageManager.Instance.SetLanguage("en");
+        changeAffichage();
     }
 
     public void quitter() {
@@ -85,5 +135,37 @@ public class MenuScript : MonoBehaviour
         // Note : La fonction Application.Quit() ne fonctionne pas dans l'éditeur Unity.
         // Pour tester dans l'éditeur, vous pouvez utiliser cette ligne :
         Debug.Log("Quitter le jeu !");
+    }
+
+    private void changeAffichage()
+    {
+        var textJouer = btnJouer.GetComponentInChildren<TextMeshProUGUI>();
+        var textCommandes = btnCommandes.GetComponentInChildren<TextMeshProUGUI>();
+        var textQuitter = btnQuitter.GetComponentInChildren<TextMeshProUGUI>();
+        var textRetour = btnRetourMenu.GetComponentInChildren<TextMeshProUGUI>();
+        var textRetourLanguage = btnRetourMenuLanguage.GetComponentInChildren<TextMeshProUGUI>();
+        var textLanguage = btnLanguage.GetComponentInChildren<TextMeshProUGUI>();
+        if (LanguageManager.Instance != null)
+        {
+            textJouer.text = LanguageManager.Instance.GetTranslation("play");
+            textCommandes.text = LanguageManager.Instance.GetTranslation("option");
+            textQuitter.text = LanguageManager.Instance.GetTranslation("exit");
+            textRetour.text = LanguageManager.Instance.GetTranslation("backMenu");
+            textRetourLanguage.text = LanguageManager.Instance.GetTranslation("backMenu");
+            textLanguage.text = LanguageManager.Instance.GetTranslation("languageBtn");
+            welcomeText.text = LanguageManager.Instance.GetTranslation("welcome");
+            memoCommandesText.text = LanguageManager.Instance.GetTranslation("commands");
+            changeLanguage.text = LanguageManager.Instance.GetTranslation("changeLanguage");
+            forward.text = LanguageManager.Instance.GetTranslation("forward");
+            moveBack.text = LanguageManager.Instance.GetTranslation("moveBack");
+            left.text = LanguageManager.Instance.GetTranslation("left");
+            right.text = LanguageManager.Instance.GetTranslation("right");
+            showMenu.text = LanguageManager.Instance.GetTranslation("showMenu");
+            pickup.text = LanguageManager.Instance.GetTranslation("pickup");
+        }
+        else
+        {
+            print("Pas de LanguageManager");
+        }
     }
 }

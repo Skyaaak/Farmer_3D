@@ -63,7 +63,7 @@ public class InteractWithItem : MonoBehaviour
                         case ItemType.Sappling: endText = "la pousse de " + itemSee.sappling.getTypeOfSappling(); break;
                     }
 
-                    text.text = "Appuyez sur E pour ramasser " + endText;
+                    text.text = LanguageManager.Instance.GetTranslation("pressToPickUp") + endText;
 
                     if (Input.GetKeyDown(KeyCode.E))
                     {
