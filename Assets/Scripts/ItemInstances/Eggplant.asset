@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5774d819f65697647a7d771ac551045e, type: 3}
   m_Name: Eggplant
   m_EditorClassIdentifier: 
-  nameItem: Aubergine
+  nameItem: Eggplant
   description: 
   type: 1
   visuel: {fileID: 21300000, guid: 58bdaf88b7d160a4389af5e3937f8a3e, type: 3}

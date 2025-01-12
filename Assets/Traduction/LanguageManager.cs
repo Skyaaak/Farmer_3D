@@ -58,7 +58,7 @@ public class LanguageManager : MonoBehaviour
         {
             return translations[currentLanguage][key];
         }
-        return key;
+        return "Error";
     }
 
     public void SetLanguage(string language)

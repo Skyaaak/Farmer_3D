@@ -17,6 +17,6 @@ MonoBehaviour:
   - {fileID: 8331122410249767392, guid: 1263c5c5f1c53d941996ba932a56be28, type: 3}
   - {fileID: 4987168525372244248, guid: 29e8f6b3bd51b8145b726606716d8e39, type: 3}
   - {fileID: 9111295212725099334, guid: bc4985a967f2fc840b295c8c9b4b44cc, type: 3}
-  typeOfSeed: Aubergine
+  typeOfSeed: Eggplant
   dayBeforeGrowth: 2
   plantType: 0
