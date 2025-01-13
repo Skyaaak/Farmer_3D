@@ -151,3 +151,4 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 19d9001a6268ade44b6892098b3fd939, type: 2}
     minRessource: 1
     maxRessource: 6
+  tool: {fileID: 11400000, guid: 0c8a2922be285c24c8558774d631671c, type: 2}
