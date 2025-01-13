@@ -295,5 +295,44 @@ public class InteractWithItem : MonoBehaviour
         {
             //On ne regarde pas d'objet
         }
+
+        // Appuyez sur R pour lâcher l'outil équipé
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DropEquippedTool();
+        }
+    }
+
+
+    private void DropEquippedTool()
+    {
+        // Vérifie si un outil est équipé
+        if (inventory.toolEquipped != null)
+        {
+            // Instancie le prefab de l'outil
+            GameObject droppedTool = Instantiate(inventory.toolEquipped.prefab);
+
+            // Positionne l'objet juste devant le joueur
+            Vector3 dropPosition = transform.position + transform.forward * 1.0f; // Position devant le joueur
+            dropPosition.y = transform.position.y + 1.0f; // Légèrement au-dessus du sol
+            droppedTool.transform.position = dropPosition;
+
+            // Ajoute un Rigidbody pour que l'objet tombe au sol
+            if (droppedTool.GetComponent<Rigidbody>() == null)
+            {
+                Rigidbody rb = droppedTool.AddComponent<Rigidbody>();
+                rb.mass = 1.0f; // Vous pouvez ajuster la masse si nécessaire
+            }
+
+            // Retire l'outil de l'inventaire
+            inventory.toolEquipped = null;
+
+            // Optionnel : Affiche un message pour confirmer
+            Debug.Log("Outil lâché : " + droppedTool.name);
+        }
+        else
+        {
+            Debug.Log("Aucun outil équipé à lâcher.");
+        }
     }
 }
