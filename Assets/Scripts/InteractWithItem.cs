@@ -116,7 +116,7 @@ public class InteractWithItem : MonoBehaviour
                 //Si on as pas l'objet adéquat on affiche le text nécessaire
                 else
                 {
-                    text.text = LanguageManager.Instance.GetTranslation("needTool") + fullGrownItem.GetToolRequired().nameItem + LanguageManager.Instance.GetTranslation("toHarvest");
+                    text.text = LanguageManager.Instance.GetTranslation("needTool") + LanguageManager.Instance.GetTranslation(fullGrownItem.GetToolRequired().nameItem.ToLower()) + LanguageManager.Instance.GetTranslation("toHarvest");
                 }
             }
             if (hit.transform.CompareTag("CapsuleDirt"))
@@ -169,11 +169,11 @@ public class InteractWithItem : MonoBehaviour
                         //Si on a déjà planté quelque chose on regarde si on peut ramasser
                         if (!harvestableSee.isHarvestable)
                         {
-                            text.text = harvestableSee.type + LanguageManager.Instance.GetTranslation("plantSince") + (harvestableSee.dayTracker == 0 ? LanguageManager.Instance.GetTranslation("today") : harvestableSee.dayTracker + (harvestableSee.dayTracker > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
+                            text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (harvestableSee.dayTracker == 0 ? LanguageManager.Instance.GetTranslation("today") : harvestableSee.dayTracker + (harvestableSee.dayTracker > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
                         }
                         else
                         {
-                            text.text = harvestableSee.type + LanguageManager.Instance.GetTranslation("harvestable");
+                            text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
                         }
                         
                     }
@@ -256,11 +256,11 @@ public class InteractWithItem : MonoBehaviour
                 {
                     if (!treeLand.isPickable())
                     {
-                        text.text = treeLand.getTreeName() + LanguageManager.Instance.GetTranslation("plantSince") + (treeLand.daySincePlantation() == 0 ? LanguageManager.Instance.GetTranslation("today") : treeLand.daySincePlantation() + (treeLand.daySincePlantation() > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
+                        text.text = LanguageManager.Instance.GetTranslation(treeLand.getTreeName().ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (treeLand.daySincePlantation() == 0 ? LanguageManager.Instance.GetTranslation("today") : treeLand.daySincePlantation() + (treeLand.daySincePlantation() > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
                     }
                     else
                     {
-                        text.text = treeLand.getTreeName() + LanguageManager.Instance.GetTranslation("harvestable");
+                        text.text = LanguageManager.Instance.GetTranslation(treeLand.getTreeName().ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
                     }
                 }
                 else
