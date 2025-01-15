@@ -8,11 +8,6 @@ public class GameController : MonoBehaviour
     public int days = 1;
     public int moneyWin = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     //Fonction pour le changement de jour
     public void NewDay()
     {

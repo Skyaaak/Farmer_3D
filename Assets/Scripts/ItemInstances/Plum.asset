@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5774d819f65697647a7d771ac551045e, type: 3}
   m_Name: Plum
   m_EditorClassIdentifier: 
-  nameItem: Prune
+  nameItem: Plum
   description: 
   type: 1
   visuel: {fileID: 21300000, guid: 3cc08debddf700446ac394bfd07f064f, type: 3}
