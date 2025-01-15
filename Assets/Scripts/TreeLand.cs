@@ -76,10 +76,7 @@ public class TreeLand : MonoBehaviour
 
     public bool isPlanted() { return Planted; }
 
-    public string getTreeName()
-    {
-        return sappling.getTypeOfSappling();
-    }
+    public string getTreeName() { return sappling.getTypeOfSappling(); }
 
     public int daySincePlantation() {  return dayTracker; }
 
