@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6225544969697220073}
   - component: {fileID: 6484642137575128163}
   - component: {fileID: 4255871668757447854}
-  - component: {fileID: 6387787050916599785}
   - component: {fileID: 5933303091826927593}
+  - component: {fileID: 3361821970179244386}
   m_Layer: 6
   m_Name: WaterCan
   m_TagString: Item
@@ -99,7 +99,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 11cd45ea8bd77fc49a8d0b8b0455a268, type: 2}
---- !u!54 &6387787050916599785
+--- !u!65 &5933303091826927593
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103860775831644438}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7688905, y: 0.6156305, z: 0.375036}
+  m_Center: {x: -0.11266803, y: 0.30781525, z: -0.00000002980232}
+--- !u!54 &3361821970179244386
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,28 +143,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &5933303091826927593
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4103860775831644438}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.7688905, y: 0.6156305, z: 0.375036}
-  m_Center: {x: -0.11266803, y: 0.30781525, z: -0.00000002980232}

@@ -4,6 +4,7 @@ using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -322,10 +323,18 @@ public class InteractWithItem : MonoBehaviour
             {
                 Rigidbody rb = droppedTool.AddComponent<Rigidbody>();
                 rb.mass = 1.0f; // Vous pouvez ajuster la masse si nécessaire
+                rb.isKinematic = false;
+            } 
+            else
+            {
+                Rigidbody rb = droppedTool.GetComponent<Rigidbody>();
+                rb.mass = 1.0f; // Vous pouvez ajuster la masse si nécessaire
+                rb.isKinematic = false;
             }
 
             // Retire l'outil de l'inventaire
             inventory.toolEquipped = null;
+            inventory.RefreshContent();
 
             // Optionnel : Affiche un message pour confirmer
             Debug.Log("Outil lâché : " + droppedTool.name);
