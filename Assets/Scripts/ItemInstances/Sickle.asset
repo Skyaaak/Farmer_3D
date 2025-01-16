@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5774d819f65697647a7d771ac551045e, type: 3}
   m_Name: Sickle
   m_EditorClassIdentifier: 
-  nameItem: Faucille
+  nameItem: Sickle
   description: 
   type: 0
   visuel: {fileID: 21300000, guid: 7f0449a7d63b00742ad251935792304b, type: 3}

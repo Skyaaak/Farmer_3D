@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5774d819f65697647a7d771ac551045e, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: 
-  nameItem: Carotte
+  nameItem: Carrot
   description: 
   type: 1
   visuel: {fileID: 21300000, guid: 1e3c7e28fd64c0945b163d7478073bf0, type: 3}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5774d819f65697647a7d771ac551045e, type: 3}
   m_Name: Hoe
   m_EditorClassIdentifier: 
-  nameItem: Houe
+  nameItem: Hoe
   description: 
   type: 0
   visuel: {fileID: 21300000, guid: 4632e854ef0ee934885e0953c49553e6, type: 3}

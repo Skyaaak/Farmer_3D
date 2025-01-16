@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 //Fonction permettant l'interaction avec les objets
 public class InteractWithItem : MonoBehaviour
@@ -36,6 +34,9 @@ public class InteractWithItem : MonoBehaviour
     private TextMeshProUGUI textMoneyJour;
 
     [SerializeField]
+    private UnityEngine.UI.Button endButton;
+
+    [SerializeField]
     private GameObject inventaire;
 
     // Update is called once per frame
@@ -55,16 +56,7 @@ public class InteractWithItem : MonoBehaviour
 
                 if (inventory.HaveSpace(itemSee))
                 {
-                    var endText = "";
-                    switch (itemSee.type)
-                    {
-                        case ItemType.Ressource: endText = "la " + itemSee.nameItem; break;
-                        case ItemType.Tool: endText = "la " + itemSee.nameItem; break;
-                        case ItemType.Seed: endText = "le sac de graines de " + itemSee.seed.typeOfSeed; break;
-                        case ItemType.Sappling: endText = "la pousse de " + itemSee.sappling.getTypeOfSappling(); break;
-                    }
-
-                    text.text = "Appuyez sur E pour ramasser " + endText;
+                    text.text = LanguageManager.Instance.GetTranslation("pressToPickUp") + LanguageManager.Instance.GetTranslation(itemSee.nameItem.ToLower() + "Gender"); ;
 
                     if (Input.GetKeyDown(KeyCode.E))
                     {
@@ -74,7 +66,7 @@ public class InteractWithItem : MonoBehaviour
                 }
                 else
                 {
-                    text.text = "Inventaire plein";
+                    text.text = LanguageManager.Instance.GetTranslation("inventoryFull");
                 }
                 
             }
@@ -86,7 +78,7 @@ public class InteractWithItem : MonoBehaviour
                 if (fullGrownItem.GetToolRequired() == null || inventory.toolEquipped == fullGrownItem.GetToolRequired())
                 {
                     //Si on as la Faucille on donne la possibilit� de r�colter
-                    text.text = "Appuyer sur E pour r�colter";
+                    text.text = LanguageManager.Instance.GetTranslation("pressToHarvest");
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
@@ -106,11 +98,9 @@ public class InteractWithItem : MonoBehaviour
                                 {
                                     //On modifie l�g�rement sa position pour qu'il soit ramassable
                                     Vector3 newPos = harvestable.transform.position;
-                                    print("avant changement: " + newPos);
                                     newPos.z += ressource.itemData.prefab.transform.position.z;
                                     newPos.y += ressource.itemData.prefab.transform.position.y;
                                     newPos.x += 0.5f;
-                                    print("apr�s changement: " + newPos);
                                     instantiatedRessource.transform.position = newPos;
                                 }
                                 else
@@ -129,7 +119,7 @@ public class InteractWithItem : MonoBehaviour
                 //Si on as pas l'objet ad�quat on affiche le text n�cessaire
                 else
                 {
-                    text.text = "Il vous faut l'outil "+ fullGrownItem.GetToolRequired().nameItem + " pour r�colter";
+                    text.text = LanguageManager.Instance.GetTranslation("needTool") + LanguageManager.Instance.GetTranslation(fullGrownItem.GetToolRequired().nameItem.ToLower()) + LanguageManager.Instance.GetTranslation("toHarvest");
                 }
             }
             if (hit.transform.CompareTag("CapsuleDirt"))
@@ -140,9 +130,9 @@ public class InteractWithItem : MonoBehaviour
                 if (!dirtSee.plowed)
                 {
                     //Si elle n'est pas labour� on regarde si on as la houe pour donner la possibilit� de labourer
-                    if (inventory.toolEquipped?.nameItem == "Houe")
+                    if (inventory.toolEquipped?.nameItem == "Hoe")
                     {
-                        text.text = "Appuyez sur E pour labourré";
+                        text.text = LanguageManager.Instance.GetTranslation("pressToPlow");
                         if (Input.GetKeyDown(KeyCode.E))
                         {
                             dirtSee.isGettingPlowed();
@@ -150,7 +140,7 @@ public class InteractWithItem : MonoBehaviour
                     }
                     else
                     {
-                        text.text = "Prenez la houe pour labourrer";
+                        text.text = LanguageManager.Instance.GetTranslation("toolToPlow");
                     }
                 }
                 else
@@ -164,7 +154,7 @@ public class InteractWithItem : MonoBehaviour
 
                         if (inventory.toolEquipped?.type == ItemType.Seed)
                         {
-                            text.text = "Appuyez sur E pour planter les graines";
+                            text.text = LanguageManager.Instance.GetTranslation("pressToSeed");
                             if (Input.GetKeyDown(KeyCode.E))
                             {
                                 SeedData seed = inventory.toolEquipped.seed;
@@ -173,7 +163,7 @@ public class InteractWithItem : MonoBehaviour
                         }
                         else
                         {
-                            text.text = "Prenez des graines pour les planter";
+                            text.text = LanguageManager.Instance.GetTranslation("seedToSeed");
                         }
 
                     }
@@ -182,11 +172,11 @@ public class InteractWithItem : MonoBehaviour
                         //Si on a déjà planté quelque chose on regarde si on peut ramasser
                         if (!harvestableSee.isHarvestable)
                         {
-                            text.text = harvestableSee.type + " planté depuis " + (harvestableSee.dayTracker == 0 ? "aujourd'hui" : harvestableSee.dayTracker + (harvestableSee.dayTracker > 1 ? " jours" : " jour"));
+                            text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (harvestableSee.dayTracker == 0 ? LanguageManager.Instance.GetTranslation("today") : harvestableSee.dayTracker + (harvestableSee.dayTracker > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
                         }
                         else
                         {
-                            text.text = harvestableSee.type + " ramassable";
+                            text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
                         }
 
                     }
@@ -195,7 +185,7 @@ public class InteractWithItem : MonoBehaviour
             }
             if (hit.transform.CompareTag("Door"))
             {
-                text.text = "Appuyez sur E pour terminer la journé";
+                text.text = LanguageManager.Instance.GetTranslation("pressToSleep");
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
@@ -204,18 +194,20 @@ public class InteractWithItem : MonoBehaviour
                     menuDeNuit.SetActive(true);
                     //On désactive le mouvement de la caméra et on réactive la souris
                     Time.timeScale = 0;
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
+                    UnityEngine.Cursor.visible = true;
+                    UnityEngine.Cursor.lockState = CursorLockMode.None;
                     //On change le text pour afficher le jour et on lance le nouveau jour
-                    textNumeroJour.text = "Fin du jour " + gameController.days;
-                    textMoneyJour.text = "Argent gagn� pendant la journ�e: " + gameController.moneyWin;
+                    textNumeroJour.text = LanguageManager.Instance.GetTranslation("endDay") + gameController.days;
+                    textMoneyJour.text = LanguageManager.Instance.GetTranslation("moneyWin") + gameController.moneyWin;
+                    var textendButton = endButton.GetComponentInChildren<TextMeshProUGUI>();
+                    textendButton.text = LanguageManager.Instance.GetTranslation("endRecap");
                     gameController.NewDay();
                 }
             }
             if (hit.transform.CompareTag("Pickable"))
             {
                 //Si on as la Houe on donne la possibilit� de r�colter
-                text.text = "Appuyer sur E pour ceuillir les fruits";
+                text.text = LanguageManager.Instance.GetTranslation("pressToShake");
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
@@ -267,18 +259,18 @@ public class InteractWithItem : MonoBehaviour
                 {
                     if (!treeLand.isPickable())
                     {
-                        text.text = treeLand.getTreeName() + " plant� depuis " + (treeLand.daySincePlantation() == 0 ? "aujourd'hui" : treeLand.daySincePlantation() + (treeLand.daySincePlantation() > 1 ? " jours" : " jour"));
+                        text.text = LanguageManager.Instance.GetTranslation(treeLand.getTreeName().ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (treeLand.daySincePlantation() == 0 ? LanguageManager.Instance.GetTranslation("today") : treeLand.daySincePlantation() + (treeLand.daySincePlantation() > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
                     }
                     else
                     {
-                        text.text = treeLand.getTreeName() + " ramassable";
+                        text.text = LanguageManager.Instance.GetTranslation(treeLand.getTreeName().ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
                     }
                 }
                 else
                 {
                     if (inventory.toolEquipped?.type == ItemType.Sappling)
                     {
-                        text.text = "Appuyez sur E pour planter l'arbre";
+                        text.text = LanguageManager.Instance.GetTranslation("pressToPlant");
                         if (Input.GetKeyDown(KeyCode.E))
                         {
                             SapplingData sappling = inventory.toolEquipped.sappling;
@@ -287,7 +279,7 @@ public class InteractWithItem : MonoBehaviour
                     }
                     else
                     {
-                        text.text = "Equipez une pousse d'arbre pour planter";
+                        text.text = LanguageManager.Instance.GetTranslation("takeSappling");
                     }
                 }
             }
