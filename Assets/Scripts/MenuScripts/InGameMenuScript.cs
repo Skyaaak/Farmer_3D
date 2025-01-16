@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Unity.VisualScripting.Icons;
 
 public class InGameMenuScript : MonoBehaviour
 {
@@ -47,7 +48,17 @@ public class InGameMenuScript : MonoBehaviour
 
     public void onClickSave()
     {
+        Inventory inventaire = FindAnyObjectByType<Inventory>();
+        SaveInventoryManager.SaveJsonData(new List<ISaveable> { inventaire });
         saveText.text = LanguageManager.Instance.GetTranslation("saveSuccess");
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerPrefs.SetFloat("playerX", player.transform.position.x);
+        PlayerPrefs.SetFloat("playerY", player.transform.position.y);
+        PlayerPrefs.SetFloat("playerZ", player.transform.position.z);
+        PlayerPrefs.SetFloat("playerRotationY", player.transform.rotation.y);
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+        PlayerPrefs.SetFloat("cameraX", camera.transform.position.x);
     }
 
     public void onClickQuit()
