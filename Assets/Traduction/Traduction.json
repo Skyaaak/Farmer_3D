@@ -73,7 +73,12 @@
     "pressToShake": "Press E to shake the tree",
     "pressToPlant": "Press E to plant Sappling",
     "takeSappling": "Take a Sappling to plant it",
-    "endRecap": "End the summary"
+    "endRecap": "End the summary",
+    "resume":"Resume",
+    "quit": "Leave",
+    "save": "Save",
+    "saveSuccess": "Save successful!",
+    "saveFail": "Save failed!"
   },
   "fr": {
     "welcome": "Bienvenue sur Farmer 3D!",
@@ -149,6 +154,11 @@
     "pressToShake": "Appuyer sur E pour secouer l'arbre",
     "pressToPlant": "Appuyer sur E pour planter la pousse",
     "takeSappling": "Equipez une pousse d'arbre pour planter",
-    "endRecap": "Terminer le récap"
+    "endRecap": "Terminer le récap",
+    "resume":"Reprendre",
+    "quit": "Quitter",
+    "save": "Sauvegarder",
+    "saveSuccess": "Sauvegarde réussi!",
+    "saveFail": "Sauvegarde échouée!"
   }
 }
