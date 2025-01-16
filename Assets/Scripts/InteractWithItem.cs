@@ -307,7 +307,7 @@ public class InteractWithItem : MonoBehaviour
 
             // Positionne l'objet juste devant le joueur
             Vector3 dropPosition = transform.position + transform.forward * 1.0f; // Position devant le joueur
-            dropPosition.y = transform.position.y + 1.0f; // Légèrement au-dessus du sol
+            dropPosition.y = transform.position.y - 1.0f; // Légèrement au-dessus du sol
             droppedTool.transform.position = dropPosition;
 
             // Ajoute un Rigidbody pour que l'objet tombe au sol
