@@ -24,6 +24,8 @@ public class InGameMenuScript : MonoBehaviour
     private Button btnOption;
     [SerializeField]
     private Button btnQuit;
+    [SerializeField]
+    private GameController gameController;
 
     void Start()
     {
@@ -57,8 +59,9 @@ public class InGameMenuScript : MonoBehaviour
         PlayerPrefs.SetFloat("playerY", player.transform.position.y);
         PlayerPrefs.SetFloat("playerZ", player.transform.position.z);
         PlayerPrefs.SetFloat("playerRotationY", player.transform.rotation.y);
-        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-        PlayerPrefs.SetFloat("cameraX", camera.transform.position.x);
+        PlayerPrefs.SetInt("money", MainManager.Instance.GetMoney());
+        PlayerPrefs.SetInt("actualDays", gameController.GetDays());
+        PlayerPrefs.SetInt("moneyWin", gameController.GetMoneyWin());
     }
 
     public void onClickQuit()
