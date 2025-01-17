@@ -1,4 +1,7 @@
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -45,13 +48,13 @@ public class InteractWithItem : MonoBehaviour
         RaycastHit hit;
         text.text = "";
 
-        //On utilse un rayon vers l'avant pour savoir si on regarde un objet avec lequel on peut intéragir
+        //On utilse un rayon vers l'avant pour savoir si on regarde un objet avec lequel on peut intÃ©ragir
         if (Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask))
         {
             //On regarde le tag de l'objet pour agir en fonction
             if (hit.transform.CompareTag("Item"))
             {
-                //Si c'est un item et qu'on à de la place, on donne la possibilité de le ramasser avec E
+                //Si c'est un item et qu'on Ã  de la place, on donne la possibilitÃ© de le ramasser avec E
                 ItemData itemSee = hit.transform.gameObject.GetComponent<Item>().item;
 
                 if (inventory.HaveSpace(itemSee))
@@ -74,29 +77,29 @@ public class InteractWithItem : MonoBehaviour
             {
                 FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
 
-                //Si c'est un harvestable, on regarde si il à besoin d'un objet pour être ramassé et si, le cas présent, l'objet nécessaire est l'objet équipé
+                //Si c'est un harvestable, on regarde si il ï¿½ besoin d'un objet pour ï¿½tre ramassï¿½ et si, le cas prï¿½sent, l'objet nï¿½cessaire est l'objet ï¿½quipï¿½
                 if (fullGrownItem.GetToolRequired() == null || inventory.toolEquipped == fullGrownItem.GetToolRequired())
                 {
-                    //Si on as la Faucille on donne la possibilité de récolter
+                    //Si on as la Faucille on donne la possibilitï¿½ de rï¿½colter
                     text.text = LanguageManager.Instance.GetTranslation("pressToHarvest");
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
 
-                        //On boucle sur chaque objet différent que peut dropper le plant
+                        //On boucle sur chaque objet diffÃ©rent que peut dropper le plant
                         for (int i = 0; i < fullGrownItem.harvestableItems.Length; i++)
                         {
                             Ressource ressource = fullGrownItem.harvestableItems[i];
 
-                            //Pour chaque ressource, on génère un nombre aléatoire entre le minimum et le maximum de ressources possible
+                            //Pour chaque ressource, on gÃ©nÃ¨re un nombre alÃ©atoire entre le minimum et le maximum de ressources possible
                             for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
                             {
                                 //On instancie un objet
                                 GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
 
-                                if(harvestable.plantType == PlantType.Plant)
+                                if (harvestable.plantType == PlantType.Plant)
                                 {
-                                    //On modifie légérement sa position pour qu'il soit ramassable
+                                    //On modifie lï¿½gï¿½rement sa position pour qu'il soit ramassable
                                     Vector3 newPos = harvestable.transform.position;
                                     newPos.z += ressource.itemData.prefab.transform.position.z;
                                     newPos.y += ressource.itemData.prefab.transform.position.y;
@@ -109,14 +112,14 @@ public class InteractWithItem : MonoBehaviour
                                     newPos.y += 0.2f;
                                     instantiatedRessource.transform.position = newPos;
                                 }
-                                
+
                             }
                         }
 
                         harvestable.isPickedUp();
                     }
                 }
-                //Si on as pas l'objet adéquat on affiche le text nécessaire
+                //Si on as pas l'objet adï¿½quat on affiche le text nï¿½cessaire
                 else
                 {
                     text.text = LanguageManager.Instance.GetTranslation("needTool") + LanguageManager.Instance.GetTranslation(fullGrownItem.GetToolRequired().nameItem.ToLower()) + LanguageManager.Instance.GetTranslation("toHarvest");
@@ -124,12 +127,12 @@ public class InteractWithItem : MonoBehaviour
             }
             if (hit.transform.CompareTag("CapsuleDirt"))
             {
-                //Si c'est une parcelle de terre on regarde si elle est labourée
+                //Si c'est une parcelle de terre on regarde si elle est labourÃ©e
                 Dirt dirtSee = hit.transform.gameObject.GetComponent<Dirt>();
-                
+
                 if (!dirtSee.plowed)
                 {
-                    //Si elle n'est pas labouré on regarde si on as la houe pour donner la possibilité de labourer
+                    //Si elle n'est pas labourï¿½ on regarde si on as la houe pour donner la possibilitï¿½ de labourer
                     if (inventory.toolEquipped?.nameItem == "Hoe")
                     {
                         text.text = LanguageManager.Instance.GetTranslation("pressToPlow");
@@ -147,10 +150,10 @@ public class InteractWithItem : MonoBehaviour
                 {
                     HarvestableInstance harvestableSee = hit.transform.gameObject.GetComponent<HarvestableInstance>();
 
-                    //Si la terre à été labourré on regarde si des graines ont été plantées
+                    //Si la terre Ã  Ã©tÃ© labourrÃ© on regarde si des graines ont Ã©tÃ© plantÃ©es
                     if (!harvestableSee.isPlanted)
                     {
-                        //Si on as pas déjà de graine plantées on en plante si on as des graines dans l'inventaire
+                        //Si on as pas dÃ©jÃ  de graine plantÃ©es on en plante si on as des graines dans l'inventaire
 
                         if (inventory.toolEquipped?.type == ItemType.Seed)
                         {
@@ -165,11 +168,11 @@ public class InteractWithItem : MonoBehaviour
                         {
                             text.text = LanguageManager.Instance.GetTranslation("seedToSeed");
                         }
-                        
+
                     }
                     else
                     {
-                        //Si on a déjà planté quelque chose on regarde si on peut ramasser
+                        //Si on a dÃ©jÃ  plantÃ© quelque chose on regarde si on peut ramasser
                         if (!harvestableSee.isHarvestable)
                         {
                             text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (harvestableSee.dayTracker == 0 ? LanguageManager.Instance.GetTranslation("today") : harvestableSee.dayTracker + (harvestableSee.dayTracker > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
@@ -178,9 +181,9 @@ public class InteractWithItem : MonoBehaviour
                         {
                             text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
                         }
-                        
+
                     }
-                   
+
                 }
             }
             if (hit.transform.CompareTag("Door"))
@@ -189,10 +192,10 @@ public class InteractWithItem : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //On désactive l'affichage de l'inventaire et on active l'affichage du menu de nuit
+                    //On dÃ©sactive l'affichage de l'inventaire et on active l'affichage du menu de nuit
                     inventaire.SetActive(false);
                     menuDeNuit.SetActive(true);
-                    //On désactive le mouvement de la caméra et on réactive la souris
+                    //On dÃ©sactive le mouvement de la camÃ©ra et on rÃ©active la souris
                     Time.timeScale = 0;
                     UnityEngine.Cursor.visible = true;
                     UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -207,19 +210,19 @@ public class InteractWithItem : MonoBehaviour
             }
             if (hit.transform.CompareTag("Pickable"))
             {
-                //Si on as la Houe on donne la possibilité de récolter
+                //Si on as la Houe on donne la possibilitï¿½ de rï¿½colter
                 text.text = LanguageManager.Instance.GetTranslation("pressToShake");
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
                     TreeLand treeLand = hit.transform.GetComponentInParent<TreeLand>();
 
-                    //On boucle sur chaque objet différent que peut dropper l'arbre
+                    //On boucle sur chaque objet diffï¿½rent que peut dropper l'arbre
                     for (int i = 0; i < fullGrownItem.harvestableItems.Length; i++)
                     {
                         Ressource ressource = fullGrownItem.harvestableItems[i];
 
-                        //Pour chaque ressource, on génère un nombre aléatoire entre le minimum et le maximum de ressources possible
+                        //Pour chaque ressource, on gï¿½nï¿½re un nombre alï¿½atoire entre le minimum et le maximum de ressources possible
                         for (int j = 0; j < Random.Range(ressource.minRessource, ressource.maxRessource); j++)
                         {
                             //On instancie un objet
@@ -288,6 +291,53 @@ public class InteractWithItem : MonoBehaviour
         else
         {
             //On ne regarde pas d'objet
+        }
+
+        // Appuyez sur R pour lÃ¢cher l'outil Ã©quipÃ©
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DropEquippedTool();
+        }
+    }
+
+
+    private void DropEquippedTool()
+    {
+        // VÃ©rifie si un outil est Ã©quipÃ©
+        if (inventory.toolEquipped != null)
+        {
+            // Instancie le prefab de l'outil
+            GameObject droppedTool = Instantiate(inventory.toolEquipped.prefab);
+
+            // Positionne l'objet juste devant le joueur
+            Vector3 dropPosition = transform.position + transform.forward * 1.0f; // Position devant le joueur
+            dropPosition.y = transform.position.y - 1.0f; // LÃ©gÃ¨rement au-dessus du sol
+            droppedTool.transform.position = dropPosition;
+
+            // Ajoute un Rigidbody pour que l'objet tombe au sol
+            if (droppedTool.GetComponent<Rigidbody>() == null)
+            {
+                Rigidbody rb = droppedTool.AddComponent<Rigidbody>();
+                rb.mass = 1.0f; // Vous pouvez ajuster la masse si nÃ©cessaire
+                rb.isKinematic = false;
+            } 
+            else
+            {
+                Rigidbody rb = droppedTool.GetComponent<Rigidbody>();
+                rb.mass = 1.0f; // Vous pouvez ajuster la masse si nÃ©cessaire
+                rb.isKinematic = false;
+            }
+
+            // Retire l'outil de l'inventaire
+            inventory.toolEquipped = null;
+            inventory.RefreshContent();
+
+            // Optionnel : Affiche un message pour confirmer
+            Debug.Log("Outil lÃ¢chÃ© : " + droppedTool.name);
+        }
+        else
+        {
+            Debug.Log("Aucun outil Ã©quipÃ© Ã  lÃ¢cher.");
         }
     }
 }

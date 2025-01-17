@@ -53,6 +53,9 @@ public class MenuScript : MonoBehaviour
     private TextMeshProUGUI pickup;
 
     [SerializeField]
+    private TextMeshProUGUI drop;
+
+    [SerializeField]
     private GameObject memoCommandes;
 
     [SerializeField]
@@ -162,6 +165,7 @@ public class MenuScript : MonoBehaviour
             right.text = LanguageManager.Instance.GetTranslation("right");
             showMenu.text = LanguageManager.Instance.GetTranslation("showMenu");
             pickup.text = LanguageManager.Instance.GetTranslation("pickup");
+            drop.text = LanguageManager.Instance.GetTranslation("drop");
         }
         else
         {

@@ -12,6 +12,7 @@
     "left": "A to move left",
     "showMenu": "Q to show the menu",
     "pickup": "E to pick up an item",
+    "drop": "R to drop an item",
     "changeLanguage": "Choose a new language",
     "languageBtn": "Change language >",
     "pressToPickUp": "Press E to pickup ",
@@ -78,7 +79,8 @@
     "quit": "Leave",
     "save": "Save",
     "saveSuccess": "Save successful!",
-    "saveFail": "Save failed!"
+    "saveFail": "Save failed!",
+    "pressToDrop": "Press R to drop the tool"
   },
   "fr": {
     "welcome": "Bienvenue sur Farmer 3D!",
@@ -93,6 +95,7 @@
     "left": "Q pour aller à gauche",
     "showMenu": "A pour afficher le menu",
     "pickup": "E pour ramasser un objet",
+    "drop": "R pour lacher un objet",
     "changeLanguage": "Choisir une nouvelle langue",
     "languageBtn": "Changer de langue >",
     "pressToPickUp": "Appuyer sur E pour ramasser ",
@@ -159,6 +162,7 @@
     "quit": "Quitter",
     "save": "Sauvegarder",
     "saveSuccess": "Sauvegarde réussi!",
-    "saveFail": "Sauvegarde échouée!"
+    "saveFail": "Sauvegarde échouée!",
+    "pressToDrop":"Appuyer sur R pour lacher l'outil"
   }
 }

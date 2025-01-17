@@ -108,7 +108,7 @@ public class Inventory : MonoBehaviour , ISaveable
     }
 
     //Fonction permettant de mettre à jour le visuel de l'inventaire
-    private void RefreshContent()
+    public void RefreshContent()
     {
         //On boucle sur chaque slot de l'inventaire et on remet l'affichage par défaut
         for (int i = 0; i < inventorySlotsParent.childCount; i++)
