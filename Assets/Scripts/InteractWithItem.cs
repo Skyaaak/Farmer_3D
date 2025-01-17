@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Assets.Scripts.MarketSystem;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -216,6 +217,8 @@ public class InteractWithItem : MonoBehaviour
                     Time.timeScale = 0;
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
+
+                    ChestMarket market = hit.transform.gameObject.GetComponent<ChestMarket>();
                 }
             }
         }
