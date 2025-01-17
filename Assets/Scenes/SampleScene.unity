@@ -5439,7 +5439,7 @@ MonoBehaviour:
   menuDeNuit: {fileID: 1863671839}
   textNumeroJour: {fileID: 1779359438}
   textMoneyJour: {fileID: 935185556}
-  endButton: {fileID: 0}
+  endButton: {fileID: 305595045}
   inventaire: {fileID: 1757750696}
 --- !u!1001 &964408795
 PrefabInstance:
@@ -10674,7 +10674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuDeNuit: {fileID: 1863671839}
   inventaire: {fileID: 1757750696}
-  playerBody: {fileID: 0}
+  playerBody: {fileID: 1680452284}
 --- !u!114 &1863671845
 MonoBehaviour:
   m_ObjectHideFlags: 0
