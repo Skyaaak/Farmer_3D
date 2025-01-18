@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29b65a33-11de-4f0a-beab-d0c154f22585" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MarketSystem/UIMarketController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MarketSystem/UIMarketController.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Farmer_3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Farmer_3D/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EconomicSystem/MoneySystem/MarketInteractor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EconomicSystem/MoneySystem/MarketInteractor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +112,7 @@
       <option name="presentableId" value="Default" />
       <updated>1736157050797</updated>
       <workItem from="1736157051472" duration="10868000" />
-      <workItem from="1737190412086" duration="2164000" />
+      <workItem from="1737190412086" duration="5249000" />
     </task>
     <task id="LOCAL-00001" summary="Add price system">
       <option name="closed" value="true" />
@@ -143,6 +143,7 @@
     <option name="unityProject" value="true" />
     <option name="unityProjectFolder" value="true" />
   </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Add price system" />
