@@ -10,10 +10,10 @@ using static UnityEditor.Progress;
 //Inventaire du joueur s�par� en deux partis:
 //La partie inventaire unique pour un outil ou un sac de graines
 //La partie inventaire classique pour les r�coltes
-public class Inventory : MonoBehaviour, MarketInteractor
+public class Inventory : MonoBehaviour, MarketInteractor ,ISaveable
 {
     [SerializeField]
-    public List<ItemInInventory> content = new List<ItemInInventory>();
+    public List<ItemInInventory> content;
 
     [SerializeField]
     public GameObject inventoryPanel;
@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour, MarketInteractor
 
     public void Start()
     {
+        SaveInventoryManager.LoadJsonData(new List<ISaveable> { this });
         RefreshContent();
     }
 
@@ -116,7 +117,7 @@ public class Inventory : MonoBehaviour, MarketInteractor
     }
 
     //Fonction permettant de mettre � jour le visuel de l'inventaire
-    private void RefreshContent()
+    public void RefreshContent()
     {
         //On boucle sur chaque slot de l'inventaire et on remet l'affichage par d�faut
         for (int i = 0; i < inventorySlotsParent.childCount; i++)
@@ -234,6 +235,30 @@ public class Inventory : MonoBehaviour, MarketInteractor
         
         return itemDetails;
     }
+
+    public string ToJson()
+    {
+        return JsonUtility.ToJson(this);
+    }
+
+    public void LoadFromJson(string a_Json)
+    {
+        JsonUtility.FromJsonOverwrite(a_Json, this);
+    }
+
+    public void PopulateInventory(Inventory a_SaveData)
+    {
+        a_SaveData.content = new List<ItemInInventory>(this.content);
+        a_SaveData.toolEquipped = this.toolEquipped;
+        a_SaveData.actualWeight = this.actualWeight;
+    }
+
+    public void LoadFromInventory(Inventory a_SaveData)
+    {
+        this.content = new List<ItemInInventory>(a_SaveData.content);
+        this.toolEquipped = a_SaveData.toolEquipped;
+        this.actualWeight = a_SaveData.actualWeight;
+    }
 }
 
 //Objet contenant l'item et le nombre d'item stock�
@@ -242,4 +267,10 @@ public class ItemInInventory
 {
     public ItemData itemData;
     public int count;
+}
+
+public interface ISaveable
+{
+    void PopulateInventory(Inventory a_SaveData);
+    void LoadFromInventory(Inventory a_SaveData);
 }

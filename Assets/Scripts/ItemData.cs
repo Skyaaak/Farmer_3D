@@ -21,5 +21,6 @@ public enum ItemType
 {
     Tool,
     Ressource,
-    Seed
+    Seed,
+    Sappling
 }

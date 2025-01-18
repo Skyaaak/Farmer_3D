@@ -17,5 +17,6 @@ MonoBehaviour:
   - {fileID: 8331122410249767392, guid: 1263c5c5f1c53d941996ba932a56be28, type: 3}
   - {fileID: 1941980279283757603, guid: 1ff530657f12e2944895de229213090e, type: 3}
   - {fileID: 4104555261407255546, guid: eb07454021a3bc2408af6bf243423f47, type: 3}
-  typeOfSeed: Tomate
+  typeOfSeed: Tomato
   dayBeforeGrowth: 1
+  plantType: 0
