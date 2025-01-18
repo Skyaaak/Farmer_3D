@@ -45,6 +45,9 @@ public class InteractWithItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textJourInventaire;
 
+    [SerializeField]
+    private TextMeshProUGUI textAmountMoney;
+
     // Update is called once per frame
     void Update()
     {
@@ -296,13 +299,14 @@ public class InteractWithItem : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    inventaire.SetActive(false);
-                    menuDeNuit.SetActive(false);
-                    menuMarket.SetActive(true);
-
                     Time.timeScale = 0;
                     UnityEngine.Cursor.visible = true;
                     UnityEngine.Cursor.lockState = CursorLockMode.None;
+
+                    inventaire.SetActive(false);
+                    menuMarket.SetActive(true);
+                    var amount = inventory.GetSellAmount();
+                    textAmountMoney.text = LanguageManager.Instance.GetTranslation("sellInventory") + amount;
                 }
             }
         }

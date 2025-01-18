@@ -80,7 +80,10 @@
     "save": "Save",
     "saveSuccess": "Save successful!",
     "saveFail": "Save failed!",
-    "pressToDrop": "Press R to drop the tool"
+    "pressToDrop": "Press R to drop the tool",
+    "sell": "Sell",
+    "sellInventory": "Sell all your inventory for ",
+    "cancel": "Cancel"
   },
   "fr": {
     "welcome": "Bienvenue sur Farmer 3D!",
@@ -163,6 +166,9 @@
     "save": "Sauvegarder",
     "saveSuccess": "Sauvegarde réussi!",
     "saveFail": "Sauvegarde échouée!",
-    "pressToDrop":"Appuyer sur R pour lacher l'outil"
+    "pressToDrop":"Appuyer sur R pour lacher l'outil",
+    "sell": "Vendre",
+    "sellInventory": "Vendre tout votre inventaire pour un total de ",
+    "cancel": "Annuler"
   }
 }
