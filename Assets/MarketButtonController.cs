@@ -14,6 +14,7 @@ public class MarketButtonController : MonoBehaviour
     //Fonction pour le click du bouton quitter
     public void ValidateButtonClick()
     {
+        Debug.Log("Validate button clicked");
         //On d�sactive le menu de nuit et on r�active l'affichage de l'inventaire
         menuMarket.SetActive(false);
         menuInventaire.SetActive(true);

@@ -132,17 +132,20 @@ public class Inventory : MonoBehaviour , ISaveable
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
 
-            //On ajoute les données nécessaire à l'affichage
-            currentSlot.item = content[i].itemData;
-            currentSlot.itemVisual.sprite = content[i].itemData.visuel;
-
-            //Si l'objet est stackable on affiche également le compteur
-            if (currentSlot.item.stackable)
+            if (content[i] != null)
             {
-                currentSlot.countText.enabled = true;
-                currentSlot.countText.text = content[i].count.ToString();
+                //On ajoute les données nécessaire à l'affichage
+                currentSlot.item = content[i].itemData;
+                currentSlot.itemVisual.sprite = content[i].itemData.visuel;
+
+                //Si l'objet est stackable on affiche également le compteur
+                if (currentSlot.item.stackable)
+                {
+                    currentSlot.countText.enabled = true;
+                    currentSlot.countText.text = content[i].count.ToString();
+                }
+                //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
             }
-            //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
         }
 
         //Si on as un outil équipé, on change l'affichage
@@ -229,9 +232,10 @@ public class Inventory : MonoBehaviour , ISaveable
 
     public void Sell()
     {
-        this.content.Clear();
         MainManager.Instance.AddMoney(GetSellAmount());
         moneyText.text = MainManager.Instance.GetMoney().ToString();
+        this.content.Clear();
+        RefreshContent();
     }
 
     public int GetSellAmount()
