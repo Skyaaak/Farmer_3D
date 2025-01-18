@@ -23,6 +23,7 @@ public class LanguageManager : MonoBehaviour
         }
     }
 
+    //Chargement des traductions depuis le fichier json
     private void LoadTranslations()
     {
         translations = new Dictionary<string, Dictionary<string, string>>();
@@ -34,8 +35,13 @@ public class LanguageManager : MonoBehaviour
         else { 
             Debug.LogError("Fichier de traduction non trouvé !"); 
         }
+        if (PlayerPrefs.HasKey("language"))
+        {
+            SetLanguage(PlayerPrefs.GetString("language"));
+        }
     }
 
+    //Initialisation du manager
     private void Awake()
     {
         if (manager == null)
@@ -52,6 +58,7 @@ public class LanguageManager : MonoBehaviour
         LoadTranslations();
     }
 
+    //Récupération de la traduction de la langue actuelle
     public string GetTranslation(string key)
     {
         if (translations.ContainsKey(currentLanguage) && translations[currentLanguage].ContainsKey(key))
@@ -61,11 +68,14 @@ public class LanguageManager : MonoBehaviour
         return "Error";
     }
 
+    //Changement de la langue dans les données du jeu
     public void SetLanguage(string language)
     {
         if (translations.ContainsKey(language))
         {
             currentLanguage = language;
+            //Sauvegarde de la langue pour les prochaines sessions
+            PlayerPrefs.SetString("language", language);
         }
         else
         {

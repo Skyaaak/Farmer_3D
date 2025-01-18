@@ -75,6 +75,11 @@
     "pressToPlant": "Press E to plant Sappling",
     "takeSappling": "Take a Sappling to plant it",
     "endRecap": "End the summary",
+    "resume":"Resume",
+    "quit": "Leave",
+    "save": "Save",
+    "saveSuccess": "Save successful!",
+    "saveFail": "Save failed!",
     "pressToDrop": "Press R to drop the tool"
   },
   "fr": {
@@ -153,6 +158,11 @@
     "pressToPlant": "Appuyer sur E pour planter la pousse",
     "takeSappling": "Equipez une pousse d'arbre pour planter",
     "endRecap": "Terminer le récap",
+    "resume":"Reprendre",
+    "quit": "Quitter",
+    "save": "Sauvegarder",
+    "saveSuccess": "Sauvegarde réussi!",
+    "saveFail": "Sauvegarde échouée!",
     "pressToDrop":"Appuyer sur R pour lacher l'outil"
   }
 }

@@ -5,10 +5,10 @@ using System.Linq;
 //Inventaire du joueur séparé en deux partis:
 //La partie inventaire unique pour un outil ou un sac de graines
 //La partie inventaire classique pour les récoltes
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour , ISaveable
 {
     [SerializeField]
-    public List<ItemInInventory> content = new List<ItemInInventory>();
+    public List<ItemInInventory> content;
 
     [SerializeField]
     public GameObject inventoryPanel;
@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
 
     public void Start()
     {
+        SaveInventoryManager.LoadJsonData(new List<ISaveable> { this });
         RefreshContent();
     }
 
@@ -197,6 +198,30 @@ public class Inventory : MonoBehaviour
         }
         
     }
+
+    public string ToJson()
+    {
+        return JsonUtility.ToJson(this);
+    }
+
+    public void LoadFromJson(string a_Json)
+    {
+        JsonUtility.FromJsonOverwrite(a_Json, this);
+    }
+
+    public void PopulateInventory(Inventory a_SaveData)
+    {
+        a_SaveData.content = new List<ItemInInventory>(this.content);
+        a_SaveData.toolEquipped = this.toolEquipped;
+        a_SaveData.actualWeight = this.actualWeight;
+    }
+
+    public void LoadFromInventory(Inventory a_SaveData)
+    {
+        this.content = new List<ItemInInventory>(a_SaveData.content);
+        this.toolEquipped = a_SaveData.toolEquipped;
+        this.actualWeight = a_SaveData.actualWeight;
+    }
 }
 
 //Objet contenant l'item et le nombre d'item stocké
@@ -205,4 +230,10 @@ public class ItemInInventory
 {
     public ItemData itemData;
     public int count;
+}
+
+public interface ISaveable
+{
+    void PopulateInventory(Inventory a_SaveData);
+    void LoadFromInventory(Inventory a_SaveData);
 }

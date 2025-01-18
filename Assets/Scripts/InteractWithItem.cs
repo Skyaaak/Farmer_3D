@@ -39,6 +39,9 @@ public class InteractWithItem : MonoBehaviour
     [SerializeField]
     private GameObject inventaire;
 
+    [SerializeField]
+    private TextMeshProUGUI textJourInventaire;
+
     // Update is called once per frame
     void Update()
     {
@@ -197,11 +200,12 @@ public class InteractWithItem : MonoBehaviour
                     UnityEngine.Cursor.visible = true;
                     UnityEngine.Cursor.lockState = CursorLockMode.None;
                     //On change le text pour afficher le jour et on lance le nouveau jour
-                    textNumeroJour.text = LanguageManager.Instance.GetTranslation("endDay") + gameController.days;
-                    textMoneyJour.text = LanguageManager.Instance.GetTranslation("moneyWin") + gameController.moneyWin;
+                    textNumeroJour.text = LanguageManager.Instance.GetTranslation("endDay") + gameController.GetDays();
+                    textMoneyJour.text = LanguageManager.Instance.GetTranslation("moneyWin") + gameController.GetMoneyWin();
                     var textendButton = endButton.GetComponentInChildren<TextMeshProUGUI>();
                     textendButton.text = LanguageManager.Instance.GetTranslation("endRecap");
                     gameController.NewDay();
+                    textJourInventaire.text = gameController.GetDays().ToString();
                 }
             }
             if (hit.transform.CompareTag("Pickable"))

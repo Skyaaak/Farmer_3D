@@ -1,12 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
 
-    public int days = 1;
-    public int moneyWin = 0;
+    private int days = 1;
+    private int moneyWin = 0;
+    [SerializeField]
+    private TextMeshProUGUI moneyText;
+    [SerializeField]
+    private TextMeshProUGUI textJourInventaire;
+
+    public void Start()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (PlayerPrefs.HasKey("playerX"))
+        {
+            var actualPlayerRotation = player.transform.rotation;
+            player.transform.position = new Vector3(PlayerPrefs.GetFloat("playerX"), PlayerPrefs.GetFloat("playerY"), PlayerPrefs.GetFloat("playerZ"));
+            player.transform.rotation = new Quaternion(actualPlayerRotation.x, PlayerPrefs.GetFloat("playerRotationY"), actualPlayerRotation.z, actualPlayerRotation.w);
+            MainManager.Instance.AddMoney(PlayerPrefs.GetInt("money"));
+            days = PlayerPrefs.GetInt("actualDays");
+            moneyWin = PlayerPrefs.GetInt("moneyWin");
+            moneyText.text = MainManager.Instance.GetMoney().ToString();
+            textJourInventaire.text = days.ToString();
+        }
+    }
 
     //Fonction pour le changement de jour
     public void NewDay()
@@ -39,4 +60,28 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
+    public void AddMoney(int amount)
+    {
+        moneyWin += amount;
+        MainManager.Instance.AddMoney(amount);
+        moneyText.text = MainManager.Instance.GetMoney().ToString();
+    }
+
+    public void SpendMoney(int amount)
+    {
+        MainManager.Instance.SpendMoney(amount);
+        moneyText.text = MainManager.Instance.GetMoney().ToString();
+    }
+
+    public int GetMoneyWin()
+    {
+        return moneyWin;
+    }
+
+    public int GetDays()
+    {
+        return days;
+    }
+
 }
