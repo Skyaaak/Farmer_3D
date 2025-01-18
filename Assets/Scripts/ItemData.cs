@@ -12,6 +12,7 @@ public class ItemData : ScriptableObject
     public GameObject prefab;
     public bool stackable;
     public int weight;
+    public int price;
     public SeedData seed;
     public SapplingData sappling;
 }

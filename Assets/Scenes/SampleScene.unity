@@ -11665,6 +11665,7 @@ MonoBehaviour:
   toolEquipped: {fileID: 0}
   toolSlot: {fileID: 254986112}
   inventorySlotsParent: {fileID: 323728503}
+  moneyText: {fileID: 408129831}
   actualWeight: 0
   emptySlotVisual: {fileID: 0}
 --- !u!4 &1613769356

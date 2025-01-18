@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 //Inventaire du joueur séparé en deux partis:
 //La partie inventaire unique pour un outil ou un sac de graines
@@ -20,6 +21,9 @@ public class Inventory : MonoBehaviour , ISaveable
 
     [SerializeField]
     private Transform inventorySlotsParent;
+
+    [SerializeField]
+    private TextMeshProUGUI moneyText;
 
     const int maxSize = 5;
     const int maxWeight = 10000;
@@ -221,6 +225,24 @@ public class Inventory : MonoBehaviour , ISaveable
         this.content = new List<ItemInInventory>(a_SaveData.content);
         this.toolEquipped = a_SaveData.toolEquipped;
         this.actualWeight = a_SaveData.actualWeight;
+    }
+
+    public void Sell()
+    {
+        this.content.Clear();
+        MainManager.Instance.AddMoney(GetSellAmount());
+        moneyText.text = MainManager.Instance.GetMoney().ToString();
+    }
+
+    public int GetSellAmount()
+    {
+        int price = 0;
+        foreach (ItemInInventory itemInInventory in this.content)
+        {
+            price += itemInInventory.itemData.price * itemInInventory.count;
+        }
+
+        return price;
     }
 }
 
