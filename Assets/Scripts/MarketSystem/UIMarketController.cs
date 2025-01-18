@@ -8,17 +8,20 @@ namespace Assets.Scripts.MarketSystem
 {
     public class UIMarketController: MonoBehaviour
     {
-        private MarketInteractor interactor;
-        [SerializeField] private 
+        [SerializeField] private Inventory inventory;
         [SerializeField] private TextMeshProUGUI text;
 
         private void Awake()
         {
-            interactor = GetComponent<MarketInteractor>();
         }
+
+        private void Start()
+        {
+            text.text = "Vous allez vendre pour un total de " + inventory.GetSellAmount() + " pièces";
+        }
+
         private void Update()
         {
-            text.text = "Vous allez vendre pour un total de " + interactor.GetSellAmount() + " pièces";
         }
     }
 }
