@@ -209,24 +209,30 @@ public class Inventory : MonoBehaviour, MarketInteractor
 
     public void Sell()
     {
-        float priceToAdd = 0;
-        foreach (ItemInInventory itemInInventory in this.content)
-        {
-            priceToAdd += itemInInventory.itemData.price * itemInInventory.count;            
-        }
-        
         this.content.Clear();
-        this.moneyInPocket.AddMoney(priceToAdd);
+        this.moneyInPocket.AddMoney(GetSellAmount());
     }
 
     public float GetSellAmount()
     {
+        float price = 0;
+        foreach (ItemInInventory itemInInventory in this.content)
+        {
+            price += itemInInventory.itemData.price * itemInInventory.count;            
+        }
         
+        return price;
     }
 
     public List<itemDetail> GetSellDetail()
     {
-        throw new NotImplementedException();
+        List<itemDetail> itemDetails = new List<itemDetail>();
+        foreach (ItemInInventory itemInInventory in content)
+        {
+            itemDetails.Add(new itemDetail(itemInInventory.itemData, itemInInventory.count));
+        }
+        
+        return itemDetails;
     }
 }
 

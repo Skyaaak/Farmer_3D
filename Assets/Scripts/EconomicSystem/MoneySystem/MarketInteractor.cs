@@ -6,7 +6,7 @@ namespace EconomicSystem.MoneySystem
     public interface MarketInteractor
     {
         public void Sell();
-        public void GetSellAmount();
+        public float GetSellAmount();
         public List<itemDetail> GetSellDetail();
     }
 
@@ -14,5 +14,11 @@ namespace EconomicSystem.MoneySystem
     {
         public ItemData item;
         public int amount;
+
+        public itemDetail(ItemData itemData, int count)
+        {
+            this.item = itemData;
+            this.amount = count;
+        }
     }
 }
