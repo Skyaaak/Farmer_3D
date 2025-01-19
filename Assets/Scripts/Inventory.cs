@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 //Inventaire du joueur séparé en deux partis:
 //La partie inventaire unique pour un outil ou un sac de graines
@@ -20,6 +21,9 @@ public class Inventory : MonoBehaviour , ISaveable
 
     [SerializeField]
     private Transform inventorySlotsParent;
+
+    [SerializeField]
+    private TextMeshProUGUI moneyText;
 
     const int maxSize = 5;
     const int maxWeight = 10000;
@@ -128,17 +132,20 @@ public class Inventory : MonoBehaviour , ISaveable
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
 
-            //On ajoute les données nécessaire à l'affichage
-            currentSlot.item = content[i].itemData;
-            currentSlot.itemVisual.sprite = content[i].itemData.visuel;
-
-            //Si l'objet est stackable on affiche également le compteur
-            if (currentSlot.item.stackable)
+            if (content[i] != null)
             {
-                currentSlot.countText.enabled = true;
-                currentSlot.countText.text = content[i].count.ToString();
+                //On ajoute les données nécessaire à l'affichage
+                currentSlot.item = content[i].itemData;
+                currentSlot.itemVisual.sprite = content[i].itemData.visuel;
+
+                //Si l'objet est stackable on affiche également le compteur
+                if (currentSlot.item.stackable)
+                {
+                    currentSlot.countText.enabled = true;
+                    currentSlot.countText.text = content[i].count.ToString();
+                }
+                //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
             }
-            //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
         }
 
         //Si on as un outil équipé, on change l'affichage
@@ -221,6 +228,25 @@ public class Inventory : MonoBehaviour , ISaveable
         this.content = new List<ItemInInventory>(a_SaveData.content);
         this.toolEquipped = a_SaveData.toolEquipped;
         this.actualWeight = a_SaveData.actualWeight;
+    }
+
+    public void Sell()
+    {
+        MainManager.Instance.AddMoney(GetSellAmount());
+        moneyText.text = MainManager.Instance.GetMoney().ToString();
+        this.content.Clear();
+        RefreshContent();
+    }
+
+    public int GetSellAmount()
+    {
+        int price = 0;
+        foreach (ItemInInventory itemInInventory in this.content)
+        {
+            price += itemInInventory.itemData.price * itemInInventory.count;
+        }
+
+        return price;
     }
 }
 

@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
             var actualPlayerRotation = player.transform.rotation;
             player.transform.position = new Vector3(PlayerPrefs.GetFloat("playerX"), PlayerPrefs.GetFloat("playerY"), PlayerPrefs.GetFloat("playerZ"));
             player.transform.rotation = new Quaternion(actualPlayerRotation.x, PlayerPrefs.GetFloat("playerRotationY"), actualPlayerRotation.z, actualPlayerRotation.w);
-            MainManager.Instance.AddMoney(PlayerPrefs.GetInt("money"));
             days = PlayerPrefs.GetInt("actualDays");
             moneyWin = PlayerPrefs.GetInt("moneyWin");
             moneyText.text = MainManager.Instance.GetMoney().ToString();

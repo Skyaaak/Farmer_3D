@@ -28,6 +28,9 @@ public class InteractWithItem : MonoBehaviour
     private GameObject menuDeNuit;
 
     [SerializeField]
+    private GameObject menuMarket;
+
+    [SerializeField]
     private TextMeshProUGUI textNumeroJour;
 
     [SerializeField]
@@ -41,6 +44,9 @@ public class InteractWithItem : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI textJourInventaire;
+
+    [SerializeField]
+    private TextMeshProUGUI textAmountMoney;
 
     // Update is called once per frame
     void Update()
@@ -285,6 +291,22 @@ public class InteractWithItem : MonoBehaviour
                     {
                         text.text = LanguageManager.Instance.GetTranslation("takeSappling");
                     }
+                }
+            }
+            if (hit.transform.CompareTag("Market"))
+            {
+                text.text = "Appuyer sur E pour ouvrir l'interface de vente.";
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Time.timeScale = 0;
+                    UnityEngine.Cursor.visible = true;
+                    UnityEngine.Cursor.lockState = CursorLockMode.None;
+
+                    inventaire.SetActive(false);
+                    menuMarket.SetActive(true);
+                    var amount = inventory.GetSellAmount();
+                    textAmountMoney.text = LanguageManager.Instance.GetTranslation("sellInventory") + amount;
                 }
             }
         }
