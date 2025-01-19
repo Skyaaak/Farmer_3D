@@ -83,7 +83,8 @@
     "pressToDrop": "Press R to drop the tool",
     "sell": "Sell",
     "sellInventory": "Sell all your inventory for ",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "pressToMarket": "Press E to open the market interface"
   },
   "fr": {
     "welcome": "Bienvenue sur Farmer 3D!",
@@ -169,6 +170,7 @@
     "pressToDrop":"Appuyer sur R pour lacher l'outil",
     "sell": "Vendre",
     "sellInventory": "Vendre tout votre inventaire pour un total de ",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "pressToMarket": "Appuyer sur E pour ouvrir l'interface de vente"
   }
 }

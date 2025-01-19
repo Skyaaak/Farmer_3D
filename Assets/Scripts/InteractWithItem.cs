@@ -1,10 +1,6 @@
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 //Fonction permettant l'interaction avec les objets
 public class InteractWithItem : MonoBehaviour
@@ -295,7 +291,7 @@ public class InteractWithItem : MonoBehaviour
             }
             if (hit.transform.CompareTag("Market"))
             {
-                text.text = "Appuyer sur E pour ouvrir l'interface de vente.";
+                text.text = LanguageManager.Instance.GetTranslation("pressToMarket");
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
