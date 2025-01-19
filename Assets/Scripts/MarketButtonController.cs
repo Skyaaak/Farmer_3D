@@ -17,6 +17,8 @@ public class MarketButtonController : MonoBehaviour
     private Button validButton;
     [SerializeField]
     private Button cancelButton;
+    [SerializeField]
+    private GameObject detailContainer;
 
     //Fonction pour le d�marrage de la fen�tre de vente
     public void Start()
@@ -27,6 +29,22 @@ public class MarketButtonController : MonoBehaviour
         var textCancel = cancelButton.GetComponentInChildren<TextMeshProUGUI>();
         textValid.text = LanguageManager.Instance.GetTranslation("sell");
         textCancel.text = LanguageManager.Instance.GetTranslation("cancel");
+
+        var listOfDetail = detailContainer.GetComponentsInChildren<SellDetail>();
+        var listOfItem = inventory.GetContent();
+        for (int i = 0; i < listOfDetail.Length; i++)
+        {
+            if(i >= listOfItem.Count)
+            {
+                listOfDetail[i].clearDetail();
+            }
+            else
+            {
+                var nameItem = listOfItem[i].count > 1 ? LanguageManager.Instance.GetTranslation(listOfItem[i].itemData.name.ToLower()+"Plural") : LanguageManager.Instance.GetTranslation(listOfItem[i].itemData.name.ToLower());
+                listOfDetail[i].setDetail(listOfItem[i].count + " " + nameItem);
+                listOfDetail[i].setPrice((listOfItem[i].count * listOfItem[i].itemData.price).ToString());
+            }
+        }
     }
 
     //Fonction pour le click du bouton quitter
