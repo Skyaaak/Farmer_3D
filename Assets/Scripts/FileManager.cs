@@ -32,7 +32,7 @@ public static class FileManager
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to read from {fullPath} with exception {e}");
+            Debug.Log("Pas de fichier de sauvegarde");
             result = "";
             return false;
         }

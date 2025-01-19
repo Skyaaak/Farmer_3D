@@ -505,7 +505,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 37978117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bed94ae78b0cd799ba5d72fadb614f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 052b9435a8e84c145ad1ce554bf5ee75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menuMarket: {fileID: 37978117}
@@ -3423,7 +3423,7 @@ GameObject:
   - component: {fileID: 389580127}
   - component: {fileID: 389580126}
   m_Layer: 0
-  m_Name: Button
+  m_Name: ValidButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
