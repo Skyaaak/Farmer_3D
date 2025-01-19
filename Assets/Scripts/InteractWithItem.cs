@@ -295,7 +295,7 @@ public class InteractWithItem : MonoBehaviour
             }
             if (hit.transform.CompareTag("Market"))
             {
-                text.text = "Appuyer sur E pour ouvrir l'interface de vente.";
+                text.text = LanguageManager.Instance.GetTranslation("pressToMarket");
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
