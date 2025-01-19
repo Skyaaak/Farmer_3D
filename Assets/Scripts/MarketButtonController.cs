@@ -34,13 +34,32 @@ public class MarketButtonController : MonoBehaviour
         var listOfItem = inventory.GetContent();
         for (int i = 0; i < listOfDetail.Length; i++)
         {
-            if(i >= listOfItem.Count)
+            if (i >= listOfItem.Count)
             {
                 listOfDetail[i].clearDetail();
             }
             else
             {
                 var nameItem = listOfItem[i].count > 1 ? LanguageManager.Instance.GetTranslation(listOfItem[i].itemData.name.ToLower()+"Plural") : LanguageManager.Instance.GetTranslation(listOfItem[i].itemData.name.ToLower());
+                listOfDetail[i].setDetail(listOfItem[i].count + " " + nameItem);
+                listOfDetail[i].setPrice((listOfItem[i].count * listOfItem[i].itemData.price).ToString());
+            }
+        }
+    }
+
+    public void OnEnable()
+    {
+        var listOfDetail = detailContainer.GetComponentsInChildren<SellDetail>();
+        var listOfItem = inventory.GetContent();
+        for (int i = 0; i < listOfDetail.Length; i++)
+        {
+            if (i >= listOfItem.Count)
+            {
+                listOfDetail[i].clearDetail();
+            }
+            else
+            {
+                var nameItem = listOfItem[i].count > 1 ? LanguageManager.Instance.GetTranslation(listOfItem[i].itemData.name.ToLower() + "Plural") : LanguageManager.Instance.GetTranslation(listOfItem[i].itemData.name.ToLower());
                 listOfDetail[i].setDetail(listOfItem[i].count + " " + nameItem);
                 listOfDetail[i].setPrice((listOfItem[i].count * listOfItem[i].itemData.price).ToString());
             }
