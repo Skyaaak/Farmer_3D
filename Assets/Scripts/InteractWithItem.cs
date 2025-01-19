@@ -1,10 +1,6 @@
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 //Fonction permettant l'interaction avec les objets
 public class InteractWithItem : MonoBehaviour
