@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// Classe contenant les données du menu in-game et les fonctions de ses boutons
 public class InGameMenuScript : MonoBehaviour
 {
     [SerializeField]
@@ -31,6 +32,7 @@ public class InGameMenuScript : MonoBehaviour
         changeLanguage();
     }
 
+    // Fonction permettant de fermer le menu in-game
     public void onClickResume()
     {
         Cursor.visible = false;
@@ -40,12 +42,14 @@ public class InGameMenuScript : MonoBehaviour
         menuInGame.SetActive(false);
     }
 
+    //Fonction permettant d'ouvrir le menu option
     public void onClickOption()
     {
         menuOption.SetActive(true);
         menuInGame.SetActive(false);
     }
 
+    //Fonction permettant de sauvegarder les données du joueur
     public void onClickSave()
     {
         Inventory inventaire = FindAnyObjectByType<Inventory>();
@@ -62,11 +66,13 @@ public class InGameMenuScript : MonoBehaviour
         PlayerPrefs.SetInt("moneyWin", gameController.GetMoneyWin());
     }
 
+    //Fonction permettant de revenir au menu principal
     public void onClickQuit()
     {
         SceneManager.LoadScene("MenuScene");
     }
 
+    //Fonction permettant d'adapter le texte en fonction de la langue choisie
     private void changeLanguage()
     {
         var textQuitter = btnQuit.GetComponentInChildren<TextMeshProUGUI>();

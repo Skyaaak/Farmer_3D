@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//Classe contenant chaque terrain cultivable
 public class Harvestable : MonoBehaviour
 {
     public GameObject[] statesOfGrowth;
@@ -15,12 +14,6 @@ public class Harvestable : MonoBehaviour
     public PlantType plantType;
     [SerializeField]
     private Dirt dirt;
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     //Fonction pour ajouter un jour à la plantation
     public void AddDay()

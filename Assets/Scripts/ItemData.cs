@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//Permet de créer des instances d'ItemData
 [CreateAssetMenu(fileName = "item", menuName = "item/New item")]
 public class ItemData : ScriptableObject
 {
@@ -16,7 +15,6 @@ public class ItemData : ScriptableObject
     public SeedData seed;
     public SapplingData sappling;
 }
-
 
 public enum ItemType
 {

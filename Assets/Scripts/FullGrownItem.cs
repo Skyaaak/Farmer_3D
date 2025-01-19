@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
+//Classe pour les plants pouvant être récolté
 public class FullGrownItem : MonoBehaviour
 {
     //Variable contenant chaque Item pouvant être droppé par le plant ainsi que leurs quantité minimum et maximum
@@ -11,15 +9,7 @@ public class FullGrownItem : MonoBehaviour
     [SerializeField]
     private ItemData tool;
 
-    private void OnValidate()
-    {
-        if (tool != null && tool.type != ItemType.Tool)
-        {
-            Debug.LogWarning("Cet objet n'est pas de type 'Tool' !", this);
-            tool = null;
-        }
-    }
-
+    //Fonction permettant de récupèrer l'outil nécessair à la récolte
     public ItemData GetToolRequired()
     {
         return tool;

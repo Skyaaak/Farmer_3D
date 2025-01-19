@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Classe contenant les données des graines
 [CreateAssetMenu(fileName = "seed", menuName = "seed/New seed")]
 public class SeedData : ScriptableObject
 {

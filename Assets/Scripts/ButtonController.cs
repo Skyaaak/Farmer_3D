@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//Classe pour le contrôle des boutons du menu de nuit
 public class ButtonController : MonoBehaviour
 {
     [SerializeField]
@@ -22,6 +21,7 @@ public class ButtonController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
 
+        //On applique une rotation au joueur afin qu'il se retrouve dos à la ferme
         playerBody.rotation = Quaternion.Euler(new Vector3(0f, -120f, 0f)); ;
     }
 }

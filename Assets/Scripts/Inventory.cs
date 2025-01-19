@@ -25,12 +25,16 @@ public class Inventory : MonoBehaviour , ISaveable
     [SerializeField]
     private TextMeshProUGUI moneyText;
 
+    [SerializeField]
+    private GameController gameController;
+
     const int maxSize = 5;
     const int maxWeight = 10000;
     public int actualWeight = 0;
 
     public Sprite emptySlotVisual;
 
+    //Fonction pour l'initialisation de l'inventaire
     public void Start()
     {
         SaveInventoryManager.LoadJsonData(new List<ISaveable> { this });
@@ -206,16 +210,19 @@ public class Inventory : MonoBehaviour , ISaveable
         
     }
 
+    //Fonction permettant de convertir l'inventaire en objet JSON
     public string ToJson()
     {
         return JsonUtility.ToJson(this);
     }
 
+    //Fonction permettant de charger un inventaire depuis un objet JSON
     public void LoadFromJson(string a_Json)
     {
         JsonUtility.FromJsonOverwrite(a_Json, this);
     }
 
+    //Fonction permettant de sauvegarder l'inventaire
     public void PopulateInventory(Inventory a_SaveData)
     {
         a_SaveData.content = new List<ItemInInventory>(this.content);
@@ -223,6 +230,7 @@ public class Inventory : MonoBehaviour , ISaveable
         a_SaveData.actualWeight = this.actualWeight;
     }
 
+    //Fonction permettant de charger un inventaire
     public void LoadFromInventory(Inventory a_SaveData)
     {
         this.content = new List<ItemInInventory>(a_SaveData.content);
@@ -230,14 +238,15 @@ public class Inventory : MonoBehaviour , ISaveable
         this.actualWeight = a_SaveData.actualWeight;
     }
 
+    //Fonction permettant de vendre l'intégralité de l'inventaire
     public void Sell()
     {
-        MainManager.Instance.AddMoney(GetSellAmount());
-        moneyText.text = MainManager.Instance.GetMoney().ToString();
+        gameController.AddMoney(GetSellAmount());
         this.content.Clear();
         RefreshContent();
     }
 
+    //Fonction permettant de récupérer le montant total de l'inventaire
     public int GetSellAmount()
     {
         int price = 0;
@@ -258,6 +267,7 @@ public class ItemInInventory
     public int count;
 }
 
+//Interface permettant de sauvegarder un objet
 public interface ISaveable
 {
     void PopulateInventory(Inventory a_SaveData);

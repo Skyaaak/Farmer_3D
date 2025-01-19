@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// This script is used to control the camera movement using the mouse.
 public class MouseLook : MonoBehaviour
 {
 

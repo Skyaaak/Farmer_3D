@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Classe permettant de gérer le menu des options
 public class OptionMenu : MonoBehaviour
 {
     [SerializeField]
@@ -42,6 +41,7 @@ public class OptionMenu : MonoBehaviour
         changeAffichage();
     }
 
+    // Fonction permettant de retourner au menu in game
     public void retourMenu()
     {
         //Cacher les commandes
@@ -56,6 +56,7 @@ public class OptionMenu : MonoBehaviour
         }
     }
 
+    // Fonction permettant de changer l'affichage des commandes en fonction de la langue
     private void changeAffichage()
     {
         var textRetour = btnRetourMenu.GetComponentInChildren<TextMeshProUGUI>();

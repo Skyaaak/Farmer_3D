@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// Classe contenant les données du menu de la scène d'accueil
 public class MenuScript : MonoBehaviour
 {
     [SerializeField] 
@@ -64,13 +63,12 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     private GameObject menuLanguage;
 
-
-
     public void Start()
     {
         changeAffichage();
     }
 
+    // Fonction pour lancer le jeu
     public void jouer() {
         // Charger la scène "SampleScene"
         SceneManager.LoadScene("SampleScene");
@@ -79,6 +77,7 @@ public class MenuScript : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    //Fonction pour afficher les commandes
     public void afficherMemoCommandes() {
         // Afficher le Canvas des commandes
         if (memoCommandes != null) {
@@ -90,6 +89,7 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    //Fonction pour retourner au menu principal
     public void retourMenu() {
         //Cacher les commandes
         if (memoCommandes != null){
@@ -106,6 +106,7 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    //Fonction pour afficher le menu de changement de langue
     public void selectLanguage()
     {
         if (memoCommandes != null)
@@ -119,18 +120,21 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    //Fonction pour changer la langue en français
     public void selectFr()
     {
         LanguageManager.Instance.SetLanguage("fr");
         changeAffichage();
     }
 
+    //Fonction pour changer la langue en anglais
     public void selectEn()
     {
         LanguageManager.Instance.SetLanguage("en");
         changeAffichage();
     }
 
+    // Fonction pour quitter le jeu
     public void quitter() {
         // Quitter le jeu
         Application.Quit();
@@ -140,6 +144,7 @@ public class MenuScript : MonoBehaviour
         Debug.Log("Quitter le jeu !");
     }
 
+    //Fonction pour changer l'affichage des textes des menus en fonction de la langue
     private void changeAffichage()
     {
         var textJouer = btnJouer.GetComponentInChildren<TextMeshProUGUI>();

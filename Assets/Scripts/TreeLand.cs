@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Classe pour les zones arboricoles
 public class TreeLand : MonoBehaviour
 {
     private int state = 0;
@@ -11,6 +10,7 @@ public class TreeLand : MonoBehaviour
     private bool Pickable = false;
     private SapplingData sappling;
 
+    //Fonction pour ajouter un jour
     public void AddDay()
     {
         //On regarde si quelque chose est planté
@@ -47,6 +47,7 @@ public class TreeLand : MonoBehaviour
         }
     }
 
+    //Fonction pour planter une pousse
     public void Plant(SapplingData newSappling)
     {
         sappling = newSappling;
@@ -55,6 +56,7 @@ public class TreeLand : MonoBehaviour
         Planted = true;
     }
 
+    //Fonction pour secouer l'arbre
     public void PickUp()
     {
         Pickable = false;
@@ -72,12 +74,16 @@ public class TreeLand : MonoBehaviour
         Destroy(actualPrefab);
     }
 
+    //Fonction permettant de savoir si l'arbe est secouable
     public bool isPickable() {  return Pickable; }
 
+    //Fonction permettant de savoir si quelque chose est planté
     public bool isPlanted() { return Planted; }
 
+    //Fonction permettant de récupérer le nom de la pousse
     public string getTreeName() { return sappling.getTypeOfSappling(); }
 
+    //Fonction permettant de récupérer le nombre de jours depuis la plantation
     public int daySincePlantation() {  return dayTracker; }
 
 }

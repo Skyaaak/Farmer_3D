@@ -1,9 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Classe permettant de sauvegarder les données de l'inventaire
 public static class SaveInventoryManager
 {
+    // Fonction permettant de sauvegarder les données en JSON
     public static void SaveJsonData(IEnumerable<ISaveable> a_Saveables)
     {
         Inventory sd = new Inventory();
@@ -18,6 +19,7 @@ public static class SaveInventoryManager
         }
     }
 
+    // Fonction permettant de charger les données en JSON
     public static void LoadJsonData(IEnumerable<ISaveable> a_Saveables)
     {
         if (FileManager.LoadFromFile("Inventory.dat", out var json))
