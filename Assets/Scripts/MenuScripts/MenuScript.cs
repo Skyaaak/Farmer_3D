@@ -134,6 +134,13 @@ public class MenuScript : MonoBehaviour
         changeAffichage();
     }
 
+    //Fonction pour changer la langue en espagnol
+    public void selectEsp()
+    {
+        LanguageManager.Instance.SetLanguage("esp");
+        changeAffichage();
+    }
+
     // Fonction pour quitter le jeu
     public void quitter() {
         // Quitter le jeu
