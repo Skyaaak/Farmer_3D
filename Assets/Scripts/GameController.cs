@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+//Classe pour le contrôle du jeu contenant des variables nécessaire à l'ensemble de la scène
 public class GameController : MonoBehaviour
 {
 
@@ -13,9 +12,11 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textJourInventaire;
 
+    // Start is called before the first frame update
     public void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        //On applique les paramètres sauvegardés
         if (PlayerPrefs.HasKey("playerX"))
         {
             var actualPlayerRotation = player.transform.rotation;
@@ -38,7 +39,7 @@ public class GameController : MonoBehaviour
         foreach(GameObject cultivable in listeOfCultivable)
         {
             //On récupère le script du plant
-            HarvestableInstance script = cultivable.GetComponent<HarvestableInstance>();
+            Harvestable script = cultivable.GetComponent<Harvestable>();
             //Si on as quelque chose de planté, on ajoute un jour à la culture.
             if (script != null)
             {
@@ -60,6 +61,7 @@ public class GameController : MonoBehaviour
         }
     }
 
+    //Fonction permettant d'ajouter de l'argent à la somme gagné aujourd'hui et au total et met à jour le texte
     public void AddMoney(int amount)
     {
         moneyWin += amount;
@@ -67,17 +69,20 @@ public class GameController : MonoBehaviour
         moneyText.text = MainManager.Instance.GetMoney().ToString();
     }
 
+    //Fonction permettant de dépenser de l'argent et met à jour le texte
     public void SpendMoney(int amount)
     {
         MainManager.Instance.SpendMoney(amount);
         moneyText.text = MainManager.Instance.GetMoney().ToString();
     }
 
+    //Fonction permettant de récupérer la somme gagné aujourd'hui
     public int GetMoneyWin()
     {
         return moneyWin;
     }
 
+    //Fonction permettant de récupérer le numéro du jour actuel
     public int GetDays()
     {
         return days;

@@ -1,10 +1,11 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
 
+//Classe permettant de gérer les fichiers de sauvegarde
 public static class FileManager
 {
+    //Fonction permettant de sauvegarder les données en les inscrivant dans un fichier
     public static bool WriteToFile(string a_FileName, string a_FileContents)
     {
         var fullPath = Path.Combine(Application.persistentDataPath, a_FileName);
@@ -21,6 +22,7 @@ public static class FileManager
         }
     }
 
+    //Fonction permettant de charger les données depuis le fichier de sauvegarde
     public static bool LoadFromFile(string a_FileName, out string result)
     {
         var fullPath = Path.Combine(Application.persistentDataPath, a_FileName);
@@ -32,7 +34,7 @@ public static class FileManager
         }
         catch (Exception e)
         {
-            Debug.Log("Pas de fichier de sauvegarde");
+            Debug.Log($"Pas de fichier de sauvegarde {e}");
             result = "";
             return false;
         }

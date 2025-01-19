@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+// Classe permettant d'afficher le menu du jeu lorsque A est pressé
 public class AfficherMenu : MonoBehaviour
 {
     [SerializeField]

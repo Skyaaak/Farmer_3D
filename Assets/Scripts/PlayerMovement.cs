@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// This script is responsible for the movement of the player character.
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
@@ -21,12 +22,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
-
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -44,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
+    // Check if the player is on the ground
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))

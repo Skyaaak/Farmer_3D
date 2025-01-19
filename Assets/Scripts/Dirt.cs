@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//Classe permettant de gérer les préfab de terre
 public class Dirt : MonoBehaviour
 {
     [SerializeField]
@@ -10,11 +9,6 @@ public class Dirt : MonoBehaviour
     public GameObject dirtPlowedObject;
 
     public bool plowed = false;
-
-    void Update()
-    {
-        
-    }
 
     //Fonction pour labourré la terre
     public void isGettingPlowed()
@@ -25,6 +19,7 @@ public class Dirt : MonoBehaviour
         dirtObject.SetActive(false);
     }
 
+    //Fonction permettant de remettre la terre à son état initial
     public void Reinisialised()
     {
         plowed = false;

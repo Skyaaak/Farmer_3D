@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using System;
 
 //Inventaire du joueur séparé en deux partis:
 //La partie inventaire unique pour un outil ou un sac de graines
@@ -9,12 +10,13 @@ using TMPro;
 public class Inventory : MonoBehaviour , ISaveable
 {
     [SerializeField]
-    public List<ItemInInventory> content;
+    private List<ItemInInventory> content;
 
     [SerializeField]
-    public GameObject inventoryPanel;
+    private GameObject inventoryPanel;
 
-    public ItemData toolEquipped;
+    [SerializeField]
+    private ItemData toolEquipped;
 
     [SerializeField]
     private ToolSlot toolSlot;
@@ -25,12 +27,14 @@ public class Inventory : MonoBehaviour , ISaveable
     [SerializeField]
     private TextMeshProUGUI moneyText;
 
+    [SerializeField]
+    private GameController gameController;
+
     const int maxSize = 5;
     const int maxWeight = 10000;
-    public int actualWeight = 0;
+    private int actualWeight = 0;
 
-    public Sprite emptySlotVisual;
-
+    //Fonction pour l'initialisation de l'inventaire
     public void Start()
     {
         SaveInventoryManager.LoadJsonData(new List<ISaveable> { this });
@@ -119,13 +123,10 @@ public class Inventory : MonoBehaviour , ISaveable
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
 
-            currentSlot.item = null;
-            currentSlot.itemVisual.sprite = emptySlotVisual;
-            currentSlot.countText.enabled = false;
+            currentSlot.EmptySlot();
         }
         //On met l'affichage par défaut sur l'inventaire d'outil 
-        toolSlot.item = null;
-        toolSlot.itemVisual.sprite = emptySlotVisual;
+        toolSlot.EmptySlot();
 
         //On boucle sur le contenu de l'inventaire
         for (int i = 0; i < content.Count; i++)
@@ -135,14 +136,12 @@ public class Inventory : MonoBehaviour , ISaveable
             if (content[i] != null)
             {
                 //On ajoute les données nécessaire à l'affichage
-                currentSlot.item = content[i].itemData;
-                currentSlot.itemVisual.sprite = content[i].itemData.visuel;
+                currentSlot.SetSlot(content[i].itemData);
 
                 //Si l'objet est stackable on affiche également le compteur
-                if (currentSlot.item.stackable)
+                if (currentSlot.ItemStackable())
                 {
-                    currentSlot.countText.enabled = true;
-                    currentSlot.countText.text = content[i].count.ToString();
+                    currentSlot.SetText(content[i].count.ToString());
                 }
                 //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
             }
@@ -151,8 +150,7 @@ public class Inventory : MonoBehaviour , ISaveable
         //Si on as un outil équipé, on change l'affichage
         if (toolEquipped)
         {
-            toolSlot.item = toolEquipped;
-            toolSlot.itemVisual.sprite = toolEquipped.visuel;
+            toolSlot.setItem(toolEquipped);
         }
     }
 
@@ -206,16 +204,19 @@ public class Inventory : MonoBehaviour , ISaveable
         
     }
 
+    //Fonction permettant de convertir l'inventaire en objet JSON
     public string ToJson()
     {
         return JsonUtility.ToJson(this);
     }
 
+    //Fonction permettant de charger un inventaire depuis un objet JSON
     public void LoadFromJson(string a_Json)
     {
         JsonUtility.FromJsonOverwrite(a_Json, this);
     }
 
+    //Fonction permettant de sauvegarder l'inventaire
     public void PopulateInventory(Inventory a_SaveData)
     {
         a_SaveData.content = new List<ItemInInventory>(this.content);
@@ -223,6 +224,7 @@ public class Inventory : MonoBehaviour , ISaveable
         a_SaveData.actualWeight = this.actualWeight;
     }
 
+    //Fonction permettant de charger un inventaire
     public void LoadFromInventory(Inventory a_SaveData)
     {
         this.content = new List<ItemInInventory>(a_SaveData.content);
@@ -230,14 +232,15 @@ public class Inventory : MonoBehaviour , ISaveable
         this.actualWeight = a_SaveData.actualWeight;
     }
 
+    //Fonction permettant de vendre l'intégralité de l'inventaire
     public void Sell()
     {
-        MainManager.Instance.AddMoney(GetSellAmount());
-        moneyText.text = MainManager.Instance.GetMoney().ToString();
+        gameController.AddMoney(GetSellAmount());
         this.content.Clear();
         RefreshContent();
     }
 
+    //Fonction permettant de récupérer le montant total de l'inventaire
     public int GetSellAmount()
     {
         int price = 0;
@@ -247,6 +250,24 @@ public class Inventory : MonoBehaviour , ISaveable
         }
 
         return price;
+    }
+
+    //Fonction permettant de récupérer le poids total de l'inventaire
+    public int GetWeight()
+    {
+        return actualWeight;
+    }
+
+    //Fonction permettant de récupérer l'outil équipé
+    public ItemData GetToolEquipped()
+    {
+        return toolEquipped;
+    }
+
+    public void EmptyTool()
+    {
+        toolEquipped = null;
+        toolSlot.EmptySlot();
     }
 }
 
@@ -258,6 +279,7 @@ public class ItemInInventory
     public int count;
 }
 
+//Interface permettant de sauvegarder un objet
 public interface ISaveable
 {
     void PopulateInventory(Inventory a_SaveData);
