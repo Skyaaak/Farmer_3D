@@ -19,21 +19,17 @@ public class Harvestable : MonoBehaviour
         if (isPlanted)
         {
             dayTracker++;
-            Debug.Log("Planted "+ seedData.GetDayBeforeGrowth());
             //On regarde si le nombre de jour modulo le temps entre deux étape de pousse est égale à 0 pour chager le modèle
             if (dayTracker % seedData.GetDayBeforeGrowth() == 0)
             {
-                Debug.Log("CanGrow");
                 if (state == 0)
                 {
-                    Debug.Log("state0");
                     //On initialise le modèle correspondant à l'étape actuelle
                     actualPrefab = Instantiate(seedData.GetStatesOfGrowth(state), gameObject.transform);
                     state++;
                 }
                 else
                 {
-                    Debug.Log("AlreadyPrefab");
                     //Si la plantation n'est pas arrivé à terme on la fait avancée
                     if (state < seedData.getNumberOfStates())
                     {
@@ -71,6 +67,7 @@ public class Harvestable : MonoBehaviour
         }
         else
         {
+            state = 0;
             Destroy(actualPrefab);
             Reinitialised();
         }

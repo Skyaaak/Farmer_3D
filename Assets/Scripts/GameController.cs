@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
         foreach(GameObject cultivable in listeOfCultivable)
         {
             //On récupère le script du plant
-            HarvestableInstance script = cultivable.GetComponent<HarvestableInstance>();
+            Harvestable script = cultivable.GetComponent<Harvestable>();
             //Si on as quelque chose de planté, on ajoute un jour à la culture.
             if (script != null)
             {

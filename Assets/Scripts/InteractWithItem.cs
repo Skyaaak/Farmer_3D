@@ -121,9 +121,6 @@ public class InteractWithItem : MonoBehaviour
 
             // Retire l'outil de l'inventaire
             inventory.EmptyTool();
-
-            // Optionnel : Affiche un message pour confirmer
-            Debug.Log("Outil lâché : " + droppedTool.name);
         }
         else
         {
@@ -356,7 +353,7 @@ public class InteractWithItem : MonoBehaviour
         }
         else
         {
-            HarvestableInstance harvestableSee = hit.transform.gameObject.GetComponent<HarvestableInstance>();
+            Harvestable harvestableSee = hit.transform.gameObject.GetComponent<Harvestable>();
 
             //Si la terre à été labourré on regarde si des graines ont été plantées
             if (!harvestableSee.isSeedPlanted())
