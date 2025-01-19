@@ -80,7 +80,7 @@ public class InteractWithItem : MonoBehaviour
             }
             else
             {
-                Debug.Log("Tag inconnu");
+                Debug.Log("Tag inconnu " + tag);
             }
         }
 
@@ -95,10 +95,10 @@ public class InteractWithItem : MonoBehaviour
     private void DropEquippedTool()
     {
         // Vérifie si un outil est équipé
-        if (inventory.toolEquipped != null)
+        if (inventory.GetToolEquipped() != null)
         {
             // Instancie le prefab de l'outil
-            GameObject droppedTool = Instantiate(inventory.toolEquipped.prefab);
+            GameObject droppedTool = Instantiate(inventory.GetToolEquipped().prefab);
 
             // Positionne l'objet juste devant le joueur
             Vector3 dropPosition = transform.position + transform.forward * 1.0f; // Position devant le joueur
@@ -120,8 +120,7 @@ public class InteractWithItem : MonoBehaviour
             }
 
             // Retire l'outil de l'inventaire
-            inventory.toolEquipped = null;
-            inventory.RefreshContent();
+            inventory.EmptyTool();
 
             // Optionnel : Affiche un message pour confirmer
             Debug.Log("Outil lâché : " + droppedTool.name);
@@ -160,7 +159,7 @@ public class InteractWithItem : MonoBehaviour
         FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
 
         //Si c'est un harvestable, on regarde si il � besoin d'un objet pour �tre ramass� et si, le cas pr�sent, l'objet n�cessaire est l'objet �quip�
-        if (fullGrownItem.GetToolRequired() == null || inventory.toolEquipped == fullGrownItem.GetToolRequired())
+        if (fullGrownItem.GetToolRequired() == null || inventory.GetToolEquipped() == fullGrownItem.GetToolRequired())
         {
             //Si on as la Faucille on donne la possibilit� de r�colter
             text.text = LanguageManager.Instance.GetTranslation("pressToHarvest");
@@ -179,7 +178,7 @@ public class InteractWithItem : MonoBehaviour
                         //On instancie un objet
                         GameObject instantiatedRessource = GameObject.Instantiate(ressource.itemData.prefab);
 
-                        if (harvestable.plantType == PlantType.Plant)
+                        if (harvestable.GetPlantType() == PlantType.Plant)
                         {
                             //On modifie l�g�rement sa position pour qu'il soit ramassable
                             Vector3 newPos = harvestable.transform.position;
@@ -243,12 +242,12 @@ public class InteractWithItem : MonoBehaviour
         }
         else
         {
-            if (inventory.toolEquipped?.type == ItemType.Sappling)
+            if (inventory.GetToolEquipped()?.type == ItemType.Sappling)
             {
                 text.text = LanguageManager.Instance.GetTranslation("pressToPlant");
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    SapplingData sappling = inventory.toolEquipped.sappling;
+                    SapplingData sappling = inventory.GetToolEquipped().sappling;
                     treeLand.Plant(sappling);
                 }
             }
@@ -342,7 +341,7 @@ public class InteractWithItem : MonoBehaviour
         if (!dirtSee.plowed)
         {
             //Si elle n'est pas labour� on regarde si on as la houe pour donner la possibilit� de labourer
-            if (inventory.toolEquipped?.nameItem == "Hoe")
+            if (inventory.GetToolEquipped()?.nameItem == "Hoe")
             {
                 text.text = LanguageManager.Instance.GetTranslation("pressToPlow");
                 if (Input.GetKeyDown(KeyCode.E))
@@ -360,16 +359,16 @@ public class InteractWithItem : MonoBehaviour
             HarvestableInstance harvestableSee = hit.transform.gameObject.GetComponent<HarvestableInstance>();
 
             //Si la terre à été labourré on regarde si des graines ont été plantées
-            if (!harvestableSee.isPlanted)
+            if (!harvestableSee.isSeedPlanted())
             {
                 //Si on as pas déjà de graine plantées on en plante si on as des graines dans l'inventaire
 
-                if (inventory.toolEquipped?.type == ItemType.Seed)
+                if (inventory.GetToolEquipped()?.type == ItemType.Seed)
                 {
                     text.text = LanguageManager.Instance.GetTranslation("pressToSeed");
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        SeedData seed = inventory.toolEquipped.seed;
+                        SeedData seed = inventory.GetToolEquipped().seed;
                         harvestableSee.isSeedeed(seed);
                     }
                 }
@@ -382,13 +381,13 @@ public class InteractWithItem : MonoBehaviour
             else
             {
                 //Si on a déjà planté quelque chose on regarde si on peut ramasser
-                if (!harvestableSee.isHarvestable)
+                if (!harvestableSee.isCultureHarvestable())
                 {
-                    text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (harvestableSee.dayTracker == 0 ? LanguageManager.Instance.GetTranslation("today") : harvestableSee.dayTracker + (harvestableSee.dayTracker > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
+                    text.text = LanguageManager.Instance.GetTranslation(harvestableSee.GetTypeOfSeed().ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (harvestableSee.GetTimeSincePlanted() == 0 ? LanguageManager.Instance.GetTranslation("today") : harvestableSee.GetTimeSincePlanted() + (harvestableSee.GetTimeSincePlanted() > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
                 }
                 else
                 {
-                    text.text = LanguageManager.Instance.GetTranslation(harvestableSee.type.ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
+                    text.text = LanguageManager.Instance.GetTranslation(harvestableSee.GetTypeOfSeed().ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
                 }
 
             }

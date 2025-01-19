@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using System;
 
 //Inventaire du joueur séparé en deux partis:
 //La partie inventaire unique pour un outil ou un sac de graines
@@ -9,12 +10,13 @@ using TMPro;
 public class Inventory : MonoBehaviour , ISaveable
 {
     [SerializeField]
-    public List<ItemInInventory> content;
+    private List<ItemInInventory> content;
 
     [SerializeField]
-    public GameObject inventoryPanel;
+    private GameObject inventoryPanel;
 
-    public ItemData toolEquipped;
+    [SerializeField]
+    private ItemData toolEquipped;
 
     [SerializeField]
     private ToolSlot toolSlot;
@@ -30,9 +32,7 @@ public class Inventory : MonoBehaviour , ISaveable
 
     const int maxSize = 5;
     const int maxWeight = 10000;
-    public int actualWeight = 0;
-
-    public Sprite emptySlotVisual;
+    private int actualWeight = 0;
 
     //Fonction pour l'initialisation de l'inventaire
     public void Start()
@@ -123,13 +123,10 @@ public class Inventory : MonoBehaviour , ISaveable
         {
             Slot currentSlot = inventorySlotsParent.GetChild(i).GetComponent<Slot>();
 
-            currentSlot.item = null;
-            currentSlot.itemVisual.sprite = emptySlotVisual;
-            currentSlot.countText.enabled = false;
+            currentSlot.EmptySlot();
         }
         //On met l'affichage par défaut sur l'inventaire d'outil 
-        toolSlot.item = null;
-        toolSlot.itemVisual.sprite = emptySlotVisual;
+        toolSlot.EmptySlot();
 
         //On boucle sur le contenu de l'inventaire
         for (int i = 0; i < content.Count; i++)
@@ -139,14 +136,12 @@ public class Inventory : MonoBehaviour , ISaveable
             if (content[i] != null)
             {
                 //On ajoute les données nécessaire à l'affichage
-                currentSlot.item = content[i].itemData;
-                currentSlot.itemVisual.sprite = content[i].itemData.visuel;
+                currentSlot.SetSlot(content[i].itemData);
 
                 //Si l'objet est stackable on affiche également le compteur
-                if (currentSlot.item.stackable)
+                if (currentSlot.ItemStackable())
                 {
-                    currentSlot.countText.enabled = true;
-                    currentSlot.countText.text = content[i].count.ToString();
+                    currentSlot.SetText(content[i].count.ToString());
                 }
                 //inventorySlotsParent.GetChild(i).GetChild(0).GetComponent<Image>().sprite = content[i].itemData.visuel;
             }
@@ -155,8 +150,7 @@ public class Inventory : MonoBehaviour , ISaveable
         //Si on as un outil équipé, on change l'affichage
         if (toolEquipped)
         {
-            toolSlot.item = toolEquipped;
-            toolSlot.itemVisual.sprite = toolEquipped.visuel;
+            toolSlot.setItem(toolEquipped);
         }
     }
 
@@ -256,6 +250,24 @@ public class Inventory : MonoBehaviour , ISaveable
         }
 
         return price;
+    }
+
+    //Fonction permettant de récupérer le poids total de l'inventaire
+    public int GetWeight()
+    {
+        return actualWeight;
+    }
+
+    //Fonction permettant de récupérer l'outil équipé
+    public ItemData GetToolEquipped()
+    {
+        return toolEquipped;
+    }
+
+    public void EmptyTool()
+    {
+        toolEquipped = null;
+        toolSlot.EmptySlot();
     }
 }
 

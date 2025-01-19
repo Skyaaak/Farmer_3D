@@ -24,20 +24,20 @@ public class TreeLand : MonoBehaviour
                 if (state == 0)
                 {
                     //On initialise le modèle correspondant à l'étape actuelle
-                    actualPrefab = Instantiate(sappling.statesOfGrowth[state], gameObject.transform);
+                    actualPrefab = Instantiate(sappling.getStatesOfGrowth(state), gameObject.transform);
                     state++;
                 }
                 else
                 {
                     //Si la plantation n'est pas arrivé à terme on la fait avancée
-                    if (state < sappling.statesOfGrowth.Length)
+                    if (state < sappling.getNumberOfStates())
                     {
                         //Si on augmente la culture on détruit le model actuel avant de mettre le nouveau
                         Destroy(actualPrefab);
-                        actualPrefab = Instantiate(sappling.statesOfGrowth[state], gameObject.transform);
+                        actualPrefab = Instantiate(sappling.getStatesOfGrowth(state), gameObject.transform);
                         state++;
                     }
-                    if (state == sappling.statesOfGrowth.Length)
+                    if (state == sappling.getNumberOfStates())
                     {
                         //Si on arrive à la dernière étape on dit que la culture est récoltable
                         Pickable = true;
@@ -51,7 +51,7 @@ public class TreeLand : MonoBehaviour
     public void Plant(SapplingData newSappling)
     {
         sappling = newSappling;
-        actualPrefab = Instantiate(sappling.statesOfGrowth[state], gameObject.transform);
+        actualPrefab = Instantiate(sappling.getStatesOfGrowth(state), gameObject.transform);
         state = 1;
         Planted = true;
     }
@@ -62,7 +62,7 @@ public class TreeLand : MonoBehaviour
         Pickable = false;
         state--;
         Destroy(actualPrefab);
-        actualPrefab = Instantiate(sappling.statesOfGrowth[state - 1], gameObject.transform);
+        actualPrefab = Instantiate(sappling.getStatesOfGrowth(state-1), gameObject.transform);
     }
 
     //Fonction pour enlever la culture et réinitialiser la terre

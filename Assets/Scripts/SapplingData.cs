@@ -5,7 +5,7 @@ using UnityEngine;
 public class SapplingData : ScriptableObject
 {
     [SerializeField]
-    public GameObject[] statesOfGrowth;
+    private GameObject[] statesOfGrowth;
     [SerializeField]
     private string typeOfSappling;
     [SerializeField]
@@ -19,4 +19,22 @@ public class SapplingData : ScriptableObject
 
     //Fonction permettant de récupérer le type de jeune pousse
     public string getTypeOfSappling() { return typeOfSappling; }
+
+    //Fonction permettant de récupérer tout les états de croissance
+    public GameObject[] getAllStatesOfGrowth()
+    {
+        return statesOfGrowth;
+    }
+
+    //Fonction permettant de récupérer un état de croissance particulier
+    public GameObject getStatesOfGrowth(int index)
+    {
+        return statesOfGrowth[index];
+    }
+
+    //Fonction permettant de récupérer le nombre d'états de croissance
+    public int getNumberOfStates()
+    {
+        return statesOfGrowth.Length;
+    }
 }
