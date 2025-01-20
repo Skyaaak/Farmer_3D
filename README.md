@@ -20,5 +20,6 @@ Intéragir avec les item :
 Dans la journée du joueur :
   - E sur la grange pour terminer la journée
   - E sur le coffre pour vendre ses légumes
+  - I pour masquer ou afficher l'inventaire
 
 A ou Echap pour afficher le menu 
