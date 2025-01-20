@@ -49,6 +49,9 @@ public class InteractWithItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textAmountMoney;
 
+    [SerializeField]
+    private GameObject ColorBox;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -70,6 +73,7 @@ public class InteractWithItem : MonoBehaviour
     {
         RaycastHit hit;
         text.text = "";
+        ColorBox.SetActive(false);
         if (menuDeNuit.activeSelf || menuMarket.activeSelf)
         {
             return;
@@ -142,7 +146,7 @@ public class InteractWithItem : MonoBehaviour
         if (inventory.HaveSpace(itemSee))
         {
             text.text = LanguageManager.Instance.GetTranslation("pressToPickUp") + LanguageManager.Instance.GetTranslation(itemSee.nameItem.ToLower() + "Gender"); ;
-
+            ColorBox.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 inventory.AddItem(hit.transform.gameObject.GetComponent<Item>().item);
@@ -152,6 +156,7 @@ public class InteractWithItem : MonoBehaviour
         else
         {
             text.text = LanguageManager.Instance.GetTranslation("inventoryFull");
+            ColorBox.SetActive(true);
         }
     }
 
@@ -165,6 +170,7 @@ public class InteractWithItem : MonoBehaviour
         {
             //Si on as la Faucille on donne la possibilit� de r�colter
             text.text = LanguageManager.Instance.GetTranslation("pressToHarvest");
+            ColorBox.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Harvestable harvestable = hit.transform.GetComponentInParent<Harvestable>();
@@ -206,6 +212,7 @@ public class InteractWithItem : MonoBehaviour
         else
         {
             text.text = LanguageManager.Instance.GetTranslation("needTool") + LanguageManager.Instance.GetTranslation(fullGrownItem.GetToolRequired().nameItem.ToLower()) + LanguageManager.Instance.GetTranslation("toHarvest");
+            ColorBox.SetActive(true);
         }
     }
 
@@ -213,6 +220,7 @@ public class InteractWithItem : MonoBehaviour
     private void OpenMarket(RaycastHit hit)
     {
         text.text = LanguageManager.Instance.GetTranslation("pressToMarket");
+        ColorBox.SetActive(true);
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -236,10 +244,12 @@ public class InteractWithItem : MonoBehaviour
             if (!treeLand.isPickable())
             {
                 text.text = LanguageManager.Instance.GetTranslation(treeLand.getTreeName().ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (treeLand.daySincePlantation() == 0 ? LanguageManager.Instance.GetTranslation("today") : treeLand.daySincePlantation() + (treeLand.daySincePlantation() > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
+                ColorBox.SetActive(true);
             }
             else
             {
                 text.text = LanguageManager.Instance.GetTranslation(treeLand.getTreeName().ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
+                ColorBox.SetActive(true);
             }
         }
         else
@@ -247,6 +257,7 @@ public class InteractWithItem : MonoBehaviour
             if (inventory.GetToolEquipped()?.type == ItemType.Sappling)
             {
                 text.text = LanguageManager.Instance.GetTranslation("pressToPlant");
+                ColorBox.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     SapplingData sappling = inventory.GetToolEquipped().sappling;
@@ -256,6 +267,7 @@ public class InteractWithItem : MonoBehaviour
             else
             {
                 text.text = LanguageManager.Instance.GetTranslation("takeSappling");
+                ColorBox.SetActive(true);
             }
         }
     }
@@ -265,6 +277,7 @@ public class InteractWithItem : MonoBehaviour
     {
         //Si on as la Houe on donne la possibilit� de r�colter
         text.text = LanguageManager.Instance.GetTranslation("pressToShake");
+        ColorBox.SetActive(true);
         if (Input.GetKeyDown(KeyCode.E))
         {
             FullGrownItem fullGrownItem = hit.transform.gameObject.GetComponent<FullGrownItem>();
@@ -314,6 +327,7 @@ public class InteractWithItem : MonoBehaviour
     private void Sleep(RaycastHit hit)
     {
         text.text = LanguageManager.Instance.GetTranslation("pressToSleep");
+        ColorBox.SetActive(true);
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -346,6 +360,7 @@ public class InteractWithItem : MonoBehaviour
             if (inventory.GetToolEquipped()?.nameItem == "Hoe")
             {
                 text.text = LanguageManager.Instance.GetTranslation("pressToPlow");
+                ColorBox.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     dirtSee.isGettingPlowed();
@@ -354,6 +369,7 @@ public class InteractWithItem : MonoBehaviour
             else
             {
                 text.text = LanguageManager.Instance.GetTranslation("toolToPlow");
+                ColorBox.SetActive(true);
             }
         }
         else
@@ -368,6 +384,7 @@ public class InteractWithItem : MonoBehaviour
                 if (inventory.GetToolEquipped()?.type == ItemType.Seed)
                 {
                     text.text = LanguageManager.Instance.GetTranslation("pressToSeed");
+                    ColorBox.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         SeedData seed = inventory.GetToolEquipped().seed;
@@ -377,6 +394,7 @@ public class InteractWithItem : MonoBehaviour
                 else
                 {
                     text.text = LanguageManager.Instance.GetTranslation("seedToSeed");
+                    ColorBox.SetActive(true);
                 }
 
             }
@@ -386,10 +404,12 @@ public class InteractWithItem : MonoBehaviour
                 if (!harvestableSee.isCultureHarvestable())
                 {
                     text.text = LanguageManager.Instance.GetTranslation(harvestableSee.GetTypeOfSeed().ToLower()) + LanguageManager.Instance.GetTranslation("plantSince") + (harvestableSee.GetTimeSincePlanted() == 0 ? LanguageManager.Instance.GetTranslation("today") : harvestableSee.GetTimeSincePlanted() + (harvestableSee.GetTimeSincePlanted() > 1 ? LanguageManager.Instance.GetTranslation("days") : LanguageManager.Instance.GetTranslation("day")));
+                    ColorBox.SetActive(true);
                 }
                 else
                 {
                     text.text = LanguageManager.Instance.GetTranslation(harvestableSee.GetTypeOfSeed().ToLower()) + LanguageManager.Instance.GetTranslation("harvestable");
+                    ColorBox.SetActive(true);
                 }
 
             }
