@@ -11,8 +11,12 @@ public class AfficherMenu : MonoBehaviour
 
     void Update()
     {
+        if (inGameMenu.activeSelf)
+        {
+            return;
+        }
         // Vérifier si la touche "A" est pressée
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
         {
             inventaire.SetActive(false);
             inGameMenu.SetActive(true);

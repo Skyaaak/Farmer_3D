@@ -83,7 +83,6 @@ public class LanguageManager : MonoBehaviour
         }
     }
 
-
 }
 
 [System.Serializable]
