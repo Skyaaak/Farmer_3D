@@ -70,6 +70,11 @@ public class InteractWithItem : MonoBehaviour
     {
         RaycastHit hit;
         text.text = "";
+        if (menuDeNuit.activeSelf || menuMarket.activeSelf)
+        {
+            return;
+        }
+
         if (Physics.Raycast(transform.position, transform.forward, out hit, range, layerMask))
         {
             string tag = hit.transform.tag;

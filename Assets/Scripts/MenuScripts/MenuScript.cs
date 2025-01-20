@@ -137,7 +137,7 @@ public class MenuScript : MonoBehaviour
     //Fonction pour changer la langue en espagnol
     public void selectEsp()
     {
-        LanguageManager.Instance.SetLanguage("esp");
+        LanguageManager.Instance.SetLanguage("es");
         changeAffichage();
     }
 
