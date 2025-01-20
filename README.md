@@ -1,5 +1,5 @@
-# Intro
-Farmer 3D est un jeu 3D réalisé aves le moteur de jeu Unity dans le cadre d'un cours de  master 2 MIAGE à L'UPJV.
+# Introduction
+Farmer 3D est un jeu 3D réalisé aves le moteur de jeu Unity dans le cadre d'un cours de master 2 MIAGE à L'UPJV.
 
 # Description
 Faites évoluer votre ferme en faisant pousser vos fruits et légumes puis gagner de l'argent en vendant vos productions ! 
