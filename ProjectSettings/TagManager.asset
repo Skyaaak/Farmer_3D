@@ -16,11 +16,12 @@ TagManager:
   - TreeSappling
   - ObjMenu
   - Market
+  - PostProcessing
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessing
   - Water
   - UI
   - Interactable
