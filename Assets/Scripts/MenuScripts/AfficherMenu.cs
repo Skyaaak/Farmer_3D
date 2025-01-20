@@ -11,7 +11,7 @@ public class AfficherMenu : MonoBehaviour
 
     void Update()
     {
-        if (inventaire.activeSelf)
+        if (inGameMenu.activeSelf)
         {
             return;
         }
