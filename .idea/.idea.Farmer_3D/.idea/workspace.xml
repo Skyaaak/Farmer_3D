@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="29b65a33-11de-4f0a-beab-d0c154f22585" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Farmer_3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Farmer_3D/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MarketButtonController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MarketButtonController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MarketSystem/UIMarketController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MarketSystem/UIMarketController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +117,9 @@
       <option name="presentableId" value="Default" />
       <updated>1736157050797</updated>
       <workItem from="1736157051472" duration="10868000" />
-      <workItem from="1737190412086" duration="8088000" />
+      <workItem from="1737190412086" duration="8595000" />
+      <workItem from="1737286707161" duration="2025000" />
+      <workItem from="1737355482897" duration="10000" />
     </task>
     <task id="LOCAL-00001" summary="Add price system">
       <option name="closed" value="true" />
