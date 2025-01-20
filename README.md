@@ -4,6 +4,9 @@ Farmer 3D est un jeu 3D réalisé aves le moteur de jeu Unity dans le cadre d'un
 # Description
 Faites évoluer votre ferme en faisant pousser vos fruits et légumes puis gagner de l'argent en vendant vos productions ! 
 
+# Avant de lancer le jeu 
+Bien s'assurer de lancer la scène "MenuScene" et non "SampleScene" avant le lancement du jeu.
+
 # Commandes (AZERTY)
 Se déplacer :
   - Z pour avancer
