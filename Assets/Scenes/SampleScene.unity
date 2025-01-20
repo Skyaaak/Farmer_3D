@@ -5627,11 +5627,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 447205908}
   - {fileID: 2126337942}
   - {fileID: 513100319}
   - {fileID: 222973436}
   - {fileID: 1533170947}
-  - {fileID: 447205908}
   m_Father: {fileID: 1278137263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &753532961
@@ -11920,7 +11920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8634100672382765388, guid: 07f9fbf665ac5474dbc0ac26d35d7c8c, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3133869455245208487, guid: 07f9fbf665ac5474dbc0ac26d35d7c8c, type: 3}
