@@ -11,6 +11,10 @@ public class AfficherMenu : MonoBehaviour
 
     void Update()
     {
+        if (inventaire.activeSelf)
+        {
+            return;
+        }
         // Vérifier si la touche "A" est pressée
         if (Input.GetKeyDown(KeyCode.Q))
         {
